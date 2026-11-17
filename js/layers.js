@@ -12,9 +12,10 @@ SC.layers = (() => {
       relief: { type: 'raster', tileSize: 256, maxzoom: 13,
         tiles: [`${ESRI}/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}`],
         attribution: 'Relief © Esri' },
-      modern: { type: 'raster', tileSize: 256, maxzoom: 20,
-        tiles: ['a', 'b', 'c', 'd'].map((s) => `https://${s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png`),
-        attribution: '© OpenStreetMap contributors © CARTO' },
+      // Carto now requires an API key, so the modern layer uses Esri's keyless street map
+      modern: { type: 'raster', tileSize: 256, maxzoom: 19,
+        tiles: [`${ESRI}/World_Street_Map/MapServer/tile/{z}/{y}/{x}`],
+        attribution: 'Map © Esri, HERE, Garmin, © OpenStreetMap contributors' },
       dem: { type: 'raster-dem', tileSize: 256, maxzoom: 14, encoding: 'terrarium',
         tiles: ['https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'],
         attribution: 'Elevation: Mapzen Terrain Tiles (AWS Open Data)' },

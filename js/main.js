@@ -92,7 +92,8 @@
     else fitRoute(id);
   });
 
-  map.on('load', () => {
+  // 'style.load' fires once the style is ready; unlike 'load' it doesn't wait for every tile
+  map.once('style.load', () => {
     SC.layers.init(map);
     SC.move.addLayers(map);
     SC.battles_ui.addLayers(map, state);
@@ -105,5 +106,25 @@
     else if (state.isolated) fitRoute(state.isolated);
   });
 
-  map.on('error', (e) => { if (e?.error?.status !== 404) console.warn('[map]', e.error?.message || e); });
+  SC.errors = [];
+  map.on('error', (e) => {
+    const msg = `${e.sourceId || ''} ${e.error?.status || ''} ${e.error?.message || e}`.trim();
+    if (e?.error?.status !== 404) { console.warn('[map]', msg); if (SC.errors.length < 50) SC.errors.push(msg); }
+  });
+  window.addEventListener('error', (e) => SC.errors.push(`JS: ${e.message} @ ${e.filename}:${e.lineno}`));
+
+  // ?debug writes map diagnostics into the page (readable by a headless browser via --dump-dom)
+  if (new URLSearchParams(location.search).has('debug')) {
+    setInterval(() => {
+      let el = document.getElementById('debug-out');
+      if (!el) { el = document.createElement('pre'); el.id = 'debug-out'; el.style.display = 'none'; document.body.appendChild(el); }
+      const style = map.getStyle();
+      el.textContent = JSON.stringify({
+        loaded: map.loaded(), styleLoaded: map.isStyleLoaded(), layer: SC.layers.current(),
+        visible: style ? style.layers.filter((l) => l.layout?.visibility !== 'none').map((l) => l.id) : [],
+        sourcesLoaded: style ? Object.fromEntries(Object.keys(style.sources).map((s) => [s, map.isSourceLoaded(s)])) : {},
+        errors: SC.errors,
+      });
+    }, 1000);
+  }
 })();
