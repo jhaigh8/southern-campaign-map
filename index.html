@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Southern Campaign Atlas</title>
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="map"></div>
+
+  <!-- Header -->
+  <header id="title-bar">
+    <button id="toggle-sidebar" class="icon-btn" title="Commanders" aria-label="Toggle commanders panel">☰</button>
+    <div>
+      <h1>The Southern Campaign</h1>
+      <p class="subtitle">American Revolution · Dec 1778 – Oct 1781</p>
+    </div>
+  </header>
+
+  <!-- Commander sidebar -->
+  <aside id="sidebar" class="panel">
+    <div class="panel-head">
+      <h2>Commanders</h2>
+      <div class="head-actions">
+        <button id="show-all" class="link-btn">All</button>
+        <button id="show-none" class="link-btn">None</button>
+      </div>
+    </div>
+    <div id="isolate-banner" hidden>
+      <span>Isolating <strong id="isolate-name"></strong></span>
+      <button id="clear-isolate" class="link-btn">Show everyone</button>
+    </div>
+    <label class="check-row small"><input type="checkbox" id="only-active" checked> Only list commanders in the field on this date</label>
+    <div id="commander-list"></div>
+  </aside>
+
+  <!-- Layer switcher -->
+  <div id="layer-panel" class="panel">
+    <div class="seg" role="radiogroup" aria-label="Base map">
+      <button data-layer="satellite" class="active">3D Satellite</button>
+      <button data-layer="period">1775 Maps</button>
+      <button data-layer="modern">Modern</button>
+    </div>
+    <label class="check-row"><input type="checkbox" id="terrain-toggle" checked> 3D terrain</label>
+    <label class="check-row"><input type="checkbox" id="future-toggle"> Show routes ahead (dashed)</label>
+    <div id="period-opacity-row" hidden>
+      <label for="period-opacity">Period map opacity</label>
+      <input type="range" id="period-opacity" min="0" max="100" value="85">
+    </div>
+  </div>
+
+  <!-- Battle / info panel -->
+  <aside id="info-panel" class="panel" hidden>
+    <button id="close-info" class="icon-btn close" aria-label="Close">✕</button>
+    <div id="info-content"></div>
+  </aside>
+
+  <!-- Timeline -->
+  <footer id="timeline" class="panel">
+    <div class="tl-top">
+      <div class="tl-controls">
+        <button id="prev-battle" class="icon-btn" title="Previous battle (Shift+←)">⏮</button>
+        <button id="prev-day" class="icon-btn" title="Previous day (←)">◀</button>
+        <button id="play" class="icon-btn play" title="Play / pause (Space)">▶</button>
+        <button id="next-day" class="icon-btn" title="Next day (→)">▶</button>
+        <button id="next-battle" class="icon-btn" title="Next battle (Shift+→)">⏭</button>
+        <select id="speed" title="Playback speed">
+          <option value="1">1 day/s</option>
+          <option value="4" selected>4 days/s</option>
+          <option value="10">10 days/s</option>
+          <option value="30">30 days/s</option>
+        </select>
+      </div>
+      <div class="tl-date">
+        <div id="date-label">—</div>
+        <div id="date-sub"></div>
+      </div>
+      <input type="date" id="date-jump" aria-label="Jump to date">
+    </div>
+    <div class="tl-track">
+      <div id="battle-ticks"></div>
+      <input type="range" id="slider" min="0" max="100" value="0" aria-label="Date">
+      <div id="year-labels"></div>
+    </div>
+    <details id="day-log">
+      <summary>Events on this day <span id="event-count"></span></summary>
+      <ul id="event-list"></ul>
+    </details>
+  </footer>
+
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+  <script src="data/places.js"></script>
+  <script src="data/commanders.js"></script>
+  <script src="data/movements.js"></script>
+  <script src="data/battles.js"></script>
+  <script src="data/historic-maps.js"></script>
+  <script src="js/util.js"></script>
+  <script src="js/validate.js"></script>
+  <script src="js/layers.js"></script>
+  <script src="js/movements.js"></script>
+  <script src="js/commanders.js"></script>
+  <script src="js/battles.js"></script>
+  <script src="js/timeline.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
