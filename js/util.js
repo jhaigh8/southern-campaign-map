@@ -22,3 +22,15 @@ SC.util = (() => {
   };
   return { DAY, toDay, toISO, fmtLong, fmtShort, fmtRange, lerp, esc, distKm };
 })();
+
+// Tiny event bus shared by the modules
+(() => {
+  const handlers = {};
+  SC.on = (evt, fn) => { (handlers[evt] = handlers[evt] || []).push(fn); };
+  SC.emit = (evt, ...args) => { (handlers[evt] || []).forEach((fn) => fn(...args)); };
+})();
+
+// Padding that keeps fitted routes clear of the floating panels
+SC.util.mapPadding = () => (window.innerWidth < 760
+  ? { top: 140, bottom: 230, left: 30, right: 30 }
+  : { top: 110, bottom: 230, left: 330, right: 380 });
