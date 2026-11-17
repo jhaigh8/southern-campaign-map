@@ -1,0 +1,225 @@
+// Battles and sieges.
+//   place     : id from places.js or [lon, lat]
+//   outcome   : 'allied' (American/French victory) | 'crown' (British/Loyalist victory) | 'draw'
+//   allies / crown : commander ids from commanders.js that took part (only tracked commanders)
+//   others    : notable participants who are not tracked on the map
+//   strength / casualties : [allied, crown], approximate, from standard secondary sources
+//   radiusKm  : optional; how far (km) participants may be from the marker (big sieges, fleets)
+//   approach / withdrawal : days of each participant's route highlighted before/after the fight
+window.SC = window.SC || {};
+SC.battles = [
+  { id: 'savannah1778', name: 'Capture of Savannah', kind: 'battle', start: '1778-12-29', end: '1778-12-29', place: [-81.08, 32.06],
+    outcome: 'crown', allies: [], crown: ['campbell'], others: 'Maj. Gen. Robert Howe (American)',
+    strength: ['~850', '~3,100'], casualties: ['~83 killed, 453 captured', '7 killed, 19 wounded'], approach: 7, withdrawal: 2,
+    summary: "Campbell's force from New York landed at Girardeau's Plantation. Guided by an enslaved man named Quamino Dolly along a hidden path through the swamp, they turned Howe's flank. The American defense collapsed and Savannah fell in an afternoon, opening the British Southern strategy." },
+
+  { id: 'kettle_creek', name: 'Kettle Creek', kind: 'battle', start: '1779-02-14', end: '1779-02-14', place: 'kettle_creek',
+    outcome: 'allied', allies: ['pickens', 'clarke'], crown: [], others: 'Col. John Dooly (American); Col. James Boyd (Loyalist, killed)',
+    strength: ['~340', '~600–800'], casualties: ['9 killed, 23 wounded', '~70 killed, ~75 captured'], approach: 4, withdrawal: 6,
+    summary: "Pickens caught Boyd's Loyalists, who were marching to join Campbell, while they butchered cattle on Kettle Creek. Boyd was mortally wounded. The victory discouraged backcountry Loyalists and helped push Campbell out of Augusta." },
+
+  { id: 'brier_creek', name: 'Brier Creek', kind: 'battle', start: '1779-03-03', end: '1779-03-03', place: 'brier_creek',
+    outcome: 'crown', allies: [], crown: [], others: 'Gen. John Ashe (American); Lt. Col. Mark Prevost (British)',
+    strength: ['~1,500', '~900'], casualties: ['~150 killed or drowned, 227 captured', '5 killed, 11 wounded'], approach: 0, withdrawal: 0,
+    summary: "Mark Prevost made a wide flank march and fell on Ashe's North Carolina militia from the rear. The Americans were trapped against the swamps of Brier Creek and the Savannah River and many drowned trying to escape. The defeat secured Georgia for the Crown." },
+
+  { id: 'stono_ferry', name: 'Stono Ferry', kind: 'battle', start: '1779-06-20', end: '1779-06-20', place: 'stono_ferry',
+    outcome: 'crown', allies: ['lincoln'], crown: [], others: 'Lt. Col. John Maitland (British)',
+    strength: ['~1,200', '~900'], casualties: ['34 killed, 113 wounded', '~130 killed and wounded'], approach: 6, withdrawal: 5,
+    summary: "Lincoln attacked the rear guard Prevost had left at Stono Ferry as he withdrew from Charleston. After an hour of fighting Lincoln broke off as British reinforcements crossed from James Island. Andrew Jackson's brother Hugh died of heat exhaustion after the battle." },
+
+  { id: 'siege_savannah', name: 'Siege of Savannah', kind: 'siege', start: '1779-09-16', end: '1779-10-18', place: 'savannah',
+    outcome: 'crown', allies: ['lincoln', 'destaing'], crown: ['prevost'], others: 'Casimir Pulaski (mortally wounded); Sgt. William Jasper (killed)',
+    strength: ['~7,700 French & American', '~3,200'], casualties: ['~244 killed, ~600 wounded in the 9 Oct assault', '~40 killed, ~63 wounded'], approach: 5, withdrawal: 6,
+    summary: "D'Estaing's French army and Lincoln's Continentals besieged Savannah, and Prevost used the truce he asked for to strengthen his works. On 9 October the allies stormed the Spring Hill redoubt in fog and were slaughtered. It was one of the bloodiest single hours of the war. Among the French troops were the Chasseurs-Volontaires, free men of colour from Saint-Domingue." },
+
+  { id: 'siege_charleston', name: 'Siege of Charleston', kind: 'siege', radiusKm: 25, start: '1780-03-29', end: '1780-05-12', place: 'charleston',
+    outcome: 'crown', allies: ['lincoln'], crown: ['clinton', 'cornwallis', 'tarleton'], others: '',
+    strength: ['~5,500', '~10,000–13,500'], casualties: ['89 killed, 138 wounded, ~5,000 captured', '76 killed, 189 wounded'], approach: 10, withdrawal: 5,
+    summary: "Clinton landed south of the city, crossed the Ashley and dug siege lines across Charleston Neck. Tarleton's victory at Monck's Corner closed the last escape route. Lincoln surrendered the city, the Southern Army and its stores on 12 May. It was the worst American defeat of the war." },
+
+  { id: 'monks_corner', name: "Monck's Corner", kind: 'battle', start: '1780-04-14', end: '1780-04-14', place: 'monks_corner',
+    outcome: 'crown', allies: [], crown: ['tarleton'], others: 'Brig. Gen. Isaac Huger (American); Maj. Patrick Ferguson (British)',
+    strength: ['~500', '~600'], casualties: ['~20 killed, ~67 captured', '~3 wounded'], approach: 10, withdrawal: 3,
+    summary: "In a night attack Tarleton surprised Huger's cavalry guarding Charleston's line of communication up the Cooper River. He captured some 400 horses and completed the encirclement of the city." },
+
+  { id: 'lenuds_ferry', name: "Lenud's Ferry", kind: 'battle', start: '1780-05-06', end: '1780-05-06', place: 'lenuds_ferry',
+    outcome: 'crown', allies: [], crown: ['tarleton'], others: 'Col. Anthony White (American)',
+    strength: ['~350', '~150'], casualties: ['~40 killed/wounded, 67 captured', '2 killed'], approach: 3, withdrawal: 3,
+    summary: "Tarleton caught the remnants of the Continental cavalry resting at the Santee crossing and scattered them. The last mounted force near Charleston was gone." },
+
+  { id: 'waxhaws', name: 'Waxhaws (Buford\'s Massacre)', kind: 'battle', start: '1780-05-29', end: '1780-05-29', place: 'waxhaws',
+    outcome: 'crown', allies: [], crown: ['tarleton'], others: 'Col. Abraham Buford (American)',
+    strength: ['~420', '~270'], casualties: ['113 killed, 150 wounded, 53 captured', '5 killed, 12 wounded'], approach: 3, withdrawal: 4,
+    summary: "Tarleton rode about 105 miles in 54 hours to catch Buford's retreating Virginians. Many Americans were cut down after trying to surrender. \"Tarleton's Quarter\" became a rallying cry for backcountry Patriots." },
+
+  { id: 'ramsours_mill', name: "Ramsour's Mill", kind: 'battle', start: '1780-06-20', end: '1780-06-20', place: 'ramsours_mill',
+    outcome: 'allied', allies: [], crown: [], others: 'Col. Francis Locke (Patriot militia); Col. John Moore (Loyalist militia)',
+    strength: ['~400', '~1,300'], casualties: ['~70 killed and wounded', '~70 killed, ~100 wounded'], approach: 0, withdrawal: 0,
+    summary: "A fight between neighbours: Patriot militia attacked a gathering of Loyalists. Few on either side wore uniforms, and men marked themselves with paper or sprigs of green. The Loyalist rising in western North Carolina collapsed." },
+
+  { id: 'hucks_defeat', name: "Huck's Defeat", kind: 'battle', start: '1780-07-12', end: '1780-07-12', place: 'hucks_defeat',
+    outcome: 'allied', allies: [], crown: [], others: 'Col. William Bratton & Capt. John McClure (Patriot); Capt. Christian Huck (British Legion, killed)',
+    strength: ['~250', '~115'], casualties: ['1 killed', '~35 killed, ~30 wounded'], approach: 0, withdrawal: 0,
+    summary: "Backcountry militia surprised Huck's detachment at dawn at Williamson's Plantation. It was the first Patriot victory after the fall of Charleston and drew volunteers to Sumter." },
+
+  { id: 'rocky_mount', name: 'Rocky Mount', kind: 'battle', start: '1780-07-30', end: '1780-07-30', place: 'rocky_mount',
+    outcome: 'crown', allies: ['sumter'], crown: [], others: 'Lt. Col. George Turnbull (Loyalist)',
+    strength: ['~600', '~300'], casualties: ['~12 killed', '~10 killed'], approach: 10, withdrawal: 5,
+    summary: "Sumter attacked the fortified Loyalist post but could not carry its log buildings, even with a fire wagon. He withdrew to try Hanging Rock a week later." },
+
+  { id: 'hanging_rock', name: 'Hanging Rock', kind: 'battle', start: '1780-08-06', end: '1780-08-06', place: 'hanging_rock',
+    outcome: 'draw', allies: ['sumter'], crown: [], others: 'Maj. John Carden (Loyalist); 13-year-old Andrew Jackson present',
+    strength: ['~800', '~1,400'], casualties: ['12 killed, 41 wounded', '~200 killed and wounded'], approach: 5, withdrawal: 5,
+    summary: "Sumter's militia routed part of the Loyalist camp. Discipline then broke down as his men plundered the British stores and rum, and Sumter had to withdraw before the victory was complete." },
+
+  { id: 'camden', name: 'Battle of Camden', kind: 'battle', start: '1780-08-16', end: '1780-08-16', place: 'camden_field',
+    outcome: 'crown', allies: ['gates', 'dekalb'], crown: ['cornwallis', 'rawdon', 'tarleton'], others: '',
+    strength: ['~3,700', '~2,100'], casualties: ['~900 killed and wounded, ~1,000 captured', '68 killed, 245 wounded'], approach: 20, withdrawal: 3,
+    summary: "The two armies ran into each other on a night march and fought at dawn. Gates had placed raw Virginia and North Carolina militia opposite Cornwallis's best regulars, and they broke without firing. De Kalb's Marylanders and Delawares fought on until surrounded. Gates fled 60 miles to Charlotte on a fast horse. It was the worst defeat ever suffered by an American army in the open field." },
+
+  { id: 'fishing_creek', name: 'Fishing Creek', kind: 'battle', start: '1780-08-18', end: '1780-08-18', place: 'fishing_creek',
+    outcome: 'crown', allies: ['sumter'], crown: ['tarleton'], others: '',
+    strength: ['~800', '~160'], casualties: ['~150 killed, ~300 captured', '16 killed and wounded'], approach: 2, withdrawal: 6,
+    summary: "Two days after Camden, Tarleton caught Sumter's men resting with their arms stacked. Sumter escaped half-dressed and bareback." },
+
+  { id: 'musgrove_mill', name: 'Musgrove Mill', kind: 'battle', start: '1780-08-19', end: '1780-08-19', place: 'musgrove_mill',
+    outcome: 'allied', allies: ['clarke'], crown: [], others: 'Col. Isaac Shelby, Col. James Williams (Patriot); Col. Alexander Innes (Loyalist)',
+    strength: ['~200', '~500'], casualties: ['4 killed, 12 wounded', '63 killed, 90 wounded, 70 captured'], approach: 1, withdrawal: 12,
+    summary: "The Patriots threw up a breastwork and lured the Loyalists into attacking it, then shattered them. Learning of Camden, they escaped with their prisoners over the mountains." },
+
+  { id: 'great_savannah', name: 'Great Savannah', kind: 'battle', start: '1780-08-20', end: '1780-08-20', place: 'nelsons_ferry',
+    outcome: 'allied', allies: ['marion'], crown: [], others: '',
+    strength: ['~50', '~40 guards'], casualties: ['1 wounded', '~22 captured'], approach: 3, withdrawal: 7,
+    summary: "Marion struck a British escort at Nelson's Ferry and freed about 150 Maryland Continentals captured at Camden. It was his first notable action as a partisan leader." },
+
+  { id: 'augusta1780', name: 'First Siege of Augusta', kind: 'siege', start: '1780-09-14', end: '1780-09-18', place: 'augusta',
+    outcome: 'crown', allies: ['clarke'], crown: ['brown', 'cruger'], others: '',
+    strength: ['~600', '~500'], casualties: ['~60', '~40'], approach: 5, withdrawal: 10,
+    summary: "Clarke trapped Brown and his garrison in the Mackay trading house (the \"White House\"). Brown held out although wounded until Cruger arrived from Ninety Six. Afterwards Loyalists hanged several captured Patriots." },
+
+  { id: 'black_mingo', name: 'Black Mingo', kind: 'battle', start: '1780-09-28', end: '1780-09-28', place: 'black_mingo',
+    outcome: 'allied', allies: ['marion'], crown: [], others: 'Col. John Coming Ball (Loyalist)',
+    strength: ['~50', '~50'], casualties: ['~8 killed and wounded', '~30 killed and wounded'], approach: 5, withdrawal: 5,
+    summary: "Marion's night attack on Ball's Loyalists at Dollard's Tavern. Marion took Ball's horse, which he rode for the rest of the war, and from then on muffled his horses' hooves on night marches." },
+
+  { id: 'kings_mountain', name: 'Kings Mountain', kind: 'battle', start: '1780-10-07', end: '1780-10-07', place: 'kings_mountain',
+    outcome: 'allied', allies: ['overmountain'], crown: ['ferguson'], others: 'Cols. William Campbell, Isaac Shelby, John Sevier, Benjamin Cleveland',
+    strength: ['~900', '~1,100'], casualties: ['28 killed, 62 wounded', '~290 killed, ~163 wounded, ~668 captured'], approach: 12, withdrawal: 7,
+    summary: "Frontier riflemen surrounded the wooded ridge and fought their way up from all sides. Ferguson was shot from his horse. Every man in his force was killed or captured. Cornwallis abandoned his first invasion of North Carolina, and Jefferson later called the battle \"the turn of the tide of success\"." },
+
+  { id: 'tearcoat', name: 'Tearcoat Swamp', kind: 'battle', start: '1780-10-25', end: '1780-10-25', place: 'tearcoat',
+    outcome: 'allied', allies: ['marion'], crown: [], others: 'Col. Samuel Tynes (Loyalist)',
+    strength: ['~150', '~200'], casualties: ['none', '~6 killed, 14 wounded, 23 captured'], approach: 7, withdrawal: 10,
+    summary: "Marion's midnight attack scattered a Loyalist militia muster and captured the muskets and supplies meant to arm it." },
+
+  { id: 'fishdam_ford', name: 'Fishdam Ford', kind: 'battle', start: '1780-11-09', end: '1780-11-09', place: 'fishdam_ford',
+    outcome: 'allied', allies: ['sumter'], crown: [], others: 'Maj. James Wemyss (British, wounded & captured)',
+    strength: ['~500', '~140'], casualties: ['~4 killed', '~20 killed and wounded'], approach: 7, withdrawal: 7,
+    summary: "Wemyss led a night attack on Sumter's camp, but the Patriots were ready for it. Wemyss was wounded and captured, and Sumter himself narrowly escaped capture." },
+
+  { id: 'blackstocks', name: "Blackstock's Plantation", kind: 'battle', start: '1780-11-20', end: '1780-11-20', place: 'blackstocks',
+    outcome: 'allied', allies: ['sumter'], crown: ['tarleton'], others: '',
+    strength: ['~1,000', '~270'], casualties: ['3 killed, 4 wounded (incl. Sumter)', '~50 killed (disputed)'], approach: 8, withdrawal: 5,
+    summary: "Tarleton outran his own infantry and attacked Sumter's strong position with only part of his force. He was repulsed. Sumter was badly wounded in the shoulder." },
+
+  { id: 'hammonds_store', name: "Hammond's Store", kind: 'battle', start: '1780-12-30', end: '1780-12-30', place: 'hammonds_store',
+    outcome: 'allied', allies: ['wwashington'], crown: [], others: 'Col. Thomas Waters (Loyalist)',
+    strength: ['~280', '~250'], casualties: ['none', '~150 killed and wounded, 40 captured'], approach: 4, withdrawal: 3,
+    summary: "Washington's dragoons and mounted militia, detached by Morgan, routed Georgia Loyalists. The raid alarmed Cornwallis about Ninety Six, and he sent Tarleton after Morgan." },
+
+  { id: 'cowpens', name: 'Battle of Cowpens', kind: 'battle', start: '1781-01-17', end: '1781-01-17', place: 'cowpens',
+    outcome: 'allied', allies: ['morgan', 'pickens', 'wwashington'], crown: ['tarleton'], others: 'Lt. Col. John Eager Howard (Continental infantry)',
+    strength: ['~1,050', '~1,100'], casualties: ['25 killed, 124 wounded', '~110 killed, ~229 wounded, ~600 captured'], approach: 17, withdrawal: 6,
+    summary: "Morgan placed his militia in front and asked them only for \"two fires\" before retiring. The British pursued them straight into the Continental line, while Washington's dragoons and Pickens's reformed militia closed on both flanks. The result was a complete double envelopment, one of the most complete tactical victories of the war. Tarleton escaped with only a few hundred men." },
+
+  { id: 'georgetown_raid', name: 'Raid on Georgetown', kind: 'raid', start: '1781-01-24', end: '1781-01-24', place: 'georgetown',
+    outcome: 'draw', allies: ['marion', 'lee'], crown: [], others: 'Lt. Col. George Campbell (British, captured)',
+    strength: ['~400', '~200'], casualties: ['light', 'several killed; commander captured'], approach: 12, withdrawal: 4,
+    summary: "In a combined raid, Lee's infantry came downriver by boat while Marion's men attacked by land. They captured the garrison commander but could not take the fortified post." },
+
+  { id: 'cowans_ford', name: "Cowan's Ford", kind: 'battle', start: '1781-02-01', end: '1781-02-01', place: 'cowans_ford',
+    outcome: 'crown', allies: [], crown: ['cornwallis'], others: 'Gen. William Lee Davidson (American, killed)',
+    strength: ['~300', '~2,500'], casualties: ['~4 killed incl. Davidson', '~4 killed, 36 wounded'], approach: 7, withdrawal: 3,
+    summary: "Cornwallis forced a crossing of the swollen Catawba before dawn, wading chest-deep under militia fire. Davidson was killed and the militia scattered, opening the road east after Greene." },
+
+  { id: 'race_to_dan', name: 'Race to the Dan', kind: 'campaign', start: '1781-02-10', end: '1781-02-14', place: 'irwins_ferry',
+    outcome: 'allied', allies: ['greene', 'lee'], crown: ['cornwallis', 'tarleton'], others: 'Col. Otho Williams (light corps)',
+    strength: ['~2,000', '~2,500'], casualties: ['—', 'heavy straggling and attrition'], approach: 4, withdrawal: 6,
+    summary: "Otho Williams's light troops lured Cornwallis west while Greene's army marched hard for the Dan. Greene had collected every boat on the river in advance. When the British reached the Dan the Americans were all across, leaving Cornwallis exhausted, far from his supplies and in hostile country." },
+
+  { id: 'pyles', name: "Pyle's Defeat", kind: 'battle', start: '1781-02-25', end: '1781-02-25', place: 'pyles',
+    outcome: 'allied', allies: ['lee', 'pickens'], crown: [], others: 'Col. John Pyle (Loyalist, wounded)',
+    strength: ['~600', '~400'], casualties: ['1 horse killed', '~90 killed, many wounded'], approach: 7, withdrawal: 7,
+    summary: "Pyle's Loyalists mistook Lee's green-jacketed Legion for Tarleton's men. When the error came out, the Legion cut them down. The slaughter frightened North Carolina Loyalists away from Cornwallis." },
+
+  { id: 'guilford', name: 'Guilford Courthouse', kind: 'battle', start: '1781-03-15', end: '1781-03-15', place: 'guilford',
+    outcome: 'crown', allies: ['greene', 'lee', 'wwashington'], crown: ['cornwallis', 'tarleton'], others: '',
+    strength: ['~4,400', '~1,900'], casualties: ['79 killed, 185 wounded (plus ~1,000 militia missing)', '93 killed, 413 wounded, 26 missing'], approach: 10, withdrawal: 5,
+    summary: "Greene copied Morgan's layered defence on a larger scale with three lines. Cornwallis broke through only after firing grapeshot into the melee, hitting his own Guards. He held the field but lost a quarter of his army. \"Another such victory would ruin the British Army,\" said Charles James Fox in Parliament." },
+
+  { id: 'fort_watson', name: 'Siege of Fort Watson', kind: 'siege', start: '1781-04-15', end: '1781-04-23', place: 'fort_watson',
+    outcome: 'allied', allies: ['marion', 'lee'], crown: [], others: 'Lt. James McKay (British)',
+    strength: ['~380', '~120'], casualties: ['2 killed, 6 wounded', '~114 captured'], approach: 7, withdrawal: 7,
+    summary: "The fort stood on an old Indian mound and had no artillery to fear. Hezekiah Maham designed a log tower that rose above its walls, and riflemen firing down from it forced the garrison to surrender." },
+
+  { id: 'hobkirk', name: "Hobkirk's Hill", kind: 'battle', start: '1781-04-25', end: '1781-04-25', place: 'hobkirk',
+    outcome: 'crown', allies: ['greene', 'wwashington'], crown: ['rawdon'], others: '',
+    strength: ['~1,550', '~900'], casualties: ['19 killed, 113 wounded, 136 missing', '38 killed, ~220 wounded and missing'], approach: 6, withdrawal: 4,
+    summary: "Rawdon attacked Greene's camp outside Camden on a narrow front. Greene's counterattack fell apart when the veteran 1st Maryland fell into confusion. Rawdon won the field but abandoned Camden two weeks later." },
+
+  { id: 'fort_motte', name: 'Siege of Fort Motte', kind: 'siege', start: '1781-05-06', end: '1781-05-12', place: 'fort_motte',
+    outcome: 'allied', allies: ['marion', 'lee'], crown: [], others: 'Rebecca Motte (owner of the mansion); Lt. Donald McPherson (British)',
+    strength: ['~400', '~180'], casualties: ['2 killed', '~180 captured'], approach: 6, withdrawal: 3,
+    summary: "The British had fortified Rebecca Motte's mansion. She approved burning her own house, and fire arrows set the roof alight, forcing the garrison out. Afterwards she served dinner to both sides' officers." },
+
+  { id: 'fort_granby', name: 'Fort Granby', kind: 'siege', start: '1781-05-15', end: '1781-05-15', place: 'fort_granby',
+    outcome: 'allied', allies: ['lee', 'sumter'], crown: [], others: 'Maj. Andrew Maxwell (Loyalist)',
+    strength: ['~400', '~350'], casualties: ['none', '~350 captured'], approach: 3, withdrawal: 6,
+    summary: "Lee reached the post on the Congaree before Sumter could return. He bluffed the garrison into surrendering, allowing them to keep their plunder." },
+
+  { id: 'augusta1781', name: 'Siege of Augusta', kind: 'siege', start: '1781-05-22', end: '1781-06-05', place: 'augusta',
+    outcome: 'allied', allies: ['lee', 'pickens', 'clarke'], crown: ['brown'], others: '',
+    strength: ['~1,600', '~600'], casualties: ['~50', '~52 killed, 334 captured'], approach: 3, withdrawal: 4,
+    summary: "After Clarke's month-long blockade, Lee and Pickens arrived and took Fort Grierson. They then built a Maham tower and fired cannon from it into Fort Cornwallis until Brown surrendered." },
+
+  { id: 'ninety_six', name: 'Siege of Ninety-Six', kind: 'siege', radiusKm: 40, start: '1781-05-22', end: '1781-06-19', place: 'ninety_six',
+    outcome: 'crown', allies: ['greene', 'lee', 'wwashington'], crown: ['cruger', 'rawdon'], others: 'Col. Thaddeus Kosciuszko (engineer)',
+    strength: ['~1,000', '~550'], casualties: ['~57 killed, ~70 wounded', '~27 killed, ~58 wounded'], approach: 7, withdrawal: 6,
+    summary: "Kosciuszko dug approach trenches toward the earthen Star Fort, but the Loyalist garrison held out for 28 days. When Rawdon's relief column drew near, Greene's assault of 18 June failed and he lifted the siege. The British abandoned Ninety Six weeks later anyway." },
+
+  { id: 'charlottesville', name: 'Charlottesville Raid', kind: 'raid', start: '1781-06-04', end: '1781-06-04', place: 'charlottesville',
+    outcome: 'crown', allies: [], crown: ['tarleton'], others: 'Jack Jouett (rider); Thomas Jefferson',
+    strength: ['—', '~250'], casualties: ['7 legislators captured', '—'], approach: 4, withdrawal: 6,
+    summary: "Tarleton raced to capture the Virginia legislature. Jack Jouett rode 40 miles through the night to warn them, and Jefferson escaped Monticello minutes ahead of the dragoons." },
+
+  { id: 'green_spring', name: 'Green Spring', kind: 'battle', start: '1781-07-06', end: '1781-07-06', place: 'green_spring',
+    outcome: 'crown', allies: ['lafayette'], crown: ['cornwallis', 'tarleton'], others: 'Gen. Anthony Wayne (American)',
+    strength: ['~900 engaged', '~5,000'], casualties: ['28 killed, 99 wounded, 12 missing', '~75 killed and wounded'], approach: 10, withdrawal: 7,
+    summary: "Cornwallis made it look as if only his rear guard remained on the north bank of the James. Wayne attacked and found the whole British army. He saved his men by charging straight at the enemy before falling back." },
+
+  { id: 'quinby', name: 'Quinby Bridge', kind: 'battle', start: '1781-07-17', end: '1781-07-17', place: 'quinby',
+    outcome: 'crown', allies: ['sumter', 'marion', 'lee'], crown: [], others: 'Lt. Col. James Coates (British)',
+    strength: ['~1,000', '~500'], casualties: ['~60 killed and wounded', '~6 killed'], approach: 7, withdrawal: 8,
+    summary: "The climax of Sumter's \"Dog Days Expedition\". He sent Marion's men against Coates's well-posted troops at Shubrick's Plantation, and they took heavy losses. Marion and Lee left Sumter in disgust." },
+
+  { id: 'parkers_ferry', name: "Parker's Ferry", kind: 'battle', start: '1781-08-30', end: '1781-08-30', place: 'parkers_ferry',
+    outcome: 'allied', allies: ['marion'], crown: [], others: 'Maj. Thomas Fraser (Loyalist)',
+    strength: ['~400', '~500'], casualties: ['~5 killed', '~125 killed and wounded'], approach: 10, withdrawal: 9,
+    summary: "Marion's men lay hidden along a causeway through the swamp. Fraser's Loyalist cavalry charged down it repeatedly into point-blank fire." },
+
+  { id: 'capes', name: 'Battle of the Capes', kind: 'naval', start: '1781-09-05', end: '1781-09-05', place: [-75.65, 36.85],
+    outcome: 'allied', allies: ['degrasse'], crown: [], others: 'Adm. Thomas Graves (British)',
+    strength: ['24 ships of the line', '19 ships of the line'], casualties: ['~220', '~336'], approach: 6, withdrawal: 6,
+    summary: "A tactically indecisive fight off the mouth of the Chesapeake. Graves then withdrew to New York, leaving the French in control of the bay. No Royal Navy rescue would reach Cornwallis." },
+
+  { id: 'eutaw', name: 'Eutaw Springs', kind: 'battle', start: '1781-09-08', end: '1781-09-08', place: 'eutaw',
+    outcome: 'draw', allies: ['greene', 'marion', 'pickens', 'lee', 'wwashington'], crown: ['stewart', 'cruger'], others: '',
+    strength: ['~2,200', '~2,000'], casualties: ['138 killed, 375 wounded, 41 missing', '85 killed, 351 wounded, 257 missing'], approach: 17, withdrawal: 3,
+    summary: "Greene's attack drove the British back through their own camp. His hungry troops then stopped to plunder the tents and rum, and a counterattack from a fortified brick house restored the line. Stewart held the field but withdrew toward Charleston. It was the last major battle in the Carolinas." },
+
+  { id: 'yorktown', name: 'Siege of Yorktown', kind: 'siege', radiusKm: 60, start: '1781-09-28', end: '1781-10-19', place: 'yorktown',
+    outcome: 'allied', allies: ['gwashington', 'rochambeau', 'lafayette', 'lincoln', 'degrasse'], crown: ['cornwallis', 'tarleton'], others: 'Alexander Hamilton; Henry Knox (artillery)',
+    strength: ['~8,800 American, ~7,800 French', '~9,000 incl. seamen'], casualties: ['~88 killed, ~301 wounded', '~156 killed, ~326 wounded, ~7,000 captured'], approach: 40, withdrawal: 0,
+    summary: "The allied armies marched 450 miles from New York while de Grasse sealed the Chesapeake. Cornwallis was trapped. Allied guns opened on 9 October, Redoubts 9 and 10 fell to bayonet assaults on the night of 14 October, and a breakout across the York failed in a storm. On 19 October the British marched out to surrender. The war's last great campaign was over." },
+];
