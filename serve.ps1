@@ -9,9 +9,14 @@ $mime = @{
   '.svg' = 'image/svg+xml'; '.ico' = 'image/x-icon'; '.md' = 'text/markdown; charset=utf-8'
 }
 
-$listener = New-Object System.Net.HttpListener
-$listener.Prefixes.Add("http://localhost:$Port/")
-try { $listener.Start() } catch { Write-Host "Could not start on port $Port. Is it already in use? $_" -ForegroundColor Red; exit 1 }
+# Use the first free port from $Port to $Port+10 (another copy may already be running)
+$listener = $null
+foreach ($p in $Port..($Port + 10)) {
+  $try = New-Object System.Net.HttpListener
+  $try.Prefixes.Add("http://localhost:$p/")
+  try { $try.Start(); $listener = $try; $Port = $p; break } catch { $try.Close() }
+}
+if (-not $listener) { Write-Host "Could not start a server on ports $Port-$($Port + 10)." -ForegroundColor Red; exit 1 }
 
 $url = "http://localhost:$Port/"
 Write-Host "Serving $root at $url  (Ctrl+C to stop)" -ForegroundColor Green
@@ -20,6 +25,7 @@ if (-not $NoBrowser) { Start-Process $url }
 try {
   while ($listener.IsListening) {
     $ctx = $listener.GetContext()
+    try {
     $path = [Uri]::UnescapeDataString($ctx.Request.Url.AbsolutePath.TrimStart('/'))
     if ([string]::IsNullOrEmpty($path)) { $path = 'index.html' }
     $file = [IO.Path]::GetFullPath((Join-Path $root $path))
@@ -35,5 +41,6 @@ try {
       $res.StatusCode = 404
     }
     $res.OutputStream.Close()
+    } catch { }  # browser cancelled a request; keep serving
   }
 } finally { $listener.Stop() }
