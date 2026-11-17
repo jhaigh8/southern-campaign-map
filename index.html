@@ -36,28 +36,34 @@
     </div>
     <label class="check-row small"><input type="checkbox" id="only-active" checked> Only list commanders in the field on this date</label>
     <div id="commander-list"></div>
+    <div id="legend"></div>
   </aside>
 
   <!-- Layer switcher -->
   <div id="layer-panel" class="panel">
     <div class="seg" role="radiogroup" aria-label="Base map">
       <button data-layer="satellite" class="active">3D Satellite</button>
-      <button data-layer="period">1775 Maps</button>
+      <button data-layer="period">Period Maps</button>
       <button data-layer="modern">Modern</button>
     </div>
     <label class="check-row"><input type="checkbox" id="terrain-toggle" checked> 3D terrain</label>
     <label class="check-row"><input type="checkbox" id="future-toggle"> Show routes ahead (dashed)</label>
+    <label class="check-row"><input type="checkbox" id="landmark-toggle" checked> Camps &amp; posts</label>
     <div id="period-opacity-row" hidden>
       <label for="period-opacity">Period map opacity</label>
       <input type="range" id="period-opacity" min="0" max="100" value="85">
+      <div id="period-map-list"></div>
     </div>
   </div>
 
-  <!-- Battle / info panel -->
+  <!-- Battle / commander / landmark info panel -->
   <aside id="info-panel" class="panel" hidden>
     <button id="close-info" class="icon-btn close" aria-label="Close">✕</button>
     <div id="info-content"></div>
   </aside>
+
+  <!-- Play-mode notifications -->
+  <div id="toasts" aria-live="polite"></div>
 
   <!-- Timeline -->
   <footer id="timeline" class="panel">
@@ -79,6 +85,7 @@
         <div id="date-label">—</div>
         <div id="date-sub"></div>
       </div>
+      <label class="check-row small-row" title="Stop playback when a battle begins"><input type="checkbox" id="pause-battles"> Pause at battles</label>
       <input type="date" id="date-jump" aria-label="Jump to date">
     </div>
     <div class="tl-track">
@@ -97,6 +104,7 @@
   <script src="data/commanders.js"></script>
   <script src="data/movements.js"></script>
   <script src="data/battles.js"></script>
+  <script src="data/landmarks.js"></script>
   <script src="data/historic-maps.js"></script>
   <script src="js/util.js"></script>
   <script src="js/validate.js"></script>
@@ -104,6 +112,8 @@
   <script src="js/movements.js"></script>
   <script src="js/commanders.js"></script>
   <script src="js/battles.js"></script>
+  <script src="js/landmarks.js"></script>
+  <script src="js/toasts.js"></script>
   <script src="js/timeline.js"></script>
   <script src="js/main.js"></script>
 </body>

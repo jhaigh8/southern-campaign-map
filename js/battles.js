@@ -84,14 +84,13 @@ SC.battles_ui = (() => {
 
   function select(id, fly) {
     const b = SC.battles.find((x) => x.id === id);
-    state.selectedBattle = b ? b.id : null;
-    const panel = document.getElementById('info-panel');
-    if (!b) { panel.hidden = true; highlight(null); SC.emit('state:change'); return; }
+    if (!b) { if (SC.panel.kind() === 'battle') SC.panel.close(); else { state.selectedBattle = null; highlight(null); SC.emit('state:change'); } return; }
 
     const [cls, label] = OUTCOME[b.outcome];
-    document.getElementById('info-content').innerHTML = `
+    const panel = SC.panel.show('battle', `
+      <div class="kicker">${esc(b.kind)}</div>
       <h2>${esc(b.name)}</h2>
-      <div class="meta">${fmtRange(b.startDay, b.endDay)} · ${esc(b.kind)}</div>
+      <div class="meta">${fmtRange(b.startDay, b.endDay)}</div>
       <span class="outcome ${cls}">${label}</span>
       <p>${esc(b.summary)}</p>
       <div class="sides">
@@ -107,12 +106,13 @@ SC.battles_ui = (() => {
         <button class="btn" data-act="goto">Jump to date</button>
         <button class="btn" data-act="zoom">Zoom to field</button>
       </div>
-      <div class="src">Figures are approximate; sources differ.</div>`;
-    panel.hidden = false;
+      <div class="src">Figures are approximate; sources differ.</div>`,
+      () => { state.selectedBattle = null; highlight(null); SC.emit('state:change'); });
+    state.selectedBattle = b.id;
     panel.querySelector('[data-act="play"]').onclick = () => SC.emit('timeline:playRange', b.startDay - b.approach, b.endDay + b.withdrawal);
     panel.querySelector('[data-act="goto"]').onclick = () => SC.emit('timeline:set', b.startDay);
     panel.querySelector('[data-act="zoom"]').onclick = () => flyTo(b);
-    panel.querySelectorAll('[data-cmd]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); SC.emit('commander:isolate', a.dataset.cmd); }));
+    panel.querySelectorAll('[data-cmd]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); SC.emit('commander:open', a.dataset.cmd); }));
     highlight(b);
     if (fly) flyToRoutes(b);
     SC.emit('state:change');

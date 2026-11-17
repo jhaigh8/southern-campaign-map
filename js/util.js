@@ -34,3 +34,23 @@ SC.util = (() => {
 SC.util.mapPadding = () => (window.innerWidth < 760
   ? { top: 140, bottom: 230, left: 30, right: 30 }
   : { top: 110, bottom: 230, left: 330, right: 380 });
+
+// The right-hand info panel is shared by battles, commanders and landmarks
+SC.panel = (() => {
+  let onClose = null, kind = null;
+  const el = () => document.getElementById('info-panel');
+  function show(k, html, closeFn) {
+    if (onClose && kind !== k) { const f = onClose; onClose = null; f(); }
+    kind = k; onClose = closeFn || null;
+    document.getElementById('info-content').innerHTML = html;
+    el().hidden = false;
+    el().scrollTop = 0;
+    return document.getElementById('info-content');
+  }
+  function close() {
+    el().hidden = true;
+    const f = onClose; onClose = null; kind = null;
+    if (f) f();
+  }
+  return { show, close, kind: () => kind };
+})();
