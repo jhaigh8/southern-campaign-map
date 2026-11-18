@@ -145,6 +145,7 @@
     SC.landmarks_ui.addMarkers(map, state);
     SC.cmdPanel.build(state);
     SC.timeline.build(state);
+    SC.toasts.init();
     SC.validate();
     if (hash.get('layer')) SC.layers.setBase(hash.get('layer'));
     if (hash.get('terrain') === '0') { const tt = document.getElementById('terrain-toggle'); tt.checked = false; tt.dispatchEvent(new Event('change')); }
@@ -169,7 +170,7 @@
     if (q.get('cam')) { const [lon, lat, z] = q.get('cam').split(',').map(Number); map.jumpTo({ center: [lon, lat], zoom: z, pitch: 0, bearing: 0 }); }
     map.once('style.load', () => setTimeout(() => {
       if (q.get('open')) SC.emit('commander:open', q.get('open'));
-      if (q.has('toasts')) SC.toasts.forDay(state.day, state, 1);
+      if (q.has('toasts')) for (let d = state.day - 8; d <= state.day; d++) SC.toasts.forDay(d, state, 1);
     }, 1500));
     setInterval(() => {
       let el = document.getElementById('debug-out');

@@ -67,7 +67,14 @@
   </aside>
 
   <!-- Play-mode notifications -->
-  <div id="toasts" aria-live="polite"></div>
+  <div id="battle-card" class="battle-card" role="status" aria-live="polite" hidden></div>
+  <section id="dispatches" class="panel" aria-label="Dispatches" hidden>
+    <div class="d-head">
+      <button id="dispatch-toggle" class="d-title" title="Show / hide the log">Dispatches <span id="dispatch-count">0</span> <span class="chev">▾</span></button>
+      <button id="dispatch-clear" class="link-btn">Clear</button>
+    </div>
+    <ol id="dispatch-list" aria-live="polite"></ol>
+  </section>
 
   <!-- Timeline -->
   <footer id="timeline" class="panel">

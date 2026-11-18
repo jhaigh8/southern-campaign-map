@@ -234,30 +234,64 @@ h4.sub { margin: 14px 0 4px; font-size: 11px; text-transform: uppercase; letter-
 .lm-marker.active { filter: none; }
 .lm-marker.active .lm-label, .lm-marker:hover .lm-label { display: block; }
 
-/* ---- Play-mode toasts ---- */
-#toasts { position: absolute; z-index: 20; top: 78px; left: 50%; transform: translateX(-50%); width: min(380px, calc(100% - 32px)); display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
-.toast {
-  pointer-events: auto; background: var(--panel-solid); border: 1px solid var(--line); border-left: 5px solid var(--ink-soft);
-  border-radius: 10px; padding: 10px 12px; box-shadow: var(--shadow); font-size: 13px;
-  transform: translateY(-14px) scale(.97); opacity: 0; transition: transform .3s ease, opacity .3s ease;
+/* ---- Play-mode battle card (one at a time, top-left beside the title) ---- */
+.battle-card {
+  position: absolute; z-index: 20; top: 12px; left: 330px; width: 330px; cursor: pointer;
+  background: var(--panel-solid); border: 1px solid var(--line); border-left: 5px solid #7a6a55;
+  border-radius: 10px; padding: 9px 12px; box-shadow: var(--shadow); font-size: 13px;
+  transform: translateY(-10px); opacity: 0; transition: transform .3s ease, opacity .3s ease;
 }
-.toast.in { transform: none; opacity: 1; }
-.toast.out { transform: translateY(-10px); opacity: 0; }
-.toast.clickable { cursor: pointer; }
-.toast.battle { border-left-color: #8a2b1d; padding: 12px 14px; }
-.toast.battle.allied { border-left-color: #1d4ed8; } .toast.battle.crown { border-left-color: #b91c1c; }
+.battle-card.in { transform: none; opacity: 1; }
+.battle-card.allied { border-left-color: #1d4ed8; } .battle-card.crown { border-left-color: #b91c1c; }
 .t-kicker { font: 600 10px var(--sans); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); display: flex; align-items: center; gap: 4px; }
 .t-ico svg { width: 13px; height: 13px; display: block; }
-.t-loc { font-size: 12px; color: var(--ink); margin-bottom: 2px; }
+.t-title { font: 19px/1.15 var(--serif); margin: 1px 0; }
+.t-loc { font-size: 12px; color: var(--ink); }
+.t-body { color: var(--ink-soft); font-size: 12px; }
 .loc-line { font-size: 13px; margin: -4px 0 10px; }
 .loc-line .k { font: 600 10px var(--sans); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); margin-right: 4px; }
 .check-pair { display: flex; gap: 16px; }
-.t-title { font: 20px/1.15 var(--serif); margin: 2px 0; }
-.t-title.small { font: 600 13px var(--sans); }
-.t-body { color: var(--ink-soft); font-size: 12px; }
-.t-row { display: flex; gap: 10px; align-items: center; }
-.t-row img, .t-row .initials { width: 36px; height: 36px; flex: none; border-radius: 50%; border: 2.5px solid; object-fit: cover; object-position: center 18%; }
 
+/* ---- Dispatch log (docked above the timeline) ---- */
+#dispatches {
+  left: 314px; bottom: calc(var(--tl-h, 150px) + 22px); width: 420px; max-width: calc(100% - 640px);
+  min-width: 300px; padding: 6px 10px 6px; z-index: 6;
+}
+#sidebar.collapsed ~ #dispatches { left: 12px; }
+.d-head { display: flex; justify-content: space-between; align-items: center; }
+.d-title { border: 0; background: none; cursor: pointer; padding: 2px 0; font: 600 11px var(--sans); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); }
+.d-title #dispatch-count { font-weight: 400; }
+.d-title .chev { display: inline-block; transition: transform .2s; }
+#dispatches.collapsed .chev { transform: rotate(-90deg); }
+#dispatches.collapsed #dispatch-list { display: none; }
+#dispatch-list {
+  list-style: none; margin: 4px 0 0; padding: 0; max-height: 104px; overflow: hidden;
+  transition: max-height .2s;
+}
+#dispatches:hover #dispatch-list { max-height: 260px; overflow-y: auto; }
+#dispatch-list li {
+  display: flex; align-items: center; gap: 7px; padding: 3px 4px; border-radius: 6px; cursor: pointer;
+  font-size: 12px; line-height: 1.3; transition: opacity .4s, background-color .9s;
+}
+#dispatch-list li:hover { background: rgba(138, 43, 29, 0.1); }
+#dispatch-list li.new { background: rgba(255, 217, 138, 0.35); }
+#dispatch-list li:nth-child(n+3) { opacity: .7; }
+#dispatch-list li:nth-child(n+4) { opacity: .45; }
+#dispatches:hover #dispatch-list li { opacity: 1; }
+#dispatch-list li.approx .d-text { font-style: italic; }
+.d-date { flex: none; width: 46px; color: var(--ink-soft); font-size: 11px; font-variant-numeric: tabular-nums; }
+.d-face { width: 20px; height: 20px; flex: none; border-radius: 50%; border: 2px solid; object-fit: cover; object-position: center 18%; font-size: 8px; }
+.d-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#dispatches:hover .d-text { white-space: normal; }
+.d-ico { width: 20px; height: 20px; flex: none; display: grid; place-items: center; border-radius: 50%; background: #8a2b1d; color: #fff; }
+.d-ico svg { width: 13px; height: 13px; }
+#dispatch-list li.battle.allied .d-ico { background: #1d4ed8; } #dispatch-list li.battle.crown .d-ico { background: #b91c1c; }
+#dispatch-list li.battle .d-text b { font-family: var(--serif); font-size: 14px; font-weight: 400; }
+@media (max-width: 1040px) {
+  .battle-card { top: 78px; left: 50%; transform: translate(-50%, -10px); width: min(330px, calc(100% - 32px)); }
+  .battle-card.in { transform: translateX(-50%); }
+  #dispatches { max-width: none; }
+}
 /* ---- Map controls ---- */
 .north-ctrl button { width: 29px !important; height: 29px !important; font: 700 9px/1 var(--sans) !important; color: #8a2b1d !important; display: flex !important; flex-direction: column; align-items: center; justify-content: center; }
 .north-ctrl button span { font-size: 11px; }
@@ -267,7 +301,9 @@ h4.sub { margin: 14px 0 4px; font-size: 11px; text-transform: uppercase; letter-
 #period-map-list .link-btn { margin-left: auto; }
 .tl-top .small-row { margin: 0; }
 @media (max-width: 760px) {
-  #toasts { top: 120px; }
+  .battle-card { top: 120px; }
+  #dispatches { left: 8px !important; right: 8px; width: auto; min-width: 0; bottom: calc(var(--tl-h, 150px) + 16px); }
+  #dispatch-list { max-height: 26px; }
   .tl-top .small-row { display: none; }
   .profile .portrait { width: 72px; height: 88px; }
 }
