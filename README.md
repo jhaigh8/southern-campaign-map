@@ -14,7 +14,7 @@ From a terminal you can run `powershell -ExecutionPolicy Bypass -File serve.ps1`
 |---|---|
 | ◀ / ▶ or the ← / → keys | Step back or forward one day; markers glide to their new positions |
 | ⏮ / ⏭ or Shift+← / Shift+→ | Jump to the previous or next battle |
-| ▶ / Space | Play smoothly at 1–30 days per second. Each battle gets a card at the top, and every battle and movement goes into the **Dispatches** log above the timeline. Hover the log to scroll back; click a line to open it |
+| ▶ / Space | Play smoothly at 1–30 days per second. Each battle gets a card at the top, and every battle and movement goes into the **Dispatches** log above the timeline. Hover the log to scroll back; click a line to open it. Turn the log off with **Dispatches log during playback**; battle cards still appear |
 | **Pause at battles** | Stop playback and zoom in when a battle begins. Press play to close the card and zoom back out |
 | Red ticks above the slider | Battles; hover to see the name and date, click to jump to it |
 | Commander (sidebar or map) | Opens a profile card: portrait, bio, today's position, battles, plus **Isolate route**, **Follow** and **Fly to** |

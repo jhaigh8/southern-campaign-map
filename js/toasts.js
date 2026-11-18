@@ -8,6 +8,10 @@ SC.toasts = (() => {
   const KEEP = 60; // lines kept in the log
   const $ = (id) => document.getElementById(id);
   let cardTimer = null, lastDay = null;
+  // The log keeps recording when switched off, so turning it back on shows the history
+  const syncVisible = () => {
+    $('dispatches').hidden = !$('dispatch-toggle-on').checked || !$('dispatch-list').children.length;
+  };
 
   // ---- Battle card (single slot) ----
   function showCard(html, ms, onClick) {
@@ -39,14 +43,14 @@ SC.toasts = (() => {
     list.prepend(li);
     setTimeout(() => li.classList.remove('new'), 900);
     while (list.children.length > KEEP) list.lastElementChild.remove();
-    $('dispatches').hidden = false;
+    syncVisible();
     $('dispatch-count').textContent = list.children.length;
     list.scrollTop = 0;
   }
   function clear() {
     $('dispatch-list').innerHTML = '';
     $('dispatch-count').textContent = '0';
-    $('dispatches').hidden = true;
+    syncVisible();
     hideCard();
     lastDay = null;
   }
@@ -105,6 +109,12 @@ SC.toasts = (() => {
       try { localStorage.setItem('sc.dispatchesCollapsed', collapsed ? '1' : '0'); } catch (e) { /* ignore */ }
     };
     $('dispatch-clear').onclick = clear;
+    const on = $('dispatch-toggle-on');
+    try { on.checked = localStorage.getItem('sc.dispatchesOff') !== '1'; } catch (e) { /* storage blocked */ }
+    on.addEventListener('change', () => {
+      try { localStorage.setItem('sc.dispatchesOff', on.checked ? '0' : '1'); } catch (e) { /* ignore */ }
+      syncVisible();
+    });
     // Keep the log just above the timeline, whose height changes when "Events on this day" opens
     const tl = $('timeline');
     const sync = () => document.documentElement.style.setProperty('--tl-h', `${tl.offsetHeight}px`);
