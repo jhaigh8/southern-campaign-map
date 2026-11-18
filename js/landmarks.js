@@ -1,7 +1,6 @@
 // Camps, posts and occupied towns: small markers that light up while in use.
 SC.landmarks_ui = (() => {
   const { toDay, esc, fmtRange } = SC.util;
-  const ICON = { camp: '⛺', post: '⛫', city: '★', muster: '⚑' };
   const KIND = { camp: 'Field camp', post: 'Fortified post', city: 'Town / headquarters', muster: 'Muster ground' };
   let map, state;
   const markers = {};
@@ -21,7 +20,7 @@ SC.landmarks_ui = (() => {
       if (l.lon == null) continue;
       const el = document.createElement('div');
       el.className = `lm-marker ${l.control}`;
-      el.innerHTML = `<span class="lm-icon">${ICON[l.kind] || '•'}</span><span class="lm-label">${esc(l.name)}</span>`;
+      el.innerHTML = `<span class="lm-icon">${SC.icons.get(l.kind, 'camp')}</span><span class="lm-label">${esc(l.name)}</span>`;
       el.title = l.name;
       el.addEventListener('click', (e) => { e.stopPropagation(); open(l.id); });
       markers[l.id] = new maplibregl.Marker({ element: el, anchor: 'left', offset: [-11, 0] }).setLngLat([l.lon, l.lat]).addTo(map);

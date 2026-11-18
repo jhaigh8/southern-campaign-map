@@ -3,6 +3,8 @@
 SC.move = (() => {
   const { toDay, lerp, esc } = SC.util;
   const RECENT_DAYS = 30;
+  const FADE = [0.12, 0.25, 0.42, 0.62, 0.8, 0.95]; // trail opacity for each 5-day piece of the last 30 days, oldest first
+  const LINEUP_KM = 15; // battle participants within this distance join the line-up under the battle icon
   const tracks = {}; // id -> [{day, lon, lat, name, troops, cert, note, gap}]
 
   function resolvePlace(p, ctx) {
@@ -96,12 +98,13 @@ SC.move = (() => {
     map.addLayer({ id: 'routes-ahead', type: 'line', source: 'routes-ahead',
       layout: { 'line-cap': 'round', 'line-join': 'round' },
       paint: { 'line-color': ['get', 'color'], 'line-width': 2, 'line-opacity': 0.6, 'line-dasharray': [1.5, 2] } });
+    // Butt caps: the fading trail is drawn as consecutive pieces, and round caps would leave dots at each join
     map.addLayer({ id: 'trails-casing', type: 'line', source: 'trails',
-      layout: { 'line-cap': 'round', 'line-join': 'round' },
-      paint: { 'line-color': '#000', 'line-width': ['case', ['get', 'recent'], 6, 4], 'line-opacity': ['*', ['get', 'op'], 0.35] } });
+      layout: { 'line-cap': 'butt', 'line-join': 'round' },
+      paint: { 'line-color': '#000', 'line-width': ['+', ['get', 'w'], 3], 'line-opacity': ['*', ['get', 'op'], 0.3] } });
     map.addLayer({ id: 'trails', type: 'line', source: 'trails',
-      layout: { 'line-cap': 'round', 'line-join': 'round' },
-      paint: { 'line-color': ['get', 'color'], 'line-width': ['case', ['get', 'recent'], 3.5, 2], 'line-opacity': ['get', 'op'] } });
+      layout: { 'line-cap': 'butt', 'line-join': 'round' },
+      paint: { 'line-color': ['get', 'color'], 'line-width': ['get', 'w'], 'line-opacity': ['get', 'op'] } });
   }
 
   function markerFor(c) {
@@ -122,9 +125,28 @@ SC.move = (() => {
     const trailFeats = [], aheadFeats = [];
     const visibleIds = SC.commanders.filter((c) => (opts.isolated ? c.id === opts.isolated : opts.visible.has(c.id))).map((c) => c.id);
 
+    // While a battle is under way, its commanders line up in a row of small portraits under the
+    // pulsing battle icon, so they don't hide it.
+    const lineup = {}; // id -> { at:[lon,lat], off:[dx,dy] }
+    for (const b of SC.battles_ui.activeOn(Math.floor(t))) {
+      const near = visibleIds.filter((id) => {
+        if (lineup[id]) return false;
+        const p = positionAt(id, t);
+        if (!p) return false;
+        const d = SC.util.distKm([p.lon, p.lat], [b.lon, b.lat]);
+        return d <= (b.participants.includes(id) ? LINEUP_KM : 4);
+      });
+      const perRow = 6, gap = 33;
+      near.forEach((id, i) => {
+        const row = Math.floor(i / perRow), inRow = Math.min(perRow, near.length - row * perRow);
+        lineup[id] = { at: [b.lon, b.lat], off: [((i % perRow) - (inRow - 1) / 2) * gap, 20 + row * 33] };
+      });
+    }
+
     // Fan out markers that share a spot (e.g. Morgan, Pickens & Washington at Cowpens)
     const groups = {};
     for (const id of visibleIds) {
+      if (lineup[id]) continue;
       const pos = positionAt(id, t);
       if (pos) (groups[`${pos.lon.toFixed(2)},${pos.lat.toFixed(2)}`] ||= []).push(id);
     }
@@ -144,11 +166,19 @@ SC.move = (() => {
       if (shown) {
         const sp = span(c.id);
         if (sp) {
+          const end = Math.min(t, sp[1]);
           const recentFrom = Math.max(sp[0], t - RECENT_DAYS);
-          for (const coords of pathBetween(c.id, sp[0], recentFrom))
-            trailFeats.push({ type: 'Feature', properties: { color: c.color, op: 0.45 * baseOp, recent: false }, geometry: { type: 'LineString', coordinates: coords } });
-          for (const coords of pathBetween(c.id, recentFrom, Math.min(t, sp[1])))
-            trailFeats.push({ type: 'Feature', properties: { color: c.color, op: 0.95 * baseOp, recent: true }, geometry: { type: 'LineString', coordinates: coords } });
+          const line = (coords, op, w) => trailFeats.push({ type: 'Feature', properties: { color: c.color, op: op * baseOp, w }, geometry: { type: 'LineString', coordinates: coords } });
+          // Older route: only with "Show full trails" (or when this commander is isolated)
+          if (opts.fullTrails || opts.isolated === c.id)
+            for (const coords of pathBetween(c.id, sp[0], recentFrom)) line(coords, 0.45, 2.5);
+          // Last 30 days, drawn in pieces that fade with age
+          for (let k = 0; k < FADE.length; k++) {
+            const a = Math.max(recentFrom, t - RECENT_DAYS * (1 - k / FADE.length));
+            const z = Math.min(end, t - RECENT_DAYS * (1 - (k + 1) / FADE.length));
+            if (z <= a) continue;
+            for (const coords of pathBetween(c.id, a, z)) line(coords, FADE[k], 4.5);
+          }
           if (opts.showFuture || opts.isolated === c.id)
             for (const coords of pathBetween(c.id, Math.max(t, sp[0]), sp[1]))
               aheadFeats.push({ type: 'Feature', properties: { color: c.color }, geometry: { type: 'LineString', coordinates: coords } });
@@ -160,14 +190,15 @@ SC.move = (() => {
         const m = markerFor(c);
         const el = m.getElement();
         el.classList.toggle('estimated', pos.est);
+        el.classList.toggle('mini', !!lineup[c.id]);
         el.classList.toggle('focus', opts.followId === c.id || opts.isolated === c.id || opts.openCommander === c.id);
-        el.style.opacity = dim ? 0.35 : 1;
+        el.style.filter = dim ? 'opacity(.35)' : ''; // not .opacity: MapLibre overwrites that on markers
         const label = `${esc(c.short)}${pos.troops ? `<small>~${pos.troops.toLocaleString()}${c.id === 'degrasse' ? ' ships' : ''}</small>` : ''}`;
         const lbl = el.querySelector('.lbl');
         if (lbl.innerHTML !== label) lbl.innerHTML = label;
         el.title = `${c.name} — ${pos.name}${pos.est ? ' (estimated position)' : ''}`;
-        const [dx, dy] = fan[c.id] || [0, 0];
-        m.setLngLat([pos.lon, pos.lat]).setOffset([dx, dy - 20]);
+        if (lineup[c.id]) m.setLngLat(lineup[c.id].at).setOffset(lineup[c.id].off);
+        else { const [dx, dy] = fan[c.id] || [0, 0]; m.setLngLat([pos.lon, pos.lat]).setOffset([dx, dy - 20]); }
         if (!m._added) { m.addTo(map); m._added = true; }
       } else if (mk && mk._added) { mk.remove(); mk._added = false; }
     }

@@ -15,6 +15,7 @@
     openCommander: null,
     selectedBattle: null,
     showFuture: false,
+    fullTrails: false,
   };
   SC.state = state;
 
@@ -56,6 +57,18 @@
   document.getElementById('close-info').onclick = () => SC.panel.close();
   document.getElementById('future-toggle').addEventListener('change', (e) => { state.showFuture = e.target.checked; SC.emit('state:change'); });
   document.getElementById('landmark-toggle').addEventListener('change', () => SC.emit('state:change'));
+  document.getElementById('full-trails').addEventListener('change', (e) => { state.fullTrails = e.target.checked; SC.emit('state:change'); });
+
+  // Tilt on/off. Off locks the camera top-down (max pitch 0), so fly-tos stay flat too.
+  const TILT_MAX = 78;
+  function setTilt(on, animate = true) {
+    if (on) { map.setMaxPitch(TILT_MAX); map.easeTo({ pitch: 50, duration: animate ? 700 : 0 }); }
+    else map.easeTo({ pitch: 0, duration: animate ? 700 : 0 }).once('moveend', () => {
+      if (!document.getElementById('tilt-toggle').checked) map.setMaxPitch(0);
+    });
+    SC.emit('state:change');
+  }
+  document.getElementById('tilt-toggle').addEventListener('change', (e) => setTilt(e.target.checked));
 
   // Map layer (positions/trails) can redraw every animation frame; panels only when the day changes
   function renderMap() {
@@ -103,6 +116,8 @@
       if (state.selectedBattle) p.set('battle', state.selectedBattle);
       if (SC.layers.current() !== 'satellite') p.set('layer', SC.layers.current());
       if (!document.getElementById('terrain-toggle').checked) p.set('terrain', '0');
+      if (!document.getElementById('tilt-toggle').checked) p.set('tilt', '0');
+      if (state.fullTrails) p.set('trails', 'all');
       history.replaceState(null, '', `#${p}`);
     }, 250);
   }
@@ -133,6 +148,8 @@
     SC.validate();
     if (hash.get('layer')) SC.layers.setBase(hash.get('layer'));
     if (hash.get('terrain') === '0') { const tt = document.getElementById('terrain-toggle'); tt.checked = false; tt.dispatchEvent(new Event('change')); }
+    if (hash.get('tilt') === '0') { document.getElementById('tilt-toggle').checked = false; map.setPitch(0); map.setMaxPitch(0); }
+    if (hash.get('trails') === 'all') { document.getElementById('full-trails').checked = true; state.fullTrails = true; }
     SC.timeline.set(state.day, { instant: true });
     if (hash.get('battle')) SC.battles_ui.select(hash.get('battle'), true);
     else if (state.isolated) fitRoute(state.isolated);

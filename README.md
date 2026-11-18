@@ -15,13 +15,15 @@ From a terminal you can run `powershell -ExecutionPolicy Bypass -File serve.ps1`
 | ◀ / ▶ or the ← / → keys | Step back or forward one day; markers glide to their new positions |
 | ⏮ / ⏭ or Shift+← / Shift+→ | Jump to the previous or next battle |
 | ▶ / Space | Play smoothly at 1–30 days per second; a card pops up for each battle and documented movement |
-| **Pause at battles** | Stop playback automatically when a battle begins |
-| Red ticks above the slider | Battles; click one to jump to it |
+| **Pause at battles** | Stop playback and zoom in when a battle begins. Press play to close the card and zoom back out |
+| Red ticks above the slider | Battles; hover to see the name and date, click to jump to it |
 | Commander (sidebar or map) | Opens a profile card: portrait, bio, today's position, battles, plus **Isolate route**, **Follow** and **Fly to** |
-| Battle marker | Opens details and animates each side's approach and withdrawal routes; **Play this battle** runs just that window |
-| ⛺ ⛫ ★ ⚑ markers | Camps, fortified posts, occupied towns and musters. They light up while in use; click for details |
+| Battle marker | Hover for its name, date and location. Click to open details and animate each side's approach and withdrawal routes; **Play this battle** runs just that window. While a battle is under way, its commanders line up as small portraits under the icon |
+| Tent / stockade / meetinghouse / flag markers | Camps, fortified posts, occupied towns and musters. They light up while in use; click for details |
 | **N⬆** button | Turn the map north-up; click again for a flat top-down view |
 | 3D Satellite / Period Maps / Modern | Switch base map; drag with right-click or Ctrl to tilt and rotate |
+| **Tilted view** | Untick for a flat, top-down map (tilting is then locked) |
+| **Show full trails** | Off by default: trails show the last 30 days and fade with age. Tick to show every route as a full line |
 
 The URL keeps your place (for example `#date=1781-01-17&battle=cowpens&layer=period`), so you can bookmark or share a moment. Add `?validate` to the URL to see the data check report.
 

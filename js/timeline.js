@@ -19,7 +19,20 @@ SC.timeline = (() => {
     // Battle ticks and year labels
     const pct = (d) => ((d - START) / (END - START)) * 100;
     $('battle-ticks').innerHTML = SC.battles.map((b) =>
-      `<span class="tick" data-id="${b.id}" style="left:${pct(b.startDay)}%" title="${esc(b.name)} — ${fmtShort(b.startDay)}"></span>`).join('');
+      `<span class="tick${b.kind === 'standoff' ? ' minor' : ''}" data-id="${b.id}" style="left:${pct(b.startDay)}%"></span>`).join('') +
+      '<div id="tick-tip" hidden></div>';
+    // Hover label for the battle ticks (native tooltips are slow and easy to miss on 3-px targets)
+    const tip = $('tick-tip');
+    $('battle-ticks').addEventListener('mouseover', (e) => {
+      const t = e.target.closest('.tick'); if (!t) return;
+      const b = SC.battles.find((x) => x.id === t.dataset.id);
+      tip.innerHTML = `<strong>${esc(b.name)}</strong><span>${fmtShort(b.startDay)}</span>`;
+      tip.style.left = t.style.left; tip.hidden = false; tip.classList.remove('edge-l', 'edge-r');
+      const r = tip.getBoundingClientRect(), box = $('timeline').getBoundingClientRect();
+      tip.classList.toggle('edge-l', r.left < box.left + 4);
+      tip.classList.toggle('edge-r', r.right > box.right - 4);
+    });
+    $('battle-ticks').addEventListener('mouseout', (e) => { if (e.target.closest('.tick')) tip.hidden = true; });
     $('battle-ticks').addEventListener('click', (e) => {
       const t = e.target.closest('.tick'); if (!t) return;
       const b = SC.battles.find((x) => x.id === t.dataset.id);
@@ -81,7 +94,18 @@ SC.timeline = (() => {
     tween = requestAnimationFrame(step);
   }
 
+  // Camera saved when "Pause at battles" stops playback and zooms in; pressing play again
+  // closes the battle card and flies back out to it.
+  let preBattleView = null;
+  function returnFromBattle() {
+    if (!preBattleView) return;
+    if (SC.panel.kind() === 'battle') SC.panel.close();
+    SC.map.easeTo({ ...preBattleView, duration: 1400, essential: true });
+    preBattleView = null;
+  }
+
   function play(until) {
+    if (until == null) returnFromBattle(); else preBattleView = null; // "Play this battle" keeps its own view
     stopAt = until ?? null;
     cancelAnimationFrame(tween);
     if (state.day >= END) set(START, { instant: true });
@@ -110,6 +134,8 @@ SC.timeline = (() => {
         SC.toasts.forDay(d, state, speed);
         if ($('pause-battles').checked && SC.battles.some((b) => b.startDay === d)) {
           setDay(d); state.t = d; SC.emit('state:change'); pause();
+          const m = SC.map;
+          preBattleView = { center: m.getCenter(), zoom: m.getZoom(), pitch: m.getPitch(), bearing: m.getBearing() };
           const b = SC.battles.find((x) => x.startDay === d);
           SC.battles_ui.select(b.id, true);
           return;

@@ -46,7 +46,11 @@
       <button data-layer="period">Period Maps</button>
       <button data-layer="modern">Modern</button>
     </div>
-    <label class="check-row"><input type="checkbox" id="terrain-toggle" checked> 3D terrain</label>
+    <div class="check-pair">
+      <label class="check-row"><input type="checkbox" id="terrain-toggle" checked> 3D terrain</label>
+      <label class="check-row"><input type="checkbox" id="tilt-toggle" checked> Tilted view</label>
+    </div>
+    <label class="check-row"><input type="checkbox" id="full-trails"> Show full trails (otherwise last 30 days, fading)</label>
     <label class="check-row"><input type="checkbox" id="future-toggle"> Show routes ahead (dashed)</label>
     <label class="check-row"><input type="checkbox" id="landmark-toggle" checked> Camps &amp; posts</label>
     <div id="period-opacity-row" hidden>
@@ -107,6 +111,7 @@
   <script src="data/landmarks.js"></script>
   <script src="data/historic-maps.js"></script>
   <script src="js/util.js"></script>
+  <script src="js/icons.js"></script>
   <script src="js/validate.js"></script>
   <script src="js/layers.js"></script>
   <script src="js/movements.js"></script>

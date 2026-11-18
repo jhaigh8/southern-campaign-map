@@ -127,6 +127,17 @@ button { font: inherit; color: inherit; }
 #battle-ticks { position: absolute; left: 8px; right: 8px; top: 0; height: 12px; }
 .tick { position: absolute; width: 3px; height: 10px; margin-left: -1px; border-radius: 2px; background: var(--accent); cursor: pointer; opacity: .75; }
 .tick:hover { opacity: 1; transform: scaleY(1.4); }
+.tick::before { content: ''; position: absolute; inset: -4px -4px -2px; } /* bigger hover target */
+.tick.minor { background: var(--ink-soft); height: 7px; margin-top: 3px; }
+#tick-tip {
+  position: absolute; bottom: 16px; transform: translateX(-50%); z-index: 2; pointer-events: none;
+  background: var(--panel-solid); border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow);
+  padding: 5px 9px; white-space: nowrap; font-size: 12px; line-height: 1.3;
+}
+#tick-tip strong { display: block; font: 14px var(--serif); }
+#tick-tip span { color: var(--ink-soft); font-size: 11px; }
+#tick-tip.edge-l { transform: translateX(-8px); }
+#tick-tip.edge-r { transform: translateX(calc(-100% + 8px)); }
 #year-labels { position: relative; height: 14px; font-size: 10px; color: var(--ink-soft); margin: 0 8px; }
 #year-labels span { position: absolute; transform: translateX(-50%); }
 #day-log { margin-top: 4px; font-size: 12px; }
@@ -145,6 +156,13 @@ button { font: inherit; color: inherit; }
 .cmd-marker .face.initials { background: color-mix(in srgb, var(--force) 70%, #000); }
 .cmd-marker.estimated .ring { background: repeating-conic-gradient(var(--force) 0 20deg, rgba(255,255,255,.85) 20deg 30deg); }
 .cmd-marker.focus .ring { width: 50px; height: 50px; }
+/* Lined up under an active battle icon */
+.cmd-marker.mini .ring { width: 28px; height: 28px; padding: 1.5px; }
+.cmd-marker.mini .face.initials { font-size: 10px; }
+.cmd-marker.mini .lbl { display: none; font-size: 10px; }
+.cmd-marker.mini:hover { z-index: 3; }
+.cmd-marker.mini:hover .lbl { display: block; }
+.cmd-marker.mini .lbl small { display: none; }
 .cmd-marker:hover .ring { box-shadow: 0 0 0 2.5px #ffd98a, 0 3px 10px rgba(0,0,0,.6); }
 .cmd-marker .lbl {
   margin-top: 2px; white-space: nowrap; font: 600 11px var(--sans); color: #fff;
@@ -156,11 +174,23 @@ button { font: inherit; color: inherit; }
   background: rgba(30, 20, 10, 0.75); border: 2px solid #e8c37a; color: #ffd98a; font-size: 15px;
   box-shadow: 0 2px 8px rgba(0,0,0,.5);
 }
-.battle-marker.past { opacity: .5; border-color: #a99470; width: 22px; height: 22px; font-size: 11px; }
-.battle-marker.future { opacity: .0; pointer-events: none; }
-.battle-marker.show-future.future { opacity: .35; pointer-events: auto; }
-.battle-marker.active { animation: pulse 1.2s ease-in-out infinite; background: #8a2b1d; color: #fff; border-color: #fff; opacity: 1; }
-.battle-marker.selected { outline: 3px solid #ffd98a; outline-offset: 2px; opacity: 1; }
+.battle-marker > svg { width: 68%; height: 68%; }
+.battle-marker.past { filter: opacity(.5); border-color: #a99470; width: 22px; height: 22px; font-size: 11px; }
+.battle-marker:hover { filter: none; z-index: 3; }
+/* Hover label: name, date, place */
+.b-tip {
+  display: none; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  background: var(--panel-solid); color: var(--ink); border: 1px solid var(--line); border-radius: 8px;
+  padding: 6px 9px; box-shadow: var(--shadow); white-space: nowrap; font: 12px/1.35 var(--sans); text-align: left; pointer-events: none;
+}
+.b-tip strong { display: block; font: 15px/1.2 var(--serif); }
+.b-tip span { display: block; color: var(--ink-soft); }
+.b-tip .loc { font-size: 11px; max-width: 280px; white-space: normal; min-width: 200px; }
+.battle-marker:hover .b-tip { display: block; }
+.battle-marker.future { visibility: hidden; pointer-events: none; }
+.battle-marker.show-future.future { visibility: visible; filter: opacity(.35); pointer-events: auto; }
+.battle-marker.active { animation: pulse 1.2s ease-in-out infinite; background: #8a2b1d; color: #fff; border-color: #fff; filter: none; }
+.battle-marker.selected { outline: 3px solid #ffd98a; outline-offset: 2px; filter: none; }
 @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(255,120,80,.8); } 50% { box-shadow: 0 0 0 14px rgba(255,120,80,0); } }
 
 .maplibregl-popup-content { background: var(--panel-solid); color: var(--ink); border-radius: 10px; font: 12px var(--sans); }
@@ -193,14 +223,15 @@ h4.sub { margin: 14px 0 4px; font-size: 11px; text-transform: uppercase; letter-
 #info-content a { color: var(--accent); }
 
 /* ---- Landmarks (camps, posts, towns) ---- */
-.lm-marker { display: flex; align-items: center; gap: 4px; cursor: pointer; opacity: .55; }
+.lm-marker { display: flex; align-items: center; gap: 4px; cursor: pointer; filter: opacity(.55); }
 .lm-marker .lm-icon {
-  width: 22px; height: 22px; border-radius: 6px; display: grid; place-items: center; font-size: 12px;
-  background: rgba(250, 245, 232, .92); border: 2px solid var(--lm); color: var(--lm); box-shadow: 0 1px 4px rgba(0,0,0,.45);
+  width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center;
+  background: #f3e8cc; border: 1.5px solid var(--lm); color: var(--lm); box-shadow: 0 1px 4px rgba(0,0,0,.45), inset 0 0 0 1.5px #f3e8cc, inset 0 0 0 2.5px color-mix(in srgb, var(--lm) 35%, transparent);
 }
+.lm-marker .lm-icon svg { width: 16px; height: 16px; }
 .lm-marker.allied { --lm: #1d4ed8; } .lm-marker.crown { --lm: #b91c1c; }
 .lm-marker .lm-label { display: none; font: 600 11px var(--sans); color: #fff; text-shadow: 0 1px 2px #000, 0 0 4px #000; white-space: nowrap; }
-.lm-marker.active { opacity: 1; }
+.lm-marker.active { filter: none; }
 .lm-marker.active .lm-label, .lm-marker:hover .lm-label { display: block; }
 
 /* ---- Play-mode toasts ---- */
@@ -215,7 +246,12 @@ h4.sub { margin: 14px 0 4px; font-size: 11px; text-transform: uppercase; letter-
 .toast.clickable { cursor: pointer; }
 .toast.battle { border-left-color: #8a2b1d; padding: 12px 14px; }
 .toast.battle.allied { border-left-color: #1d4ed8; } .toast.battle.crown { border-left-color: #b91c1c; }
-.t-kicker { font: 600 10px var(--sans); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); }
+.t-kicker { font: 600 10px var(--sans); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); display: flex; align-items: center; gap: 4px; }
+.t-ico svg { width: 13px; height: 13px; display: block; }
+.t-loc { font-size: 12px; color: var(--ink); margin-bottom: 2px; }
+.loc-line { font-size: 13px; margin: -4px 0 10px; }
+.loc-line .k { font: 600 10px var(--sans); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); margin-right: 4px; }
+.check-pair { display: flex; gap: 16px; }
 .t-title { font: 20px/1.15 var(--serif); margin: 2px 0; }
 .t-title.small { font: 600 13px var(--sans); }
 .t-body { color: var(--ink-soft); font-size: 12px; }
@@ -243,3 +279,4 @@ h4.sub { margin: 14px 0 4px; font-size: 11px; text-transform: uppercase; letter-
 #map.zoomed-out .lm-marker.active .lm-label { display: none; }
 #map.zoomed-out .lm-marker:hover .lm-label { display: block; }
 #period-map-list .small-row { display: grid; grid-template-columns: 18px 1fr auto; gap: 6px; align-items: center; white-space: nowrap; margin-top: 2px; }
+/* MapLibre 5 sets an inline opacity on every marker, so marker fading here uses filter: opacity() instead */

@@ -13,7 +13,10 @@ SC.toasts = (() => {
     if (onClick) { t.classList.add('clickable'); t.addEventListener('click', () => { onClick(); dismiss(t); }); }
     box.appendChild(t);
     requestAnimationFrame(() => t.classList.add('in'));
-    setTimeout(() => dismiss(t), ms);
+    // Hovering a card holds it on screen; it leaves 2 s after the pointer moves away
+    let timer = setTimeout(() => dismiss(t), ms);
+    t.addEventListener('mouseenter', () => clearTimeout(timer));
+    t.addEventListener('mouseleave', () => { timer = setTimeout(() => dismiss(t), 2000); });
   }
   function dismiss(t) {
     if (!t.isConnected) return;
@@ -27,15 +30,18 @@ SC.toasts = (() => {
     : `<span class="initials" style="background:${c.color}">${esc(c.initials)}</span>`);
 
   // Called by the timeline for each new day reached while playing
+  // How long a card stays up, in ms: longer at slow speeds so there is time to read it
+  const holdMs = (speed, base) => base * (speed <= 1 ? 1.4 : speed <= 4 ? 1.15 : speed <= 10 ? 0.85 : 0.6);
+
   function forDay(day, state, speed) {
     for (const b of SC.battles) {
       if (b.startDay !== day) continue;
-      const outcome = { allied: 'American / Allied victory', crown: 'British / Loyalist victory', draw: 'Indecisive' }[b.outcome];
       show({
-        kind: `battle ${b.outcome}`, ms: speed > 10 ? 3500 : 6500,
-        html: `<div class="t-kicker">⚔ ${esc(b.kind)} · ${fmtShort(b.startDay)}</div>
+        kind: `battle ${b.outcome}`, ms: holdMs(speed, 9000),
+        html: `<div class="t-kicker"><span class="t-ico">${SC.icons.get(b.kind)}</span>${esc(b.kind)} · ${fmtShort(b.startDay)}</div>
                <div class="t-title">${esc(b.name)}</div>
-               <div class="t-body">${esc(outcome)} · tap for details</div>`,
+               ${b.location ? `<div class="t-loc">${esc(b.location)}</div>` : ''}
+               <div class="t-body">${esc(SC.battles_ui.outcomeLabel(b))} · tap for details</div>`,
         onClick: () => SC.battles_ui.select(b.id, true),
       });
     }
@@ -48,8 +54,8 @@ SC.toasts = (() => {
       const c = SC.commanders.find((x) => x.id === id);
       n++;
       show({
-        kind: 'event', ms: 4000,
-        html: `<div class="t-row">${portrait(c)}<div><div class="t-title small">${esc(c.short)} · ${esc(w.name)}</div><div class="t-body">${esc(w.note)}</div></div></div>`,
+        kind: 'event', ms: holdMs(speed, 7000),
+        html: `<div class="t-row">${portrait(c)}<div><div class="t-kicker">${fmtShort(day)}</div><div class="t-title small">${esc(c.short)} · ${esc(w.name)}</div><div class="t-body">${esc(w.note)}</div></div></div>`,
         onClick: () => SC.emit('commander:open', id),
       });
     }

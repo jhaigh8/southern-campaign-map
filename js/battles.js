@@ -2,7 +2,7 @@
 SC.battles_ui = (() => {
   const { toDay, esc, fmtRange } = SC.util;
   const OUTCOME = { allied: ['american', 'American / Allied victory'], crown: ['british', 'British / Loyalist victory'], draw: ['draw', 'Indecisive'] };
-  const KIND_ICON = { battle: '⚔', siege: '⛫', raid: '✦', campaign: '➶', naval: '⚓' };
+  const outcomeLabel = (b) => (b.kind === 'standoff' ? 'No fighting' : OUTCOME[b.outcome][1]);
   let map, state;
   const markers = {};
   let dashStep = 0, animHandle = null;
@@ -31,9 +31,9 @@ SC.battles_ui = (() => {
 
     for (const b of SC.battles) {
       const el = document.createElement('div');
-      el.className = 'battle-marker';
-      el.textContent = KIND_ICON[b.kind] || '⚔';
-      el.title = `${b.name} — ${fmtRange(b.startDay, b.endDay)}`;
+      el.className = `battle-marker kind-${b.kind}`;
+      el.innerHTML = `${SC.icons.get(b.kind)}<div class="b-tip"><strong>${esc(b.name)}</strong>
+        <span>${fmtRange(b.startDay, b.endDay)}</span>${b.location ? `<span class="loc">${esc(b.location)}</span>` : ''}</div>`;
       el.addEventListener('click', (e) => { e.stopPropagation(); select(b.id, true); });
       markers[b.id] = new maplibregl.Marker({ element: el }).setLngLat([b.lon, b.lat]).addTo(map);
     }
@@ -86,11 +86,12 @@ SC.battles_ui = (() => {
     const b = SC.battles.find((x) => x.id === id);
     if (!b) { if (SC.panel.kind() === 'battle') SC.panel.close(); else { state.selectedBattle = null; highlight(null); SC.emit('state:change'); } return; }
 
-    const [cls, label] = OUTCOME[b.outcome];
+    const cls = OUTCOME[b.outcome][0], label = outcomeLabel(b);
     const panel = SC.panel.show('battle', `
       <div class="kicker">${esc(b.kind)}</div>
       <h2>${esc(b.name)}</h2>
       <div class="meta">${fmtRange(b.startDay, b.endDay)}</div>
+      ${b.location ? `<div class="loc-line"><span class="k">Where</span> ${esc(b.location)}</div>` : ''}
       <span class="outcome ${cls}">${label}</span>
       <p>${esc(b.summary)}</p>
       <div class="sides">
@@ -134,5 +135,5 @@ SC.battles_ui = (() => {
   const prevBefore = (day) => [...SC.battles].reverse().find((b) => b.startDay < day);
   const activeOn = (day) => SC.battles.filter((b) => day >= b.startDay && day <= b.endDay);
 
-  return { prepare, addLayers, refresh, select, nextAfter, prevBefore, activeOn };
+  return { prepare, addLayers, refresh, select, nextAfter, prevBefore, activeOn, outcomeLabel };
 })();
