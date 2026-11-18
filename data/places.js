@@ -52,6 +52,8 @@ SC.places = {
   hobkirk:          [-80.60, 34.27, "Hobkirk's Hill"],
   rugeley:          [-80.63, 34.43, "Rugeley's Mill (Clermont)"],
   lynches_creek:    [-80.40, 34.40, 'Little Lynches Creek'],
+  lynches_creek_w:  [-80.46, 34.37, 'Little Lynches Creek (west bank)'],
+  blue_savannah:    [-79.40, 33.93, "Blue Savannah (Britton's Neck)"],
   waxhaws:          [-80.70, 34.80, 'Waxhaws (Buford Massacre site)'],
   waxhaws_church:   [-80.77, 34.80, 'Waxhaws Church'],
   hanging_rock:     [-80.67, 34.56, 'Hanging Rock'],

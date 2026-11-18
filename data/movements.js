@@ -151,7 +151,7 @@ SC.movements = {
     ['1780-08-17', 'port_ferry', 150, 'a', 'Takes command of the Williamsburg militia.'],
     ['1780-08-20', 'nelsons_ferry', 150, 'd', 'Great Savannah: frees 150 Continental prisoners.'],
     ['1780-08-27', 'port_ferry', 150, 'a'],
-    ['1780-09-04', [-79.52, 33.88, 'Blue Savannah'], 50, 'd', 'Routs Loyalist militia at Blue Savannah.'],
+    ['1780-09-04', 'blue_savannah', 50, 'd', 'Routs Loyalist militia at Blue Savannah.'],
     ['1780-09-08', [-78.65, 34.25, 'White Marsh, N.C.'], 60, 'a', 'Withdraws briefly into North Carolina.'],
     ['1780-09-28', 'black_mingo', 50, 'd', 'Night attack at Black Mingo Creek.'],
     ['1780-10-25', 'tearcoat', 150, 'd', 'Surprises Loyalists at Tearcoat Swamp.'],
@@ -442,7 +442,8 @@ SC.movements = {
 
   rawdon: [
     ['1780-06-20', 'camden', 1000, 'a', 'Commands the Camden post.'],
-    ['1780-08-11', 'lynches_creek', 1000, 'd', 'Blocks Gates at Little Lynches Creek.'],
+    ['1780-08-11', 'lynches_creek_w', 1000, 'd', 'Blocks Gates from the far bank of Little Lynches Creek.'],
+    ['1780-08-13', 'camden', 1000, 'a', 'Falls back to Camden as Gates swings north.'],
     ['1780-08-16', 'camden_field', 900, 'd', 'Commands the British left at Camden.'],
     ['1780-09-26', 'charlotte', 900, 'a'],
     ['1780-10-29', 'winnsboro', 900, 'a'],
