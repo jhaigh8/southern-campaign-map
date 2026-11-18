@@ -32,3 +32,11 @@ Stewart, Cruger and Brown have no known free portrait, so the map shows their in
 | sumter | [ThomasSumterByRembrandtPeale.jpg](https://commons.wikimedia.org/wiki/File:ThomasSumterByRembrandtPeale.jpg) |
 | tarleton | [Banastre_Tarleton_portrait.jpg](https://commons.wikimedia.org/wiki/File:Banastre_Tarleton_portrait.jpg) |
 | wwashington | [William_Washington_(cropped).jpg](https://commons.wikimedia.org/wiki/File:William_Washington_(cropped).jpg) |
+
+## No portrait
+
+Alexander Stewart, John Harris Cruger and Thomas Brown show initials instead. No authenticated likeness of any of them is known:
+
+- **Cruger:** the National Park Service at Ninety Six notes there are no recognised paintings of him. Its 1978 painting was reconstructed from portraits of his relatives.
+- **Brown:** the one candidate, a 1766 Glasgow portrait, is inscribed "Thomas Broun of Braid" and most likely shows a different man.
+- **Stewart:** no portrait of him is known.
