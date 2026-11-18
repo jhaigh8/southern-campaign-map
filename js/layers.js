@@ -70,10 +70,11 @@ SC.layers = (() => {
     SC.emit('layer:change', name);
   }
 
+  // Terrain only changes the ground; the camera angle belongs to the separate "Tilted view" toggle.
+  // (Turning terrain on still tilts a flat view so the relief shows, unless tilt is locked off.)
   function setTerrain(on) {
     map.setTerrain(on ? TERRAIN : null);
-    if (on && map.getPitch() < 30) map.easeTo({ pitch: 55, duration: 800 });
-    if (!on) map.easeTo({ pitch: 0, duration: 800 });
+    if (on && map.getPitch() < 30 && map.getMaxPitch() > 0) map.easeTo({ pitch: 55, duration: 800 });
   }
 
   function init(m) {

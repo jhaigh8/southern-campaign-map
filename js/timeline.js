@@ -50,9 +50,14 @@ SC.timeline = (() => {
 
     document.addEventListener('keydown', (e) => {
       if (e.target.matches('input[type="date"], select, textarea')) return;
+      if (e.repeat && e.key === ' ') return; // holding Space shouldn't flicker play/pause
       if (e.key === 'ArrowRight') { e.preventDefault(); e.shiftKey ? jumpBattle(1) : (pause(), set(state.day + 1)); }
       else if (e.key === 'ArrowLeft') { e.preventDefault(); e.shiftKey ? jumpBattle(-1) : (pause(), set(state.day - 1)); }
-      else if (e.key === ' ') { e.preventDefault(); playing ? pause() : play(); }
+      else if (e.key === ' ') {
+        // Drop focus from any clicked button/checkbox first, or Space would also "press" it on key-up
+        e.preventDefault(); if (e.target !== document.body) e.target.blur?.();
+        playing ? pause() : play();
+      }
       else if (e.key === 'Escape') SC.panel.close();
     });
 

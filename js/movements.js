@@ -5,7 +5,8 @@ SC.move = (() => {
   const RECENT_DAYS = 30;
   const FADE = [0.12, 0.25, 0.42, 0.62, 0.8, 0.95]; // trail opacity for each 5-day piece of the last 30 days, oldest first
   const LINEUP_KM = 15; // battle participants within this distance join the line-up under the battle icon
-  const tracks = {}; // id -> [{day, lon, lat, name, troops, cert, note, gap}]
+  const tracks = {}; // id -> [{day, lon, lat, name, troops, cert, note, gap}], sorted by day
+  const spans = {};  // id -> [firstDay, lastDay] in the field (cached; asked for many times per frame)
 
   function resolvePlace(p, ctx) {
     if (Array.isArray(p)) return { lon: p[0], lat: p[1], name: p[2] || '' };
@@ -28,6 +29,8 @@ SC.move = (() => {
         if (!p) return null;
         return { day, ...p, troops: troops ?? null, cert: cert || 'a', note: note || '' };
       }).filter(Boolean);
+      const real = tracks[id].filter((w) => !w.gap);
+      spans[id] = real.length ? [real[0].day, real[real.length - 1].day] : null;
     }
   }
 
@@ -39,8 +42,9 @@ SC.move = (() => {
   function positionAt(id, day) {
     const t = tracks[id];
     if (!t || !t.length) return null;
-    let i = -1;
-    for (let k = 0; k < t.length; k++) { if (t[k].day <= day) i = k; else break; }
+    // Binary search for the last waypoint on or before `day` (called many times per frame)
+    let lo = 0, hi = t.length - 1, i = -1;
+    while (lo <= hi) { const mid = (lo + hi) >> 1; if (t[mid].day <= day) { i = mid; lo = mid + 1; } else hi = mid - 1; }
     if (i < 0) return null;
     const a = t[i];
     if (a.gap) return null;
@@ -75,10 +79,7 @@ SC.move = (() => {
     return pieces;
   }
 
-  const span = (id) => {
-    const t = (tracks[id] || []).filter((w) => !w.gap);
-    return t.length ? [t[0].day, t[t.length - 1].day] : null;
-  };
+  const span = (id) => spans[id] ?? null;
   const isActive = (id, day) => !!positionAt(id, day);
   const eventsOn = (day) => {
     const out = [];
@@ -124,6 +125,7 @@ SC.move = (() => {
   function render(t, opts) {
     const trailFeats = [], aheadFeats = [];
     const visibleIds = SC.commanders.filter((c) => (opts.isolated ? c.id === opts.isolated : opts.visible.has(c.id))).map((c) => c.id);
+    const visibleSet = new Set(visibleIds);
 
     // While a battle is under way, its commanders line up in a row of small portraits under the
     // pulsing battle icon, so they don't hide it.
@@ -158,7 +160,7 @@ SC.move = (() => {
     }
 
     for (const c of SC.commanders) {
-      const shown = visibleIds.includes(c.id);
+      const shown = visibleSet.has(c.id);
       const pos = shown ? positionAt(c.id, t) : null;
       const dim = opts.dimExcept && !opts.dimExcept.has(c.id);
       const baseOp = dim ? 0.15 : 1;
@@ -203,8 +205,11 @@ SC.move = (() => {
       } else if (mk && mk._added) { mk.remove(); mk._added = false; }
     }
     map.getSource('trails').setData({ type: 'FeatureCollection', features: trailFeats });
-    map.getSource('routes-ahead').setData({ type: 'FeatureCollection', features: aheadFeats });
+    // The dashed "routes ahead" layer is usually empty; skip re-sending an empty set every frame
+    if (aheadFeats.length || aheadShown) map.getSource('routes-ahead').setData({ type: 'FeatureCollection', features: aheadFeats });
+    aheadShown = aheadFeats.length > 0;
   }
+  let aheadShown = false;
 
   return { compile, positionAt, pathBetween, span, isActive, eventsOn, addLayers, render, tracks };
 })();
