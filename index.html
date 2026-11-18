@@ -111,6 +111,27 @@
     </details>
   </footer>
 
+  <!-- Battlefield (tactical) view controls; replaces the timeline while a battle is open -->
+  <footer id="tac-bar" class="panel" hidden>
+    <div class="tac-top">
+      <button id="tac-exit" class="btn" title="Back to the campaign map (Esc)">← Campaign map</button>
+      <div class="tac-head">
+        <div id="tac-title"></div>
+        <div id="tac-clock">—</div>
+      </div>
+      <div class="tl-controls">
+        <button id="tac-first" class="icon-btn" title="First phase">⏮</button>
+        <button id="tac-prev" class="icon-btn" title="Previous phase (←)">◀</button>
+        <button id="tac-play" class="icon-btn play" title="Play / pause (Space)">▶</button>
+        <button id="tac-next" class="icon-btn" title="Next phase (→)">▶</button>
+        <button id="tac-view" class="icon-btn" title="Reset the view">⌖</button>
+      </div>
+    </div>
+    <div id="tac-dots" aria-label="Phases"></div>
+    <div id="tac-caption" aria-live="polite"></div>
+    <div id="tac-src"></div>
+  </footer>
+
   <script src="https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.js"></script>
   <script src="data/places.js"></script>
   <script src="data/commanders.js"></script>
@@ -118,6 +139,7 @@
   <script src="data/battles.js"></script>
   <script src="data/landmarks.js"></script>
   <script src="data/historic-maps.js"></script>
+  <script src="data/tactical/cowpens.js"></script>
   <script src="js/util.js"></script>
   <script src="js/icons.js"></script>
   <script src="js/validate.js"></script>
@@ -125,6 +147,7 @@
   <script src="js/movements.js"></script>
   <script src="js/commanders.js"></script>
   <script src="js/battles.js"></script>
+  <script src="js/tactical.js"></script>
   <script src="js/landmarks.js"></script>
   <script src="js/toasts.js"></script>
   <script src="js/timeline.js"></script>

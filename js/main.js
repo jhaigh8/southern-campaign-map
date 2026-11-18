@@ -118,6 +118,7 @@
       if (!document.getElementById('terrain-toggle').checked) p.set('terrain', '0');
       if (!document.getElementById('tilt-toggle').checked) p.set('tilt', '0');
       if (state.fullTrails) p.set('trails', 'all');
+      if (SC.tactics.active()) p.set('tac', SC.tactics.active());
       history.replaceState(null, '', `#${p}`);
     }, 250);
   }
@@ -146,13 +147,15 @@
     SC.cmdPanel.build(state);
     SC.timeline.build(state);
     SC.toasts.init();
+    SC.tactics.init(map);
     SC.validate();
     if (hash.get('layer')) SC.layers.setBase(hash.get('layer'));
     if (hash.get('terrain') === '0') { const tt = document.getElementById('terrain-toggle'); tt.checked = false; tt.dispatchEvent(new Event('change')); }
     if (hash.get('tilt') === '0') { document.getElementById('tilt-toggle').checked = false; map.setPitch(0); map.setMaxPitch(0); }
     if (hash.get('trails') === 'all') { document.getElementById('full-trails').checked = true; state.fullTrails = true; }
     SC.timeline.set(state.day, { instant: true });
-    if (hash.get('battle')) SC.battles_ui.select(hash.get('battle'), true);
+    if (hash.get('tac') && SC.tactics.has(hash.get('tac'))) SC.tactics.enter(hash.get('tac'));
+    else if (hash.get('battle')) SC.battles_ui.select(hash.get('battle'), true);
     else if (state.isolated) fitRoute(state.isolated);
   });
 
@@ -165,12 +168,13 @@
 
   // ?debug writes map diagnostics into the page (readable by a headless browser via --dump-dom)
   if (new URLSearchParams(location.search).has('debug')) {
-    // Test hooks for headless screenshots: ?debug&open=marion  ·  ?debug&toasts  ·  ?debug&cam=lon,lat,zoom
+    // Test hooks for headless screenshots: ?debug&open=marion  ·  ?debug&toasts  ·  ?debug&cam=lon,lat,zoom  ·  #tac=cowpens + ?debug&tacp=5
     const q = new URLSearchParams(location.search);
     if (q.get('cam')) { const [lon, lat, z] = q.get('cam').split(',').map(Number); map.jumpTo({ center: [lon, lat], zoom: z, pitch: 0, bearing: 0 }); }
     map.once('style.load', () => setTimeout(() => {
       if (q.get('open')) SC.emit('commander:open', q.get('open'));
       if (q.has('toasts')) for (let d = state.day - 8; d <= state.day; d++) SC.toasts.forDay(d, state, 1);
+      if (q.get('tacp')) SC.tactics.goTo(+q.get('tacp'));
     }, 1500));
     setInterval(() => {
       let el = document.getElementById('debug-out');
@@ -178,6 +182,7 @@
       const style = map.getStyle();
       el.textContent = JSON.stringify({
         loaded: map.loaded(), styleLoaded: map.isStyleLoaded(), layer: SC.layers.current(), day: state.day,
+        camera: { center: map.getCenter(), zoom: map.getZoom(), pitch: map.getPitch(), bearing: map.getBearing(), elev: map.getCenterElevation?.(), ground: map.queryTerrainElevation(map.getCenter()) },
         visible: style ? style.layers.filter((l) => l.layout?.visibility !== 'none').map((l) => l.id) : [],
         sourcesLoaded: style ? Object.fromEntries(Object.keys(style.sources).filter((s) => map.getSource(s)).map((s) => [s, map.isSourceLoaded(s)])) : {},
         markers: document.querySelectorAll('.cmd-marker').length, landmarks: document.querySelectorAll('.lm-marker:not([style*="none"])').length,
