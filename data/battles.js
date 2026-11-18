@@ -14,6 +14,18 @@ SC.battles = [
     strength: ['~850', '~3,100'], casualties: ['~83 killed, 453 captured', '7 killed, 19 wounded'], approach: 7, withdrawal: 2,
     summary: "Campbell's force from New York landed at Girardeau's Plantation. Guided by an enslaved man named Quamino Dolly along a hidden path through the swamp, they turned Howe's flank. The American defense collapsed and Savannah fell in an afternoon, opening the British Southern strategy." },
 
+  { id: 'sunbury', name: 'Capture of Fort Morris (Sunbury)', kind: 'siege', start: '1779-01-09', end: '1779-01-10', place: 'sunbury',
+    location: "Fort Morris State Historic Site, near Midway, Liberty County, Georgia",
+    outcome: 'crown', allies: [], crown: ['prevost'], others: 'Maj. Joseph Lane (American garrison)',
+    strength: ['~200', '~2,000'], casualties: ['~4 killed, ~7 wounded, ~200 captured', '~1 killed, ~3 wounded'], approach: 3, withdrawal: 7,
+    summary: "Marching up from East Florida, Prevost surrounded the earthwork fort guarding Sunbury and bombarded it. Major Lane surrendered after a short siege. With Savannah already taken, all of coastal Georgia was now in British hands." },
+
+  { id: 'port_royal', name: 'Port Royal Island (Beaufort)', kind: 'battle', start: '1779-02-03', end: '1779-02-03', place: [-80.73, 32.47],
+    location: "Gray's Hill, Port Royal Island, near Beaufort, Beaufort County, S.C.",
+    outcome: 'allied', allies: [], crown: [], others: 'Brig. Gen. William Moultrie (American); Maj. Gardiner (British; first name given variously)',
+    strength: ['~300', '~200'], casualties: ['8 killed, 22 wounded', '~40–50 killed and wounded, a few captured (sources differ)'], approach: 0, withdrawal: 0,
+    summary: "A British landing party tried to seize Port Royal Island. Moultrie met it with Charleston militia and two field guns. After a long exchange, with both sides short of ammunition, the British fell back to their ships. It was one of the few Patriot successes of early 1779." },
+
   { id: 'kettle_creek', name: 'Kettle Creek', kind: 'battle', start: '1779-02-14', end: '1779-02-14', place: 'kettle_creek',
     location: "Near Washington, Wilkes County, Georgia",
     outcome: 'allied', allies: ['pickens', 'clarke'], crown: [], others: 'Col. John Dooly (American); Col. James Boyd (Loyalist, killed)',
@@ -96,7 +108,7 @@ SC.battles = [
     location: "About 7 miles north of Camden, Kershaw County, S.C.",
     outcome: 'crown', allies: ['gates', 'dekalb'], crown: ['cornwallis', 'rawdon', 'tarleton'], others: '',
     strength: ['~3,700', '~2,100'], casualties: ['~900 killed and wounded, ~1,000 captured', '68 killed, 245 wounded'], approach: 20, withdrawal: 3,
-    summary: "The two armies ran into each other on a night march and fought at dawn. Gates had placed raw Virginia and North Carolina militia opposite Cornwallis's best regulars, and they broke without firing. De Kalb's Marylanders and Delawares fought on until surrounded. Gates fled 60 miles to Charlotte on a fast horse. It was the worst defeat ever suffered by an American army in the open field." },
+    summary: "The two armies ran into each other on a night march and fought at dawn. Gates had placed raw Virginia and North Carolina militia opposite Cornwallis's best regulars, and they broke without firing. De Kalb's Marylanders and Delawares fought on until surrounded. Gates fled 60 miles to Charlotte on a fast horse. It was one of the worst defeats ever suffered by an American army." },
 
   { id: 'fishing_creek', name: 'Fishing Creek', kind: 'battle', start: '1780-08-18', end: '1780-08-18', place: 'fishing_creek',
     location: "Catawba River near Fort Lawn, Chester County, S.C.",
@@ -158,6 +170,12 @@ SC.battles = [
     strength: ['~1,000', '~270'], casualties: ['3 killed, 4 wounded (incl. Sumter)', '~50 killed (disputed)'], approach: 8, withdrawal: 5,
     summary: "Tarleton outran his own infantry and attacked Sumter's strong position with only part of his force. He was repulsed. Sumter was badly wounded in the shoulder." },
 
+  { id: 'halfway_swamp', name: 'Halfway Swamp', kind: 'battle', start: '1780-12-12', end: '1780-12-13', place: 'halfway_swamp',
+    location: "Near Rimini, Clarendon County, S.C.",
+    outcome: 'draw', allies: ['marion'], crown: [], others: 'Maj. Robert McLeroth (64th Foot)',
+    strength: ['~700', '~200 regulars'], casualties: ['a few wounded (sources differ)', '~6 killed'], approach: 6, withdrawal: 5,
+    summary: "Marion caught McLeroth's column of new recruits marching to join Cornwallis and blocked its road. McLeroth proposed settling it with a duel of twenty picked men a side, then slipped away in the night while Marion waited. Marion broke off after learning there was smallpox at nearby Singleton's Mill, and the British reached Winnsboro." },
+
   { id: 'hammonds_store', name: "Hammond's Store", kind: 'battle', start: '1780-12-30', end: '1780-12-30', place: 'hammonds_store',
     location: "Near Clinton, Laurens County, S.C.",
     outcome: 'allied', allies: ['wwashington'], crown: [], others: 'Col. Thomas Waters (Loyalist)',
@@ -194,6 +212,18 @@ SC.battles = [
     strength: ['~600', '~400'], casualties: ['1 horse killed', '~90 killed, many wounded'], approach: 7, withdrawal: 7,
     summary: "Pyle's Loyalists mistook Lee's green-jacketed Legion for Tarleton's men. When the error came out, the Legion cut them down. The slaughter frightened North Carolina Loyalists away from Cornwallis." },
 
+  { id: 'weitzels_mill', name: "Weitzel's Mill", kind: 'battle', start: '1781-03-06', end: '1781-03-06', place: 'weitzels_mill',
+    location: "Reedy Fork Creek, northern Guilford County, N.C.",
+    outcome: 'draw', allies: ['lee', 'wwashington'], crown: ['cornwallis', 'tarleton'], others: "Col. Otho Williams (American light corps); Lt. Col. James Webster (British)",
+    strength: ['~700', '~1,200'], casualties: ['~20–50 killed and wounded (sources differ)', '~21–30 killed and wounded'], approach: 5, withdrawal: 5,
+    summary: "Cornwallis tried to catch Otho Williams's light corps, which was screening Greene, at the ford over Reedy Fork. Webster forced the crossing under rifle fire and the Americans fell back in good order. Nine days later the two armies met at Guilford Courthouse." },
+
+  { id: 'wiboo_lower_bridge', name: 'Wiboo Swamp & Lower Bridge', kind: 'battle', start: '1781-03-06', end: '1781-03-13', place: [-79.85, 33.65],
+    location: "Wyboo Swamp near Manning to the Lower Bridge on the Black River near Kingstree, Clarendon & Williamsburg counties, S.C.",
+    outcome: 'allied', allies: ['marion'], crown: [], others: 'Lt. Col. John Watson (British)',
+    strength: ['~300–400', '~500'], casualties: ['light (sources differ)', 'light to moderate (sources differ)'], approach: 6, withdrawal: 15,
+    summary: "Watson marched a column up the Santee to destroy Marion's brigade. Marion fought him at Wiboo Swamp and then held the Lower Bridge over the Black River, where his riflemen picked off anyone trying to cross. Watson gave up and fell back to Georgetown. Meanwhile a second column under Doyle found and burned Snow's Island." },
+
   { id: 'guilford', name: 'Guilford Courthouse', kind: 'battle', start: '1781-03-15', end: '1781-03-15', place: 'guilford',
     location: "Greensboro, Guilford County, N.C.",
     outcome: 'crown', allies: ['greene', 'lee', 'wwashington'], crown: ['cornwallis', 'tarleton'], others: '',
@@ -205,6 +235,12 @@ SC.battles = [
     outcome: 'allied', allies: ['marion', 'lee'], crown: [], others: 'Lt. James McKay (British)',
     strength: ['~380', '~120'], casualties: ['2 killed, 6 wounded', '~114 captured'], approach: 7, withdrawal: 7,
     summary: "The fort stood on an old Indian mound and had no artillery to fear. Hezekiah Maham designed a log tower that rose above its walls, and riflemen firing down from it forced the garrison to surrender." },
+
+  { id: 'blandford', name: 'Blandford (Petersburg)', kind: 'battle', start: '1781-04-25', end: '1781-04-25', place: 'petersburg',
+    location: "Blandford, east side of Petersburg, Va.",
+    outcome: 'crown', allies: [], crown: ['phillips', 'arnold'], others: 'Maj. Gen. Baron von Steuben and Brig. Gen. Peter Muhlenberg (American)',
+    strength: ['~1,000 militia', '~2,500'], casualties: ['~60–150 (sources differ)', '~20–60 (sources differ)'], approach: 3, withdrawal: 6,
+    summary: "Steuben's Virginia militia made a stand at Blandford to delay Phillips and Arnold. They held for several hours before retiring in good order across the Appomattox. The British went on to destroy the Virginia navy at Osborne's two days later." },
 
   { id: 'hobkirk', name: "Hobkirk's Hill", kind: 'battle', start: '1781-04-25', end: '1781-04-25', place: 'hobkirk',
     location: "Camden, Kershaw County, S.C.",
@@ -223,6 +259,12 @@ SC.battles = [
     outcome: 'allied', allies: ['lee', 'sumter'], crown: [], others: 'Maj. Andrew Maxwell (Loyalist)',
     strength: ['~400', '~350'], casualties: ['none', '~350 captured'], approach: 3, withdrawal: 6,
     summary: "Lee reached the post on the Congaree before Sumter could return. He bluffed the garrison into surrendering, allowing them to keep their plunder." },
+
+  { id: 'fort_galphin', name: 'Fort Galphin', kind: 'siege', start: '1781-05-21', end: '1781-05-21', place: 'fort_galphin',
+    location: "Silver Bluff on the Savannah River, near Jackson, Aiken County, S.C.",
+    outcome: 'allied', allies: ['lee'], crown: [], others: 'Capt. Michael Rudulph (Lee\'s Legion)',
+    strength: ['~200', '~120'], casualties: ['1 dead of heat', 'garrison captured'], approach: 6, withdrawal: 1,
+    summary: "On a sweltering day Lee's Legion surprised the fortified trading post below Augusta and captured its garrison. They also took the British army's annual gifts for the Creek and Cherokee, including powder, arms and blankets, just before the siege of Augusta." },
 
   { id: 'augusta1781', name: 'Siege of Augusta', kind: 'siege', start: '1781-05-22', end: '1781-06-05', place: 'augusta',
     location: "Augusta, Richmond County, Georgia",
@@ -271,6 +313,12 @@ SC.battles = [
     outcome: 'draw', allies: ['greene', 'marion', 'pickens', 'lee', 'wwashington'], crown: ['stewart', 'cruger'], others: '',
     strength: ['~2,200', '~2,000'], casualties: ['138 killed, 375 wounded, 41 missing', '85 killed, 351 wounded, 257 missing'], approach: 17, withdrawal: 3,
     summary: "Greene's attack drove the British back through their own camp. His hungry troops then stopped to plunder the tents and rum, and a counterattack from a fortified brick house restored the line. Stewart held the field but withdrew toward Charleston. It was the last major battle in the Carolinas." },
+
+  { id: 'the_hook', name: 'The Hook (Gloucester)', kind: 'battle', start: '1781-10-03', end: '1781-10-03', place: [-76.52, 37.29],
+    location: "About 3 miles north of Gloucester Point, Gloucester County, Va.",
+    outcome: 'allied', allies: [], crown: ['tarleton'], others: "Duc de Lauzun (French legion); Brig. Gen. George Weedon and Lt. Col. John Mercer (Virginia militia)",
+    strength: ['~600 cavalry & infantry engaged', '~400'], casualties: ['3 French killed, 16 wounded, plus a few militia', '~12–50 killed, wounded and captured (sources differ)'], approach: 4, withdrawal: 16,
+    summary: "Tarleton's foragers ran into Lauzun's French hussars and lancers outside Gloucester. In the cavalry clash a horse wounded by a French lance crashed into Tarleton's and threw him, and he was nearly captured. Mercer's militia stood firm and drove the British back. The Gloucester garrison was sealed in for the rest of the siege." },
 
   { id: 'yorktown', name: 'Siege of Yorktown', kind: 'siege', radiusKm: 60, start: '1781-09-28', end: '1781-10-19', place: 'yorktown',
     location: "Yorktown, York County, Va.",

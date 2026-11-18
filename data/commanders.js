@@ -77,6 +77,6 @@ SC.commanders = [
     bio: 'Joined Lincoln to besiege Savannah in September 1779. He was wounded in the failed assault of 9 October.' },
   { id: 'rochambeau', name: 'Comte de Rochambeau', side: 'french', rank: 'Lieutenant General', unit: 'Expédition Particulière', force: 'french', portrait: 'assets/portraits/rochambeau.jpg',
     bio: 'Commanded the French army that marched with Washington from New York to Yorktown.' },
-  { id: 'degrasse', name: 'Comte de Grasse', short: 'de Grasse', side: 'french', rank: 'Rear Admiral', unit: 'French West Indies fleet', force: 'french', portrait: 'assets/portraits/degrasse.jpg',
+  { id: 'degrasse', name: 'Comte de Grasse', short: 'de Grasse', side: 'french', rank: 'Admiral (lieutenant général des armées navales)', unit: 'French West Indies fleet', force: 'french', portrait: 'assets/portraits/degrasse.jpg',
     bio: 'His fleet arrived in the Chesapeake on 30 August 1781 and beat back the British fleet at the Battle of the Capes on 5 September. This sealed Cornwallis\'s fate.' },
 ];
