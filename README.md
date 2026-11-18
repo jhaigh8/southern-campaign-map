@@ -50,6 +50,7 @@ Each map is placed with `tools/georef.ps1`, which works from known landmarks:
 
 - It fits an affine transform and reports the error at each landmark.
 - With `-Grid`, it also rubber-sheets the scan into tiles so each landmark lands in place (used for Fry-Jefferson and Faden).
+- With `-Grid` and `-Smooth`, it solves the tile corners by least squares, which fits better and avoids folds. Mouzon uses this: a 10×8 grid on 29 landmarks with `-Smooth 0.3`, landing within about 1 km of most landmarks. The landmarks are saved in `tools/control-points/`.
 
 Fitting to real places works better than using a map's printed graticule, because 18th-century longitudes are often a degree off.
 
@@ -74,6 +75,7 @@ data/historic-maps.js   period map overlays and their tile corner coordinates
 assets/historic/        map scans (some cut into georeferenced tiles)
 assets/portraits/       commander portraits + CREDITS.md
 tools/georef.ps1        landmark-based georeferencing / rubber-sheet tiling
+tools/control-points/   saved landmark lists, so a map can be refitted later
 ```
 
 ### Adding a commander
@@ -84,7 +86,7 @@ tools/georef.ps1        landmark-based georeferencing / rubber-sheet tiling
 ### Adding a period map
 1. Put the scan in `assets/historic/`.
 2. Note the pixel positions of 5–15 places you can identify.
-3. Run `powershell -File tools/georef.ps1 -Points "x,y,lon,lat; ..." -Width W -Height H`, adding `-Grid 4x3 -Image file.jpg -OutPrefix name` for a rubber-sheet warp.
+3. Run `powershell -File tools/georef.ps1 -Points "x,y,lon,lat; ..." -Width W -Height H`, adding `-Grid 4x3 -Image file.jpg -OutPrefix name` for a rubber-sheet warp. Add `-Smooth 0.3` for the least-squares fit. Raise the value if any tiles look stretched or folded.
 4. Paste the printed corners into `data/historic-maps.js`.
 
 ## Sources

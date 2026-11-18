@@ -147,8 +147,9 @@
 
   // ?debug writes map diagnostics into the page (readable by a headless browser via --dump-dom)
   if (new URLSearchParams(location.search).has('debug')) {
-    // Test hooks for headless screenshots: ?debug&open=marion  ·  ?debug&toasts
+    // Test hooks for headless screenshots: ?debug&open=marion  ·  ?debug&toasts  ·  ?debug&cam=lon,lat,zoom
     const q = new URLSearchParams(location.search);
+    if (q.get('cam')) { const [lon, lat, z] = q.get('cam').split(',').map(Number); map.jumpTo({ center: [lon, lat], zoom: z, pitch: 0, bearing: 0 }); }
     map.once('style.load', () => setTimeout(() => {
       if (q.get('open')) SC.emit('commander:open', q.get('open'));
       if (q.has('toasts')) SC.toasts.forDay(state.day, state, 1);
