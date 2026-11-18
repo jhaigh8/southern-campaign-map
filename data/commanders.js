@@ -43,6 +43,16 @@ SC.commanders = [
     bio: 'Defended Virginia against Arnold, Phillips and then Cornwallis in 1781. He shadowed Cornwallis down the Peninsula and helped trap him at Yorktown.' },
   { id: 'gwashington', name: 'George Washington', short: 'Washington', side: 'american', rank: 'General & Commander-in-Chief', unit: 'Continental Army', force: 'continental', portrait: 'assets/portraits/gwashington.jpg',
     bio: 'In August 1781 Washington left a screening force facing New York and marched with Rochambeau 450 miles to Virginia. Together they besieged Cornwallis at Yorktown.' },
+  { id: 'owilliams', name: 'Otho Holland Williams', short: 'O. Williams', side: 'american', rank: 'Colonel', unit: 'Adjutant general; light corps; Maryland brigade', force: 'continental', portrait: 'assets/portraits/owilliams.jpg',
+    bio: 'A Marylander who served as adjutant general to Gates and then Greene. In February 1781 his light corps screened the Race to the Dan, drawing Cornwallis away from Greene\'s main army. He led the Maryland Continentals at Guilford Courthouse, Hobkirk\'s Hill and Eutaw Springs, where their bayonet charge broke the British line.' },
+  { id: 'huger', name: 'Isaac Huger', side: 'american', rank: 'Brigadier General', unit: 'South Carolina & Virginia Continentals', force: 'continental', portrait: 'assets/portraits/huger.jpg',
+    bio: 'A South Carolinian of Huguenot descent. He led a feint at the Siege of Savannah and was surprised by Tarleton at Monck\'s Corner in 1780. He commanded Greene\'s main army on its march from the Pee Dee to Guilford, and the Virginia Continentals at Guilford Courthouse, where he was wounded.' },
+  { id: 'moultrie', name: 'William Moultrie', side: 'american', rank: 'Brigadier General', unit: 'South Carolina Continentals', force: 'continental', portrait: 'assets/portraits/moultrie.jpg',
+    bio: 'He defended the palmetto fort on Sullivan\'s Island in June 1776, and it was named Fort Moultrie in his honour. In 1779 he drove the British off Port Royal Island and held Charleston against Prevost\'s raid. He was captured when Charleston fell in May 1780 and spent the rest of the war as a prisoner.' },
+  { id: 'steuben', name: 'Baron von Steuben', short: 'Steuben', side: 'american', rank: 'Major General', unit: 'Virginia command (1780–81)', force: 'continental', portrait: 'assets/portraits/steuben.jpg',
+    bio: 'The Prussian-trained drillmaster of Valley Forge. Greene left him in Virginia to raise and supply troops for the Southern Army. He fought Phillips and Arnold at Blandford with militia, lost the Point of Fork depot to Simcoe, and commanded a division in the trenches at Yorktown.' },
+  { id: 'wayne', name: 'Anthony Wayne', side: 'american', rank: 'Brigadier General', unit: 'Pennsylvania Line', force: 'continental', portrait: 'assets/portraits/wayne.jpg',
+    bio: '"Mad Anthony" brought the Pennsylvania Line south in 1781 to reinforce Lafayette in Virginia. At Green Spring he charged into what turned out to be Cornwallis\'s whole army, and the boldness of the charge let his men escape. He served through the Siege of Yorktown.' },
 
   // ---------- British ----------
   { id: 'campbell', name: 'Archibald Campbell', side: 'british', rank: 'Lieutenant Colonel', unit: '71st Highlanders expedition', force: 'british', portrait: 'assets/portraits/campbell.jpg',

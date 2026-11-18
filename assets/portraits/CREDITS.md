@@ -32,6 +32,11 @@ Stewart, Cruger and Brown have no known free portrait, so the map shows their in
 | sumter | [ThomasSumterByRembrandtPeale.jpg](https://commons.wikimedia.org/wiki/File:ThomasSumterByRembrandtPeale.jpg) |
 | tarleton | [Banastre_Tarleton_portrait.jpg](https://commons.wikimedia.org/wiki/File:Banastre_Tarleton_portrait.jpg) |
 | wwashington | [William_Washington_(cropped).jpg](https://commons.wikimedia.org/wiki/File:William_Washington_(cropped).jpg) |
+| huger | [Isaac_Huger.jpg](https://commons.wikimedia.org/wiki/File:Isaac_Huger.jpg) |
+| moultrie | [Charles_Willson_Peale_-_William_Moultrie_-_NPG.65.57_-_National_Portrait_Gallery.jpg](https://commons.wikimedia.org/wiki/File:Charles_Willson_Peale_-_William_Moultrie_-_NPG.65.57_-_National_Portrait_Gallery.jpg) |
+| owilliams | [Otho_Holland_Williams.jpg](https://commons.wikimedia.org/wiki/File:Otho_Holland_Williams.jpg) |
+| steuben | [Friedrich_Wilhelm_von_Steuben_by_Ralph_Earl.jpg](https://commons.wikimedia.org/wiki/File:Friedrich_Wilhelm_von_Steuben_by_Ralph_Earl.jpg) |
+| wayne | [Anthony_Wayne,_uniform.jpg](https://commons.wikimedia.org/wiki/File:Anthony_Wayne%2C_uniform.jpg) |
 
 ## No portrait
 
