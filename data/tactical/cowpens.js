@@ -30,6 +30,7 @@ SC.tactical.cowpens = {
   battle: 'cowpens',
   title: 'Battle of Cowpens',
   date: '17 January 1781',
+  level: 'detailed',
   origin: [-81.81405, 35.13493],
   facing: 130,
   camera: { at: [-40, 0], zoom: 14.95, pitch: 56, bearing: 122, elev: 295 },  // elev: ground height (m) at the battlefield

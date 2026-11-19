@@ -320,6 +320,9 @@ h4.sub { margin: 14px 0 4px; font-size: 11px; text-transform: uppercase; letter-
 .btn.tac-enter:hover { background: #3a2c1f; }
 .btn.tac-enter svg { width: 26px; height: 26px; flex: none; }
 .btn.tac-enter small { display: block; font: 400 11px var(--sans); color: #e8d3a3; }
+.tac-level { display: inline-block; font: 600 9.5px var(--sans); font-style: normal; text-transform: uppercase; letter-spacing: .06em; padding: 1px 7px; border-radius: 999px; color: #fff; background: #4d7c3a; margin-top: 3px; vertical-align: middle; cursor: help; }
+.tac-level.approximate { background: #a07a1c; }
+#tac-title .tac-level { margin: 0 0 0 6px; }
 body.tactical #timeline, body.tactical #dispatches, body.tactical #battle-card, body.tactical #sidebar,
 body.tactical .cmd-marker, body.tactical .battle-marker, body.tactical .lm-marker { display: none !important; }
 #tac-bar { left: 12px; right: 12px; bottom: 12px; padding: 10px 14px 10px; }

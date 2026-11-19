@@ -12,11 +12,17 @@ SC.tactics = (() => {
     probable: ['Probable', 'The event is documented; the exact route or position is a reasoned reconstruction.'],
     disputed: ['Sources differ', 'Eyewitness accounts and historians disagree on how this unfolded.'],
   };
-  const MAP_LAYERS = ['trails', 'trails-casing', 'routes-ahead', 'highlight', 'highlight-glow'];
+  const HM = /^\d{1,2}:\d{2}$/;
+  // Battle-level confidence badge, shown on the battle card and in the battlefield bar
+  const LEVEL = {
+    detailed: ['Detailed reconstruction', 'Well-documented battle on identifiable ground: positions are anchored to the surviving landscape and the main studies.'],
+    approximate: ['Approximate reconstruction', 'The course of the fight is documented, but positions on the ground are estimated from the accounts.'],
+  };
+  const MAP_LAYERS =['trails', 'trails-casing', 'routes-ahead', 'highlight', 'highlight-glow'];
   const $ = (id) => document.getElementById(id);
 
   const SEG = 30;          // blocks are split into pieces of at most this many metres (see blocks())
-  const UNIT_LAYERS = ['tac-road', 'tac-arrows', 'tac-heads', 'tac-units', 'tac-fire'];
+  const UNIT_LAYERS = ['tac-road', 'tac-works', 'tac-forts', 'tac-arrows', 'tac-heads', 'tac-units', 'tac-fire'];
   let map, data = null, frames = [], p = 0, anim = null, holdTimer = null, playing = false, pulseAnim = null;
   let saved = null, hasFire = false; // saved: camera and layer settings to restore on exit
   const labels = {}; const notes = [];
@@ -145,6 +151,16 @@ SC.tactics = (() => {
       heads.push({ type: 'Feature', properties: { color }, geometry: { type: 'Polygon', coordinates: [[
         toLL([x2, y2]), toLL([base[0] - uy * HW, base[1] + ux * HW]), toLL([base[0] + uy * HW, base[1] - ux * HW]), toLL([x2, y2])]] } });
     }
+    // Earthworks (sieges): shown from phase `from` (default 0) up to phase `to` (default the end)
+    const shown = shownPhase(), lines = [], forts = [];
+    for (const w of data.works || []) {
+      if (shown < (w.from ?? 0) || shown > (w.to ?? Infinity)) continue;
+      const pts = w.pathLL || w.path.map(toLL), color = w.side ? SIDE_COLOR[w.side] : '#8a7a5c';
+      if (w.kind === 'fort' || w.kind === 'redoubt') forts.push({ type: 'Feature', properties: { color, h: w.h ?? 4 }, geometry: { type: 'Polygon', coordinates: [[...pts, pts[0]]] } });
+      else lines.push({ type: 'Feature', properties: { color }, geometry: { type: 'LineString', coordinates: pts } });
+    }
+    map.getSource('tac-works').setData({ type: 'FeatureCollection', features: lines });
+    map.getSource('tac-forts').setData({ type: 'FeatureCollection', features: forts });
     map.getSource('tac-arrows').setData({ type: 'FeatureCollection', features: shafts });
     map.getSource('tac-heads').setData({ type: 'FeatureCollection', features: heads });
     drawBar();
@@ -154,11 +170,14 @@ SC.tactics = (() => {
     const i = shownPhase(), ph = data.phases[i];
     const pc = Math.max(0, Math.min(frames.length - 1, p));
     // Battle clock: interpolate between phase times
-    const mins = (t) => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
-    const a = Math.floor(pc), b = Math.min(a + 1, frames.length - 1);
-    const m = mins(data.phases[a].time) + (mins(data.phases[b].time) - mins(data.phases[a].time)) * (pc - a);
-    const hh = Math.floor(m / 60), mm = Math.floor(m % 60);
-    $('tac-clock').textContent = `${hh > 12 ? hh - 12 : hh}:${String(mm).padStart(2, '0')} ${hh >= 12 ? 'PM' : 'AM'}`;
+    // Battles use "HH:MM" times and the clock runs between them; sieges use free text ("9 Oct, dawn")
+    if (data.phases.every((x) => HM.test(x.time))) {
+      const mins = (t) => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
+      const a = Math.floor(pc), b = Math.min(a + 1, frames.length - 1);
+      const m = mins(data.phases[a].time) + (mins(data.phases[b].time) - mins(data.phases[a].time)) * (pc - a);
+      const hh = Math.floor(m / 60), mm = Math.floor(m % 60);
+      $('tac-clock').textContent = `${hh > 12 ? hh - 12 : hh}:${String(mm).padStart(2, '0')} ${hh >= 12 ? 'PM' : 'AM'}`;
+    } else $('tac-clock').textContent = ph.time;
     if ($('tac-caption').dataset.i !== String(i)) {
       $('tac-caption').dataset.i = i;
       const [label, tip] = CONF[ph.conf] || CONF.probable;
@@ -238,7 +257,12 @@ SC.tactics = (() => {
   function ensureLayers() {
     if (map.getSource('tac-units')) return;
     const empty = { type: 'FeatureCollection', features: [] };
-    for (const s of ['tac-units', 'tac-arrows', 'tac-heads', 'tac-road']) map.addSource(s, { type: 'geojson', data: empty });
+    for (const s of ['tac-units', 'tac-arrows', 'tac-heads', 'tac-road', 'tac-works', 'tac-forts']) map.addSource(s, { type: 'geojson', data: empty });
+    // Siege works: trenches as lines tinted by side; forts and redoubts as low raised outlines
+    map.addLayer({ id: 'tac-works', type: 'line', source: 'tac-works', layout: { 'line-cap': 'round', 'line-join': 'round' },
+      paint: { 'line-color': ['get', 'color'], 'line-width': 4, 'line-opacity': 0.75 } });
+    map.addLayer({ id: 'tac-forts', type: 'fill-extrusion', source: 'tac-forts',
+      paint: { 'fill-extrusion-color': ['get', 'color'], 'fill-extrusion-height': ['get', 'h'], 'fill-extrusion-base': 0, 'fill-extrusion-opacity': 0.55 } });
     // The period road the battle was fought along, as a faint dashed track
     map.addLayer({ id: 'tac-road', type: 'line', source: 'tac-road', layout: { 'line-cap': 'round', 'line-join': 'round' },
       paint: { 'line-color': '#d9c49a', 'line-width': 3, 'line-opacity': 0.55, 'line-dasharray': [2, 2] } });
@@ -287,7 +311,8 @@ SC.tactics = (() => {
     }
 
     document.body.classList.add('tactical');
-    $('tac-title').textContent = `${data.title} · ${data.date}`;
+    const [lvl, lvlTip] = level(data.battle);
+    $('tac-title').innerHTML = `${esc(data.title)} · ${esc(data.date)} <span class="tac-level ${data.level}" title="${esc(lvlTip)}">${esc(lvl)}</span>`;
     // Colour key for the officers named in the captions, then the sources
     const key = Object.entries(SC.FORCES).filter(([k]) => k !== 'french')
       .map(([, f]) => `<span class="key"><i style="background:${f.color}"></i>${esc(f.label)}</span>`).join('');
@@ -343,5 +368,8 @@ SC.tactics = (() => {
     }, true);
   }
 
-  return { init, enter, exit, goTo, active: () => (data ? data.battle : null), has: (id) => !!SC.tactical?.[id] };
+  // [label, explanation] of a reconstruction's battle-level confidence
+  function level(id) { return LEVEL[SC.tactical?.[id]?.level] || LEVEL.approximate; }
+
+  return { init, enter, exit, goTo, level, active: () => (data ? data.battle : null), has: (id) => !!SC.tactical?.[id] };
 })();
