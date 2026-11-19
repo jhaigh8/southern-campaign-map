@@ -131,7 +131,8 @@ SC.tactics = (() => {
         el.classList.toggle('dim', st.s === 'captured' || st.s === 'routed');
         lab.setLngLat(toLL([st.x, st.y]));
         const tag = { firing: 'firing', broken: 'disordered', routed: 'routed', captured: 'captured' }[st.s];
-        const html = `${esc(u.short || u.name)}<small>~${u.men}${tag ? ` · ${tag}` : ''}</small>`;
+        const info = [u.men && `~${u.men}`, tag].filter(Boolean).join(' · ');
+        const html = `${esc(u.short || u.name)}${info ? `<small>${info}</small>` : ''}`;
         if (el._html !== html) { el.innerHTML = html; el._html = html; }
       }
     }
