@@ -90,7 +90,7 @@ SC.timeline = (() => {
     SC.emit('state:change');
     const t0 = performance.now();
     const step = (now) => {
-      const k = Math.min(1, (now - t0) / TWEEN_MS);
+      const k = Math.max(0, Math.min(1, (now - t0) / TWEEN_MS));
       const e = 1 - Math.pow(1 - k, 3); // ease-out cubic
       state.t = from + (to - from) * e;
       SC.emit('frame');

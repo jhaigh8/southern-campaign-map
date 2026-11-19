@@ -65,6 +65,7 @@ SC.tactics = (() => {
 
   // Unit state at fractional phase p (eased between keyframes)
   function stateAt(id, pp) {
+    pp = Math.max(0, Math.min(frames.length - 1, pp));
     const i = Math.floor(pp), k = ease(pp - i);
     const a = frames[i]?.[id], b = frames[Math.min(i + 1, frames.length - 1)]?.[id];
     if (!a && !b) return null;
@@ -75,7 +76,7 @@ SC.tactics = (() => {
   }
 
   // The phase whose caption and arrows are shown: during a transition, the one being moved into
-  const shownPhase = () => Math.min(frames.length - 1, Math.ceil(p - 1e-6));
+  const shownPhase = () => Math.max(0, Math.min(frames.length - 1, Math.ceil(p - 1e-6)));
 
   // ---------- drawing ----------
   function draw() {
@@ -130,10 +131,11 @@ SC.tactics = (() => {
 
   function drawBar() {
     const i = shownPhase(), ph = data.phases[i];
+    const pc = Math.max(0, Math.min(frames.length - 1, p));
     // Battle clock: interpolate between phase times
     const mins = (t) => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
-    const a = Math.floor(p), b = Math.min(a + 1, frames.length - 1);
-    const m = mins(data.phases[a].time) + (mins(data.phases[b].time) - mins(data.phases[a].time)) * (p - a);
+    const a = Math.floor(pc), b = Math.min(a + 1, frames.length - 1);
+    const m = mins(data.phases[a].time) + (mins(data.phases[b].time) - mins(data.phases[a].time)) * (pc - a);
     const hh = Math.floor(m / 60), mm = Math.floor(m % 60);
     $('tac-clock').textContent = `${hh > 12 ? hh - 12 : hh}:${String(mm).padStart(2, '0')} ${hh >= 12 ? 'PM' : 'AM'}`;
     if ($('tac-caption').dataset.i !== String(i)) {
@@ -155,9 +157,12 @@ SC.tactics = (() => {
   function animateTo(target, then) {
     cancelAnimationFrame(anim);
     const from = p, dur = Math.min(2, Math.abs(target - from)) * TRANS_MS || 1;
-    const t0 = performance.now();
+    // Time from the first frame's own timestamp: a rAF timestamp can be slightly earlier than
+    // performance.now() at the moment of the request, which made k (and p) negative and crashed draw()
+    let t0 = null;
     const step = (now) => {
-      const k = Math.min(1, (now - t0) / dur);
+      t0 ??= now;
+      const k = Math.max(0, Math.min(1, (now - t0) / dur));
       p = from + (target - from) * k;
       draw();
       if (k < 1) anim = requestAnimationFrame(step); else { p = target; draw(); then?.(); }

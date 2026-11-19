@@ -175,7 +175,15 @@
       if (q.get('open')) SC.emit('commander:open', q.get('open'));
       if (q.has('toasts')) for (let d = state.day - 8; d <= state.day; d++) SC.toasts.forDay(d, state, 1);
       if (q.get('tacp')) SC.tactics.goTo(+q.get('tacp'));
+      // ?debug&seq=enter,next,play : simulated real clicks (via elementFromPoint, so overlays would block them) 2.5 s apart
+      (q.get('seq') || '').split(',').filter(Boolean).forEach((k, i) => setTimeout(() => {
+        const t = k === 'enter' ? document.querySelector('.tac-enter') : document.getElementById('tac-' + k);
+        const r = t?.getBoundingClientRect(); const hit = r && document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);
+        (window.__hit ||= []).push(`${k}:${hit ? (hit.id || hit.className || hit.tagName) : 'none'}`); (k === 'enter' ? t : hit)?.click();
+      }, 2500 * (i + 1)));
     }, 1500));
+    window.__fps = []; let __n = 0; const __c = () => { __n++; requestAnimationFrame(__c); }; requestAnimationFrame(__c);
+    setInterval(() => { window.__fps.push(__n); __n = 0; }, 1000);
     setInterval(() => {
       let el = document.getElementById('debug-out');
       if (!el) { el = document.createElement('pre'); el.id = 'debug-out'; el.style.display = 'none'; document.body.appendChild(el); }
@@ -187,6 +195,7 @@
         sourcesLoaded: style ? Object.fromEntries(Object.keys(style.sources).filter((s) => map.getSource(s)).map((s) => [s, map.isSourceLoaded(s)])) : {},
         markers: document.querySelectorAll('.cmd-marker').length, landmarks: document.querySelectorAll('.lm-marker:not([style*="none"])').length,
         errors: SC.errors,
+        tac: { phase: document.querySelector('.tac-num')?.textContent, clock: document.getElementById('tac-clock')?.textContent, hit: window.__hit, fps: window.__fps.slice(-10).join(" ") },
       });
     }, 1000);
   }
