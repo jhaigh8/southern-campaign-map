@@ -19,7 +19,7 @@ From a terminal you can run `powershell -ExecutionPolicy Bypass -File serve.ps1`
 | Red ticks above the slider | Battles; hover to see the name and date, click to jump to it |
 | Commander (sidebar or map) | Opens a profile card: portrait, bio, today's position, battles, plus **Isolate route**, **Follow** and **Fly to** |
 | Battle marker | Hover for its name, date and location. Click to open details and animate each side's approach and withdrawal routes; **Play this battle** runs just that window. While a battle is under way, its commanders line up as small portraits under the icon |
-| **Enter the battlefield** (on a battle card) | Phase-by-phase 3D reconstruction: units as raised blocks on the terrain, movement arrows, musket smoke and a battle clock. ← / → step phases, Space plays, Esc returns to the campaign map. Each phase is tagged *Well documented*, *Probable* or *Sources differ*. Available for Cowpens so far |
+| **Enter the battlefield** (on a battle card) | Phase-by-phase 3D reconstruction: units as raised blocks on the terrain, movement arrows, a pulse on units that are firing, and a battle clock. Officers named in the captions are coloured by the troops they led (hover for the full name). ← / → step phases, Space plays, Esc returns to the campaign map. Each phase is tagged *Well documented*, *Probable* or *Sources differ*. Available for Cowpens so far |
 | Tent / stockade / meetinghouse / flag markers | Camps, fortified posts, occupied towns and musters. They light up while in use; click for details |
 | **N⬆** button | Turn the map north-up; click again for a flat top-down view |
 | 3D Satellite / Period Maps / Modern | Switch base map; drag with right-click or Ctrl to tilt and rotate |
@@ -109,3 +109,6 @@ Copy `data/tactical/cowpens.js` and add a `<script>` tag for it in `index.html`:
 - Units are positioned in local metres. `x` runs toward the American right and `y` toward the enemy, measured from an `origin` on the field. `facing` is the compass bearing the American line faced.
 - Each phase lists only the units that move or change state (`formed`, `firing`, `moving`, `broken`, `routed`, `captured`), plus optional arrows.
 - Set `camera.elev` to the battlefield's ground height in metres so the tilted camera lands on target.
+- `roadLL` draws a period road from real-world `[lon, lat]` points (or use `road` in local metres).
+- `people` maps names in the captions to a tracked commander (`id`) or a `force` + `full` name, so they are coloured by the troops they led.
+- Anchor the frame on the ground: find the period road's surviving trace, sample the terrain along it, and check the positions against the sources' distances and descriptions of the ground (see the header of `cowpens.js`).

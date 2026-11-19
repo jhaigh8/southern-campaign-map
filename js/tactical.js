@@ -1,5 +1,5 @@
 // Battlefield ("tactical") view: a phase-by-phase reconstruction of a single battle, with units drawn
-// as raised blocks on the 3D terrain, movement arrows, musket smoke and a battle clock.
+// as raised blocks on the 3D terrain, movement arrows, a pulse on units that are firing, and a battle clock.
 // Battle data lives in data/tactical/<id>.js (see the header of cowpens.js for the format).
 SC.tactics = (() => {
   const { esc } = SC.util;
@@ -15,8 +15,10 @@ SC.tactics = (() => {
   const MAP_LAYERS = ['trails', 'trails-casing', 'routes-ahead', 'highlight', 'highlight-glow'];
   const $ = (id) => document.getElementById(id);
 
-  let map, data = null, frames = [], p = 0, anim = null, holdTimer = null, playing = false, smokeAnim = null;
-  let saved = null, hasSmoke = false; // camera and layer settings to restore on exit
+  const SEG = 30;          // blocks are split into pieces of at most this many metres (see blocks())
+  const UNIT_LAYERS = ['tac-road', 'tac-arrows', 'tac-heads', 'tac-units', 'tac-fire'];
+  let map, data = null, frames = [], p = 0, anim = null, holdTimer = null, playing = false, pulseAnim = null;
+  let saved = null, hasFire = false; // saved: camera and layer settings to restore on exit
   const labels = {}; const notes = [];
 
   // ---------- geometry ----------
@@ -32,6 +34,33 @@ SC.tactics = (() => {
     const pts = [[-w / 2, -d / 2], [w / 2, -d / 2], [w / 2, d / 2], [-w / 2, d / 2]]
       .map(([a, b]) => toLL([x + a * c - b * s, y + a * s + b * c]));
     return [[...pts, pts[0]]];
+  }
+  // MapLibre stands each extruded polygon on the terrain height at its centre, so one long block on
+  // sloping ground is partly buried at one end and floats at the other. Splitting a unit into
+  // pieces of at most SEG metres lets each piece sit on its own patch of ground.
+  function blocks(st) {
+    const nw = Math.max(1, Math.ceil(st.w / SEG)), nd = Math.max(1, Math.ceil(st.d / SEG));
+    const pw = st.w / nw, pd = st.d / nd, r = (st.r * Math.PI) / 180, c = Math.cos(r), s = Math.sin(r);
+    const out = [];
+    for (let i = 0; i < nw; i++) for (let j = 0; j < nd; j++) {
+      const a = -st.w / 2 + pw * (i + 0.5), b = -st.d / 2 + pd * (j + 0.5);
+      out.push(rect(st.x + a * c - b * s, st.y + a * s + b * c, pw, pd, st.r));
+    }
+    return out;
+  }
+
+  // Colour each named officer in a caption by the kind of troops they led (tooltip gives the
+  // full name). Tracked commanders use their map colour; others are listed in the battle's `people`.
+  function colorNames(html) {
+    const ppl = data.people || {};
+    const keys = Object.keys(ppl).sort((a, b) => b.length - a.length);
+    if (!keys.length) return html;
+    return html.replace(new RegExp(`\\b(${keys.join('|')})\\b`, 'g'), (k) => {
+      const v = ppl[k], c = v.id && SC.commanders.find((x) => x.id === v.id);
+      const force = SC.FORCES[c ? c.force : v.force];
+      const tip = c ? `${c.rank} ${c.name}` : v.full;
+      return `<span class="who" style="--c:${force.color}" title="${esc(`${tip} · ${force.label}`)}">${k}</span>`;
+    });
   }
 
   // Resolve each phase into a full set of unit states (units carry forward until they move again)
@@ -80,36 +109,28 @@ SC.tactics = (() => {
 
   // ---------- drawing ----------
   function draw() {
-    const feats = [], smoke = [];
+    const feats = [];
+    let fire = false;
     for (const [id, u] of Object.entries(data.units)) {
       const st = stateAt(id, p);
       const lab = labels[id];
       if (!st) { if (lab) lab.getElement().hidden = true; continue; }
       const h = st.s === 'captured' ? 2 : st.s === 'routed' ? 4 : HEIGHT[u.type] || 10;
-      feats.push({ type: 'Feature', properties: { color: unitColor(u, st.s), h },
-        geometry: { type: 'Polygon', coordinates: rect(st.x, st.y, st.w, st.d, st.r) } });
-      if (st.s === 'firing') {
-        // A row of smoke puffs just in front of the unit (toward the enemy)
-        const dir = u.side === 'allied' ? 1 : -1, n = Math.max(2, Math.round(st.w / 28));
-        for (let i = 0; i < n; i++) {
-          const fx = st.x - st.w / 2 + (st.w * (i + 0.5)) / n;
-          const r = 9 + ((i * 37) % 7), cy = st.y + dir * (st.d / 2 + 14);
-          smoke.push({ type: 'Feature', properties: { h: 16 + ((i * 53) % 12) }, geometry: { type: 'Polygon', coordinates: [Array.from({ length: 9 }, (_, k) => toLL([fx + r * Math.cos((k % 8) * Math.PI / 4), cy + r * Math.sin((k % 8) * Math.PI / 4)]))] } });
-        }
-      }
+      const props = { color: unitColor(u, st.s), h, fire: st.s === 'firing' ? 1 : 0 };
+      if (props.fire) fire = true;
+      for (const poly of blocks(st)) feats.push({ type: 'Feature', properties: props, geometry: { type: 'Polygon', coordinates: poly } });
       if (lab) {
         const el = lab.getElement();
         el.hidden = false;
         el.classList.toggle('dim', st.s === 'captured' || st.s === 'routed');
         lab.setLngLat(toLL([st.x, st.y]));
-        const tag = { broken: 'disordered', routed: 'routed', captured: 'captured' }[st.s];
+        const tag = { firing: 'firing', broken: 'disordered', routed: 'routed', captured: 'captured' }[st.s];
         const html = `${esc(u.short || u.name)}<small>~${u.men}${tag ? ` · ${tag}` : ''}</small>`;
         if (el._html !== html) { el.innerHTML = html; el._html = html; }
       }
     }
     map.getSource('tac-units').setData({ type: 'FeatureCollection', features: feats });
-    map.getSource('tac-smoke').setData({ type: 'FeatureCollection', features: smoke });
-    hasSmoke = smoke.length > 0;
+    hasFire = fire;
 
     // Arrows for the phase being shown
     const ph = data.phases[shownPhase()], shafts = [], heads = [];
@@ -142,15 +163,15 @@ SC.tactics = (() => {
       $('tac-caption').dataset.i = i;
       const [label, tip] = CONF[ph.conf] || CONF.probable;
       $('tac-caption').innerHTML = `<div class="tac-ph"><span class="tac-num">${i + 1}/${frames.length}</span> ${esc(ph.title)}
-        <span class="tac-conf ${ph.conf}" title="${esc(tip)}">${label}</span></div><p>${esc(ph.text)}</p>`;
+        <span class="tac-conf ${ph.conf}" title="${esc(tip)}">${label}</span></div><p>${colorNames(esc(ph.text))}</p>`;
       document.querySelectorAll('#tac-dots button').forEach((d, k) => d.classList.toggle('on', k === i));
     }
   }
 
-  // Gentle pulsing of the musket smoke
-  function smokeLoop(ts) {
-    if (hasSmoke && map.getLayer('tac-smoke')) map.setPaintProperty('tac-smoke', 'fill-extrusion-opacity', 0.42 + 0.2 * Math.sin(ts / 260));
-    smokeAnim = requestAnimationFrame(smokeLoop);
+  // Units that are firing pulse gently (they are drawn on their own layer so only they blink)
+  function pulseLoop(ts) {
+    if (hasFire && map.getLayer('tac-fire')) map.setPaintProperty('tac-fire', 'fill-extrusion-opacity', 0.72 + 0.23 * Math.sin(ts / 150));
+    pulseAnim = requestAnimationFrame(pulseLoop);
   }
 
   // ---------- playback ----------
@@ -217,17 +238,17 @@ SC.tactics = (() => {
   function ensureLayers() {
     if (map.getSource('tac-units')) return;
     const empty = { type: 'FeatureCollection', features: [] };
-    for (const s of ['tac-units', 'tac-smoke', 'tac-arrows', 'tac-heads', 'tac-road']) map.addSource(s, { type: 'geojson', data: empty });
-    map.addLayer({ id: 'tac-road', type: 'line', source: 'tac-road', layout: { 'line-cap': 'round' },
-      paint: { 'line-color': '#e8d3a3', 'line-width': 4, 'line-opacity': 0.7, 'line-dasharray': [2, 1.5] } });
+    for (const s of ['tac-units', 'tac-arrows', 'tac-heads', 'tac-road']) map.addSource(s, { type: 'geojson', data: empty });
+    // The period road the battle was fought along, as a faint dashed track
+    map.addLayer({ id: 'tac-road', type: 'line', source: 'tac-road', layout: { 'line-cap': 'round', 'line-join': 'round' },
+      paint: { 'line-color': '#d9c49a', 'line-width': 3, 'line-opacity': 0.55, 'line-dasharray': [2, 2] } });
     map.addLayer({ id: 'tac-arrows', type: 'line', source: 'tac-arrows', layout: { 'line-cap': 'round', 'line-join': 'round' },
       paint: { 'line-color': ['get', 'color'], 'line-width': 7, 'line-opacity': 0.85 } });
     map.addLayer({ id: 'tac-heads', type: 'fill', source: 'tac-heads', paint: { 'fill-color': ['get', 'color'], 'fill-opacity': 0.85 } });
-    map.addLayer({ id: 'tac-units', type: 'fill-extrusion', source: 'tac-units',
-      paint: { 'fill-extrusion-color': ['get', 'color'], 'fill-extrusion-height': ['get', 'h'], 'fill-extrusion-base': 0, 'fill-extrusion-opacity': 0.95 } });
-    // Musket smoke: small pale puffs floating just above the ground in front of firing units
-    map.addLayer({ id: 'tac-smoke', type: 'fill-extrusion', source: 'tac-smoke',
-      paint: { 'fill-extrusion-color': '#f1ede4', 'fill-extrusion-base': 4, 'fill-extrusion-height': ['get', 'h'], 'fill-extrusion-opacity': 0.55 } });
+    const unitPaint = { 'fill-extrusion-color': ['get', 'color'], 'fill-extrusion-height': ['get', 'h'], 'fill-extrusion-base': 0, 'fill-extrusion-opacity': 0.95 };
+    map.addLayer({ id: 'tac-units', type: 'fill-extrusion', source: 'tac-units', filter: ['!=', ['get', 'fire'], 1], paint: unitPaint });
+    // Firing units get their own layer so pulseLoop can make just them blink
+    map.addLayer({ id: 'tac-fire', type: 'fill-extrusion', source: 'tac-units', filter: ['==', ['get', 'fire'], 1], paint: unitPaint });
   }
   const setLayerVis = (ids, on) => ids.forEach((id) => map.getLayer(id) && map.setLayoutProperty(id, 'visibility', on ? 'visible' : 'none'));
 
@@ -249,8 +270,10 @@ SC.tactics = (() => {
 
     ensureLayers();
     setLayerVis(MAP_LAYERS, false);
-    setLayerVis(['tac-road', 'tac-arrows', 'tac-heads', 'tac-units', 'tac-smoke'], true);
-    map.getSource('tac-road').setData({ type: 'FeatureCollection', features: [{ type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: data.road.map(toLL) } }] });
+    setLayerVis(UNIT_LAYERS, true);
+    // roadLL: real-world [lon, lat] trace; road: points in the battle's local metres
+    const road = data.roadLL || (data.road || []).map(toLL);
+    map.getSource('tac-road').setData({ type: 'FeatureCollection', features: road.length ? [{ type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: road } }] : [] });
     for (const [uid, u] of Object.entries(data.units)) {
       if (u.label === false) continue;
       const el = document.createElement('div');
@@ -265,12 +288,15 @@ SC.tactics = (() => {
 
     document.body.classList.add('tactical');
     $('tac-title').textContent = `${data.title} · ${data.date}`;
-    $('tac-src').textContent = data.sources;
+    // Colour key for the officers named in the captions, then the sources
+    const key = Object.entries(SC.FORCES).filter(([k]) => k !== 'french')
+      .map(([, f]) => `<span class="key"><i style="background:${f.color}"></i>${esc(f.label)}</span>`).join('');
+    $('tac-src').innerHTML = `<div class="tac-key">${key}</div>${esc(data.sources)}`;
     $('tac-dots').innerHTML = data.phases.map((ph, i) => `<button title="${esc(ph.time)} ${esc(ph.title)}" data-i="${i}"></button>`).join('');
     $('tac-bar').hidden = false;
     p = 0; $('tac-caption').dataset.i = '';
     draw();
-    smokeAnim = requestAnimationFrame(smokeLoop);
+    pulseAnim = requestAnimationFrame(pulseLoop);
 
     frameCamera(2600);
     SC.emit('state:change');
@@ -278,10 +304,10 @@ SC.tactics = (() => {
 
   function exit(restore = true) {
     if (!data) return;
-    stop(); cancelAnimationFrame(smokeAnim);
+    stop(); cancelAnimationFrame(pulseAnim);
     for (const k of Object.keys(labels)) { labels[k].remove(); delete labels[k]; }
     notes.splice(0).forEach((n) => n.remove());
-    setLayerVis(['tac-road', 'tac-arrows', 'tac-heads', 'tac-units', 'tac-smoke'], false);
+    setLayerVis(UNIT_LAYERS, false);
     setLayerVis(MAP_LAYERS, true);
     document.body.classList.remove('tactical');
     $('tac-bar').hidden = true;

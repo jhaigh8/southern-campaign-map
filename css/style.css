@@ -338,6 +338,11 @@ body.tactical .cmd-marker, body.tactical .battle-marker, body.tactical .lm-marke
 .tac-conf.documented { background: #4d7c3a; } .tac-conf.probable { background: #a07a1c; } .tac-conf.disputed { background: #9a3b2c; }
 #tac-caption p { margin: 4px 0 0; font-size: 13px; max-width: 980px; }
 #tac-src { font-size: 11px; color: var(--ink-soft); font-style: italic; margin-top: 6px; }
+.tac-key { display: flex; flex-wrap: wrap; gap: 4px 12px; font-style: normal; margin-bottom: 3px; }
+.tac-key .key { display: inline-flex; align-items: center; gap: 5px; }
+.tac-key i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+/* Officers named in battlefield captions, coloured by the troops they led */
+#tac-caption .who { font-weight: 600; color: color-mix(in srgb, var(--c) 70%, var(--ink)); border-bottom: 2px solid var(--c); cursor: help; }
 .tac-label {
   pointer-events: none; white-space: nowrap; text-align: center; font: 600 11px/1.15 var(--sans); color: #fff;
   text-shadow: 0 1px 2px #000, 0 0 5px #000;
