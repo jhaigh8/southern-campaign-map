@@ -19,7 +19,7 @@ From a terminal you can run `powershell -ExecutionPolicy Bypass -File serve.ps1`
 | Red ticks above the slider | Battles; hover to see the name and date, click to jump to it |
 | Commander (sidebar or map) | Opens a profile card: portrait, bio, today's position, battles, plus **Isolate route**, **Follow** and **Fly to** |
 | Battle marker | Hover for its name, date and location. Click to open details and animate each side's approach and withdrawal routes; **Play this battle** runs just that window. While a battle is under way, its commanders line up as small portraits under the icon |
-| **Enter the battlefield** (on a battle card) | Phase-by-phase 3D reconstruction: units as raised blocks on the terrain, movement arrows, a pulse on units that are firing, and a battle clock. Officers named in the captions are coloured by the troops they led (hover for the full name). ← / → step phases, Space plays, Esc returns to the campaign map. Each phase is tagged *Well documented*, *Probable* or *Sources differ*. Available for Cowpens so far |
+| **Enter the battlefield** (on a battle card) | Phase-by-phase 3D reconstruction: units as raised blocks on the terrain, movement arrows, a pulse on units that are firing, and a battle clock. Officers named in the captions are coloured by the troops they led (hover for the full name). ← / → step phases, Space plays, Esc returns to the campaign map. Each phase is tagged *Well documented*, *Probable* or *Sources differ*. Available for 35 battles and sieges: every Tier 1 battle, the sieges and the Tier 2 actions (see below). A badge shows whether a view is a *Detailed* or an *Approximate* reconstruction |
 | Tent / stockade / meetinghouse / flag markers | Camps, fortified posts, occupied towns and musters. They light up while in use; click for details |
 | **N⬆** button | Turn the map north-up; click again for a flat top-down view |
 | 3D Satellite / Period Maps / Modern | Switch base map; drag with right-click or Ctrl to tilt and rotate |
@@ -112,3 +112,13 @@ Copy `data/tactical/cowpens.js` and add a `<script>` tag for it in `index.html`:
 - `roadLL` draws a period road from real-world `[lon, lat]` points (or use `road` in local metres).
 - `people` maps names in the captions to a tracked commander (`id`) or a `force` + `full` name, so they are coloured by the troops they led.
 - Anchor the frame on the ground: find the period road's surviving trace, sample the terrain along it, and check the positions against the sources' distances and descriptions of the ground (see the header of `cowpens.js`).
+- `level`: `'detailed'` (positions anchored to the surviving landscape and the main studies) or `'approximate'` (the course of the fight is documented, positions are estimated). It shows as a badge on the battle card and in the battlefield bar.
+- `origin` can be a place id from `data/places.js` instead of `[lon, lat]`, for sites known only approximately.
+- Sieges: phase `time` can be free text (`'14 October, night'`) instead of `HH:MM`, and `works` draws trenches (`kind: 'trench'`, a line) and forts/redoubts (`'fort'`/`'redoubt'`, a low raised outline) in local metres (`path`) or `[lon, lat]` (`pathLL`), shown from phase `from` to phase `to`, tinted by `side`. A unit may set its own block height with `h` (used for siege towers).
+
+**Battlefield views so far**
+- *Detailed:* Cowpens, Guilford Courthouse, Kings Mountain, Siege of Yorktown.
+- *Approximate, major battles:* Camden, Eutaw Springs, Hobkirk's Hill, Green Spring.
+- *Approximate, sieges:* Savannah (1779), Charleston (1780), Ninety Six, Augusta (1781), Fort Watson, Fort Motte, Fort Granby.
+- *Approximate, smaller actions:* Capture of Savannah (1778), Kettle Creek, Brier Creek, Stono Ferry, Monck's Corner, Lenud's Ferry, Waxhaws, Ramsour's Mill, Huck's Defeat, Rocky Mount, Hanging Rock, Musgrove Mill, Fishdam Ford, Blackstock's, Hammond's Store, Cowan's Ford, Pyle's Defeat, Weitzel's Mill, Quinby Bridge, Parker's Ferry.
+- *Not yet:* the sparsely documented partisan fights (Black Mingo, Tearcoat Swamp, Great Savannah, Blue Savannah, Halfway Swamp, Wiboo Swamp and others), plus Race to the Dan (a campaign), the Little Lynches Creek standoff (no fighting) and the Battle of the Capes (naval).

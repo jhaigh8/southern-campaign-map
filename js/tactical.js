@@ -281,6 +281,8 @@ SC.tactics = (() => {
     if (!SC.tactical?.[id]) return;
     if (data) exit(false);
     data = SC.tactical[id];
+    // origin may name a place in data/places.js (used where the site is only known approximately)
+    if (typeof data.origin === 'string') data.origin = SC.places[data.origin].slice(0, 2);
     compile();
     SC.timeline.pause();
     SC.panel.close();
