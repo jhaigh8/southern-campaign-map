@@ -121,7 +121,7 @@ SC.tactics = (() => {
       const st = stateAt(id, p);
       const lab = labels[id];
       if (!st) { if (lab) lab.getElement().hidden = true; continue; }
-      const h = st.s === 'captured' ? 2 : st.s === 'routed' ? 4 : HEIGHT[u.type] || 10;
+      const h = st.s === 'captured' ? 2 : st.s === 'routed' ? 4 : u.h ?? HEIGHT[u.type] ?? 10;
       const props = { color: unitColor(u, st.s), h, fire: st.s === 'firing' ? 1 : 0 };
       if (props.fire) fire = true;
       for (const poly of blocks(st)) feats.push({ type: 'Feature', properties: props, geometry: { type: 'Polygon', coordinates: poly } });
