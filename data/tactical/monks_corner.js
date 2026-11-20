@@ -1,14 +1,14 @@
 // Tactical reconstruction (approximate): Monck's Corner (Biggin's Bridge), 14 April 1780. Format: see cowpens.js.
-// Placement: origin is the battle's map location (data/places.js); Huger's camp guarded Biggin's Bridge over
+// Placement: origin is Biggin Bridge by the Biggin Church ruins (data/places.js, approximate); Huger's camp guarded the bridge over
 // the Cooper River headwaters. Tarleton came down the road from the north-west at night. Positions schematic.
 // Sources: Tarleton's Campaigns (1787); Borick, A Gallant Defense (2003).
 window.SC = window.SC || {};
 SC.tactical = SC.tactical || {};
 
 SC.tactical.monks_corner = {
-  battle: 'monks_corner', title: "Monck's Corner", date: '14 April 1780', level: 'approximate',
-  origin: 'monks_corner', facing: 300,
-  camera: { at: [0, 100], zoom: 15.4, pitch: 52, bearing: 300, elev: 15 },
+  battle: 'monks_corner', title: "Monck's Corner", date: '14 April 1780', level: 'approximate', site: 'approximate',
+  origin: 'biggin_bridge', facing: 300,
+  camera: { at: [0, 100], zoom: 15.4, pitch: 52, bearing: 0, elev: 15 },
   sources: "After Tarleton's Campaigns and Borick (2003). Site approximate; positions schematic.",
   people: {
     Tarleton: { id: 'tarleton' }, Huger: { id: 'huger' }, Ferguson: { id: 'ferguson' },

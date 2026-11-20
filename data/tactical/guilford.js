@@ -25,10 +25,12 @@ SC.tactical.guilford = {
   level: 'detailed',
   origin: [-79.84690, 36.13181],
   facing: 250,
-  camera: { at: [60, -380], zoom: 14.85, pitch: 55, bearing: 82, elev: 255 },
+  camera: { at: [60, -380], zoom: 14.85, pitch: 55, bearing: 0, elev: 255 },
   sources: 'After Babits & Howard, Long, Obstinate, and Bloody (2009); NPS Guilford Courthouse NMP. Road trace and park landmarks © OpenStreetMap contributors. Positions approximate; frontages exaggerated.',
 
   people: {
+    Morgan: { id: 'morgan' },
+    Lynch: { force: 'militia', full: 'Col. Charles Lynch, Virginia riflemen' },
     Greene: { id: 'greene' },
     Cornwallis: { id: 'cornwallis' },
     Washington: { id: 'wwashington' },

@@ -6,11 +6,12 @@ window.SC = window.SC || {};
 SC.tactical = SC.tactical || {};
 
 SC.tactical.cowans_ford = {
-  battle: 'cowans_ford', title: "Cowan's Ford", date: '1 February 1781', level: 'approximate',
+  battle: 'cowans_ford', title: "Cowan's Ford", date: '1 February 1781', level: 'approximate', site: 'approximate',
   origin: 'cowans_ford', facing: 270,
-  camera: { at: [0, 120], zoom: 15.5, pitch: 52, bearing: 265, elev: 230 },
+  camera: { at: [0, 120], zoom: 15.5, pitch: 52, bearing: 0, elev: 230 },
   sources: "After Joseph Graham's account and Buchanan (1997). Site approximate (now under Lake Norman); positions schematic.",
   people: {
+    Greene: { id: 'greene' }, Morgan: { id: 'morgan' },
     Cornwallis: { id: 'cornwallis' }, Tarleton: { id: 'tarleton' },
     Davidson: { force: 'militia', full: 'Brig. Gen. William Lee Davidson, North Carolina militia (killed)' },
     "O'Hara": { force: 'british', full: "Brig. Gen. Charles O'Hara, Guards brigade" },

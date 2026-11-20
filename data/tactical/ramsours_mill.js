@@ -8,9 +8,10 @@ SC.tactical = SC.tactical || {};
 SC.tactical.ramsours_mill = {
   battle: 'ramsours_mill', title: "Battle of Ramsour's Mill", date: '20 June 1780', level: 'approximate',
   origin: 'ramsours_mill', facing: 270,
-  camera: { at: [0, 150], zoom: 15.4, pitch: 52, bearing: 265, elev: 260 },
+  camera: { at: [0, 150], zoom: 15.4, pitch: 52, bearing: 0, elev: 260 },
   sources: "After Joseph Graham's account, Draper and Buchanan (1997). Site approximate; positions schematic.",
   people: {
+    Cornwallis: { id: 'cornwallis' },
     Locke: { force: 'militia', full: 'Col. Francis Locke, North Carolina militia' },
     Moore: { force: 'loyalist', full: 'Lt. Col. John Moore, Loyalist militia' },
   },

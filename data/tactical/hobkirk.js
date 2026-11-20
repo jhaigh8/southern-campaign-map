@@ -21,10 +21,11 @@ SC.tactical.hobkirk = {
   level: 'approximate',
   origin: [-80.6089, 34.2655],
   facing: 160,
-  camera: { at: [-40, 150], zoom: 15.4, pitch: 55, bearing: 150, elev: 70 },
+  camera: { at: [-40, 150], zoom: 15.4, pitch: 55, bearing: 0, elev: 70 },
   sources: "After Greene's and Rawdon's reports, Otho Williams, Buchanan (2019) and the Gunby court of inquiry. Road © OpenStreetMap contributors. The field is built over; positions follow the accounts and are approximate.",
 
   people: {
+    Sumter: { id: 'sumter' }, Lee: { id: 'lee' }, Marion: { id: 'marion' },
     Greene: { id: 'greene' },
     Rawdon: { id: 'rawdon' },
     Washington: { id: 'wwashington' },

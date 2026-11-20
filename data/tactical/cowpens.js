@@ -33,7 +33,7 @@ SC.tactical.cowpens = {
   level: 'detailed',
   origin: [-81.81405, 35.13493],
   facing: 130,
-  camera: { at: [-40, 0], zoom: 14.95, pitch: 56, bearing: 122, elev: 295 },  // elev: ground height (m) at the battlefield
+  camera: { at: [-40, 0], zoom: 14.95, pitch: 56, bearing: 0, elev: 295 },  // elev: ground height (m) at the battlefield
   sources: 'After Babits, A Devil of a Whipping (1998); Bearss, The Battle of Cowpens (NPS, 1967); National Park Service. Road trace © OpenStreetMap contributors. Distances follow the sources; frontages are exaggerated.',
 
   // Officers named in the captions, coloured by the troops they led. `id` links a tracked commander.

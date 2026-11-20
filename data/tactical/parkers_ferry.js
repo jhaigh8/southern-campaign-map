@@ -6,11 +6,12 @@ window.SC = window.SC || {};
 SC.tactical = SC.tactical || {};
 
 SC.tactical.parkers_ferry = {
-  battle: 'parkers_ferry', title: "Parker's Ferry", date: '30 August 1781', level: 'approximate',
+  battle: 'parkers_ferry', title: "Parker's Ferry", date: '30 August 1781', level: 'approximate', site: 'approximate',
   origin: 'parkers_ferry', facing: 90,
   camera: { at: [0, 0], zoom: 15.5, pitch: 52, bearing: 0, elev: 5 },
   sources: "After Marion's report and Bass, Swamp Fox (1959). Site approximate; positions schematic.",
   people: {
+    Greene: { id: 'greene' },
     Marion: { id: 'marion' },
     Fraser: { force: 'loyalist', full: 'Maj. Thomas Fraser, South Carolina Royalist dragoons' },
   },

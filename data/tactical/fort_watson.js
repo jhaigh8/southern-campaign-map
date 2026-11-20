@@ -1,8 +1,8 @@
 // Tactical reconstruction: Siege of Fort Watson, 15-23 April 1781. Format: see cowpens.js and yorktown.js.
 //
 // Placement: the stockade stood on top of the Santee Indian Mound beside Scott's Lake, now on the shore of
-// Lake Marion (Santee National Wildlife Refuge, at the end of Fort Watson Road). origin is the mound,
-// placed approximately; the stockade, the tower and the Patriot positions are drawn schematically.
+// Lake Marion (Santee National Wildlife Refuge, at the end of Fort Watson Road). origin is the top of the mound
+// (where the OpenStreetMap footpath climbs it); the stockade, tower and Patriot positions are schematic.
 //
 // Main sources: Marion's and Lee's reports; Lee's Memoirs; NPS/USFWS site interpretation; Steven D. Smith,
 // archaeology of Fort Watson.
@@ -14,12 +14,13 @@ SC.tactical.fort_watson = {
   title: 'Siege of Fort Watson',
   date: '15–23 April 1781',
   level: 'approximate',
-  origin: [-80.4350, 33.5370],
+  origin: [-80.4378, 33.5390],
   facing: 90,
-  camera: { at: [-60, 0], zoom: 16.4, pitch: 55, bearing: 70, elev: 30 },
-  sources: "After Marion's and Lee's reports and Lee's Memoirs. Site placed approximately; works drawn schematically.",
+  camera: { at: [-60, 0], zoom: 16.4, pitch: 55, bearing: 0, elev: 30 },
+  sources: "After Marion's and Lee's reports and Lee's Memoirs. Site at the Santee Indian Mound; works drawn schematically.",
 
   people: {
+    Greene: { id: 'greene' }, Rawdon: { id: 'rawdon' },
     Marion: { id: 'marion' },
     Lee: { id: 'lee' },
     Maham: { force: 'militia', full: 'Lt. Col. Hezekiah Maham, South Carolina militia' },
@@ -41,7 +42,7 @@ SC.tactical.fort_watson = {
 
   notes: [
     { at: [0, 60], text: 'Santee Indian Mound' },
-    { at: [-250, 200], text: "Scott's Lake (now Lake Marion)" },
+    { at: [-300, -100], text: "Scott's Lake (now Lake Marion)" },
   ],
 
   phases: [

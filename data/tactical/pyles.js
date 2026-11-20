@@ -5,11 +5,12 @@ window.SC = window.SC || {};
 SC.tactical = SC.tactical || {};
 
 SC.tactical.pyles = {
-  battle: 'pyles', title: "Pyle's Defeat", date: '25 February 1781', level: 'approximate',
+  battle: 'pyles', title: "Pyle's Defeat", date: '25 February 1781', level: 'approximate', site: 'approximate',
   origin: 'pyles', facing: 90,
   camera: { at: [0, 0], zoom: 15.6, pitch: 52, bearing: 0, elev: 180 },
   sources: "After Lee's Memoirs, Pickens's account and the site archaeology. Site approximate; positions schematic.",
   people: {
+    Cornwallis: { id: 'cornwallis' },
     Lee: { id: 'lee' }, Pickens: { id: 'pickens' }, Tarleton: { id: 'tarleton' },
     Pyle: { force: 'loyalist', full: 'Col. John Pyle, Loyalist militia (wounded)' },
   },

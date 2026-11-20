@@ -14,7 +14,7 @@ SC.tactical.fort_motte = {
   level: 'approximate',
   origin: [-80.66972, 33.76083],
   facing: 180,
-  camera: { at: [0, -60], zoom: 16.3, pitch: 55, bearing: 170, elev: 70 },
+  camera: { at: [0, -60], zoom: 16.3, pitch: 55, bearing: 0, elev: 70 },
   sources: "After Lee's Memoirs, Marion's reports and the Fort Motte archaeology. Positions and works schematic.",
 
   people: {

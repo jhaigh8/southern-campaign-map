@@ -1,14 +1,15 @@
 // Tactical reconstruction (approximate): Battle of Rocky Mount, 1 August 1780. Format: see cowpens.js.
-// Placement: origin is the battle's map location by the Catawba (data/places.js). The post was three log
-// buildings in a cleared area on a hill, with an abatis. Positions schematic.
+// Placement: origin is the hill on the west bank of the Catawba above Great Falls (data/places.js; the listed position,
+// 34.540 N 80.876 W, falls in the river, so it is moved ~550 m west). The post was three log buildings in a cleared
+// area on a hill, with an abatis. Positions schematic.
 // Sources: Sumter's and Turnbull's reports; Robert D. Bass, Gamecock (1961).
 window.SC = window.SC || {};
 SC.tactical = SC.tactical || {};
 
 SC.tactical.rocky_mount = {
-  battle: 'rocky_mount', title: 'Rocky Mount', date: '1 August 1780', level: 'approximate',
+  battle: 'rocky_mount', title: 'Rocky Mount', date: '1 August 1780', level: 'approximate', site: 'approximate',
   origin: 'rocky_mount', facing: 90,
-  camera: { at: [-60, 0], zoom: 15.9, pitch: 52, bearing: 80, elev: 150 },
+  camera: { at: [-60, 0], zoom: 15.9, pitch: 52, bearing: 0, elev: 150 },
   sources: "After Sumter's and Turnbull's reports and Bass (1961). Site approximate; positions schematic.",
   people: {
     Sumter: { id: 'sumter' },

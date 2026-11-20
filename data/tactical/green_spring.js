@@ -17,13 +17,14 @@ SC.tactical.green_spring = {
   battle: 'green_spring',
   title: 'Battle of Green Spring',
   date: '6 July 1781',
-  level: 'approximate',
+  level: 'approximate', site: 'approximate',
   origin: [-76.7850, 37.2350],
   facing: 180,
-  camera: { at: [0, -250], zoom: 15.1, pitch: 55, bearing: 175, elev: 10 },
+  camera: { at: [0, -250], zoom: 15.1, pitch: 55, bearing: 0, elev: 10 },
   sources: "After Wayne's and Lafayette's letters, Cornwallis's report, Tarleton (1787) and Cecere. Positions follow the accounts and are approximate; frontages exaggerated.",
 
   people: {
+    Clinton: { id: 'clinton' },
     Wayne: { id: 'wayne' },
     Lafayette: { id: 'lafayette' },
     Cornwallis: { id: 'cornwallis' },

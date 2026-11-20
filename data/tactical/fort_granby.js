@@ -11,13 +11,14 @@ SC.tactical.fort_granby = {
   battle: 'fort_granby',
   title: 'Capture of Fort Granby',
   date: '15 May 1781',
-  level: 'approximate',
+  level: 'approximate', site: 'approximate',
   origin: [-81.05, 33.95],
   facing: 90,
-  camera: { at: [-60, 0], zoom: 16.2, pitch: 55, bearing: 80, elev: 50 },
+  camera: { at: [-60, 0], zoom: 16.2, pitch: 55, bearing: 0, elev: 50 },
   sources: "After Lee's Memoirs and Greene's and Sumter's correspondence. Site placed approximately; positions schematic.",
 
   people: {
+    Greene: { id: 'greene' },
     Lee: { id: 'lee' },
     Sumter: { id: 'sumter' },
     Rawdon: { id: 'rawdon' },

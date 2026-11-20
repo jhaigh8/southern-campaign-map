@@ -5,9 +5,9 @@ window.SC = window.SC || {};
 SC.tactical = SC.tactical || {};
 
 SC.tactical.lenuds_ferry = {
-  battle: 'lenuds_ferry', title: "Lenud's Ferry", date: '6 May 1780', level: 'approximate',
+  battle: 'lenuds_ferry', title: "Lenud's Ferry", date: '6 May 1780', level: 'approximate', site: 'approximate',
   origin: 'lenuds_ferry', facing: 200,
-  camera: { at: [0, 100], zoom: 15.4, pitch: 52, bearing: 200, elev: 5 },
+  camera: { at: [0, 100], zoom: 15.4, pitch: 52, bearing: 0, elev: 5 },
   sources: "After Tarleton's Campaigns and Borick (2003). Site approximate; positions schematic.",
   people: {
     Tarleton: { id: 'tarleton' }, Washington: { id: 'wwashington' },

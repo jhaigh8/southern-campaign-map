@@ -7,7 +7,7 @@ SC.tactical = SC.tactical || {};
 SC.tactical.fishdam_ford = {
   battle: 'fishdam_ford', title: 'Fishdam Ford', date: '9 November 1780', level: 'approximate',
   origin: 'fishdam_ford', facing: 90,
-  camera: { at: [0, 0], zoom: 15.6, pitch: 52, bearing: 90, elev: 110 },
+  camera: { at: [0, 0], zoom: 15.6, pitch: 52, bearing: 0, elev: 110 },
   sources: "After Bass (1961) and the participants' accounts. Site approximate; positions schematic.",
   people: {
     Sumter: { id: 'sumter' },

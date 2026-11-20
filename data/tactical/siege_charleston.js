@@ -19,7 +19,7 @@ SC.tactical.siege_charleston = {
   level: 'approximate',
   origin: [-79.9370, 32.7869],
   facing: 350,
-  camera: { at: [-150, 380], zoom: 14.4, pitch: 50, bearing: 170, elev: 5 },
+  camera: { at: [-150, 380], zoom: 14.4, pitch: 50, bearing: 0, elev: 5 },
   sources: "After Borick, A Gallant Defense (2003), Clinton's and Lincoln's papers and Ewald's diary. Lines drawn schematically over the modern city.",
 
   people: {

@@ -11,6 +11,7 @@ SC.tactical.hucks_defeat = {
   camera: { at: [0, 0], zoom: 15.8, pitch: 52, bearing: 0, elev: 200 },
   sources: "After Scoggins, The Day It Rained Militia (2005), and pension statements. Site approximate; positions schematic.",
   people: {
+    Sumter: { id: 'sumter' },
     Huck: { force: 'loyalist', full: 'Capt. Christian Huck, British Legion (killed)' },
     Bratton: { force: 'militia', full: 'Col. William Bratton, South Carolina militia' },
     McClure: { force: 'militia', full: 'Capt. John McClure, South Carolina militia' },

@@ -7,9 +7,9 @@ window.SC = window.SC || {};
 SC.tactical = SC.tactical || {};
 
 SC.tactical.savannah1778 = {
-  battle: 'savannah1778', title: 'Capture of Savannah', date: '29 December 1778', level: 'approximate',
+  battle: 'savannah1778', title: 'Capture of Savannah', date: '29 December 1778', level: 'approximate', site: 'approximate',
   origin: [-81.08, 32.06], facing: 110,
-  camera: { at: [80, 150], zoom: 14.7, pitch: 52, bearing: 105, elev: 10 },
+  camera: { at: [80, 150], zoom: 14.7, pitch: 52, bearing: 0, elev: 10 },
   sources: "After Campbell's journal and Howe's court-martial. Site approximate; positions schematic.",
   people: {
     Campbell: { id: 'campbell' },

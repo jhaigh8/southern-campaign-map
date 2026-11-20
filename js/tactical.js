@@ -18,6 +18,9 @@ SC.tactics = (() => {
     detailed: ['Detailed reconstruction', 'Well-documented battle on identifiable ground: positions are anchored to the surviving landscape and the main studies.'],
     approximate: ['Approximate reconstruction', 'The course of the fight is documented, but positions on the ground are estimated from the accounts.'],
   };
+  const SITE_TIP = "The exact site is not confirmed (lost, built over, under water, or known only from accounts and roadside markers). The view is placed at the best-supported spot.";
+  // Second badge: a battle file with site: 'approximate' is placed without a confirmed site on the ground
+  const siteBadge = (d) => (d?.site === 'approximate' ? `<span class="tac-level site" title="${esc(SITE_TIP)}">Location approximate</span>` : '');
   const MAP_LAYERS =['trails', 'trails-casing', 'routes-ahead', 'highlight', 'highlight-glow'];
   const $ = (id) => document.getElementById(id);
 
@@ -61,8 +64,13 @@ SC.tactics = (() => {
     const ppl = data.people || {};
     const keys = Object.keys(ppl).sort((a, b) => b.length - a.length);
     if (!keys.length) return html;
-    return html.replace(new RegExp(`\\b(${keys.join('|')})\\b`, 'g'), (k) => {
-      const v = ppl[k], c = v.id && SC.commanders.find((x) => x.id === v.id);
+    const byLow = Object.fromEntries(keys.map((k) => [esc(k).toLowerCase(), ppl[k]]));
+    // First letter either case ("de Kalb" / "De Kalb" at a sentence start). Names that are part of a place
+    // ("Fort Moultrie", "Lincoln County", "Marion Square") are left alone.
+    const pat = keys.map(esc).map((k) => `[${k[0].toUpperCase()}${k[0].toLowerCase()}]${k.slice(1).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`);
+    const re = new RegExp(`(?<!\\b(?:Fort|Lake|Mount|Camp) )\\b(${pat.join('|')})\\b(?! (?:County|Square|Street|Island|Lake|Road|Courthouse)\\b)`, 'g');
+    return html.replace(re, (k) => {
+      const v = byLow[k.toLowerCase()], c = v.id && SC.commanders.find((x) => x.id === v.id);
       const force = SC.FORCES[c ? c.force : v.force];
       const tip = c ? `${c.rank} ${c.name}` : v.full;
       return `<span class="who" style="--c:${force.color}" title="${esc(`${tip} · ${force.label}`)}">${k}</span>`;
@@ -238,20 +246,70 @@ SC.tactics = (() => {
     const [lon, lat] = target;
     return [lon + (shift * Math.sin(b)) / (111320 * Math.cos((lat * Math.PI) / 180)), lat + (shift * Math.cos(b)) / 110540];
   }
+  // North-up framing: fit every position the units take over the whole battle, leaving room for the
+  // bar at the bottom. The file's zoom is a guide (the fit may zoom out 0.6 or in 0.8 from it);
+  // camera.fit === false keeps the hand-set `at` and `zoom`.
+  function fitView(c) {
+    if (c.fit === false || !frames.length) return { target: toLL(c.at), zoom: c.zoom };
+    // Every unit's position in every phase. Columns far off on the approach or in flight would stretch
+    // the view, so fit the middle 84% of them and pad a little.
+    const lons = [], lats = [];
+    for (const f of frames) for (const st of Object.values(f)) {
+      // the block's ends, not just its centre: columns of march can be hundreds of metres long
+      const r = Math.max(st.w || 0, st.d || 0) / 2;
+      for (const [dx, dy] of [[-r, -r], [r, r], [-r, r], [r, -r]]) {
+        const [lon, lat] = toLL([st.x + dx, st.y + dy]);
+        lons.push(lon); lats.push(lat);
+      }
+    }
+    lons.sort((a, b) => a - b); lats.sort((a, b) => a - b);
+    const q = (arr, k) => arr[Math.min(arr.length - 1, Math.max(0, Math.round(k * (arr.length - 1))))];
+    let w = q(lons, 0.08), e = q(lons, 0.92), s = q(lats, 0.08), n = q(lats, 0.92);
+    const padX = Math.max((e - w) * 0.15, 0.0012), padY = Math.max((n - s) * 0.15, 0.001);
+    w -= padX; e += padX; s -= padY; n += padY;
+    const cam = map.cameraForBounds([[w, s], [e, n]], { padding: { top: 80, bottom: 300, left: 60, right: 60 }, bearing: 0, pitch: 0 });
+    if (!cam) return { target: toLL(c.at), zoom: c.zoom };
+    // A tilted view shows more ground far off than near, so it can sit a little closer than a flat fit
+    const zoom = Math.max(c.zoom - 0.6, Math.min(c.zoom + 0.8, cam.zoom + 0.3));
+    // Aim slightly below the middle so the near (south) edge isn't hidden under the bar
+    return { target: [(w + e) / 2, (s + n) / 2 - (n - s) * 0.06], zoom };
+  }
   function frameCamera(duration) {
-    const c = data.camera, target = toLL(c.at);
+    const c = { ...data.camera, bearing: data.camera.bearing ?? 0 };
+    const fit = fitView(c), target = fit.target;
+    c.zoom = fit.zoom;
     const pitch = map.getMaxPitch() > 0 ? c.pitch : 0;
     const exag = map.getTerrain()?.exaggeration ?? 0;
     // Prefer the battle file's known ground height: before the detailed terrain tiles load, a live
     // query can return a coarse or zero value
-    const height = c.elev != null ? c.elev * exag : (map.queryTerrainElevation(target) ?? 0);
-    map.easeTo({ center: aimPoint(target, height, pitch, c.bearing), zoom: c.zoom, pitch, bearing: c.bearing, duration, essential: true });
-    // After arriving (terrain loaded by then), correct for the real ground height if it differs
-    clearTimeout(frameCamera.t);
-    frameCamera.t = setTimeout(() => {
-      const h = map.queryTerrainElevation(target);
-      if (data && h != null && Math.abs(h - height) > 15 && !map.isMoving()) map.easeTo({ center: aimPoint(target, h, pitch, c.bearing), duration: 500 });
-    }, duration + 300);
+    const key = target.map((v) => v.toFixed(5)).join(',');
+    const known = groundCache[key];
+    const height = (known ?? c.elev ?? 0) * exag;
+    const view = { zoom: c.zoom, pitch, bearing: c.bearing, essential: true };
+    map.easeTo({ ...view, center: aimPoint(target, height, pitch, c.bearing), duration });
+    // The file's elev is a guide; read the true ground height from the elevation tiles and re-aim if it differs
+    if (known == null && exag) {
+      const d0 = data;
+      groundAt(target).then((g) => {
+        groundCache[key] = g;
+        if (data === d0 && Math.abs(g * exag - height) > 12) map.easeTo({ ...view, center: aimPoint(target, g * exag, pitch, c.bearing), duration: Math.max(500, duration / 2) });
+      }).catch(() => {});
+    }
+  }
+
+  // Ground height (m) at a point, decoded from the same Terrarium elevation tiles the terrain uses (zoom 13)
+  const groundCache = {};
+  async function groundAt([lon, lat]) {
+    const z = 13, n = 2 ** z;
+    const xf = ((lon + 180) / 360) * n, r = (lat * Math.PI) / 180;
+    const yf = ((1 - Math.log(Math.tan(r) + 1 / Math.cos(r)) / Math.PI) / 2) * n;
+    const x = Math.floor(xf), y = Math.floor(yf);
+    const res = await fetch(`https://s3.amazonaws.com/elevation-tiles-prod/terrarium/${z}/${x}/${y}.png`);
+    const bmp = await createImageBitmap(await res.blob());
+    const cv = document.createElement('canvas'); cv.width = bmp.width; cv.height = bmp.height;
+    const ctx = cv.getContext('2d'); ctx.drawImage(bmp, 0, 0);
+    const px = ctx.getImageData(Math.floor((xf - x) * bmp.width), Math.floor((yf - y) * bmp.height), 1, 1).data;
+    return px[0] * 256 + px[1] + px[2] / 256 - 32768;
   }
 
   // ---------- enter / exit ----------
@@ -315,7 +373,7 @@ SC.tactics = (() => {
 
     document.body.classList.add('tactical');
     const [lvl, lvlTip] = level(data.battle);
-    $('tac-title').innerHTML = `${esc(data.title)} · ${esc(data.date)} <span class="tac-level ${data.level}" title="${esc(lvlTip)}">${esc(lvl)}</span>`;
+    $('tac-title').innerHTML = `${esc(data.title)} · ${esc(data.date)} <span class="tac-level ${data.level}" title="${esc(lvlTip)}">${esc(lvl)}</span>${siteBadge(data)}`;
     // Colour key for the officers named in the captions, then the sources
     const key = Object.entries(SC.FORCES).filter(([k]) => k !== 'french')
       .map(([, f]) => `<span class="key"><i style="background:${f.color}"></i>${esc(f.label)}</span>`).join('');
@@ -373,6 +431,7 @@ SC.tactics = (() => {
 
   // [label, explanation] of a reconstruction's battle-level confidence
   function level(id) { return LEVEL[SC.tactical?.[id]?.level] || LEVEL.approximate; }
+  function site(id) { return siteBadge(SC.tactical?.[id]); }
 
-  return { init, enter, exit, goTo, level, active: () => (data ? data.battle : null), has: (id) => !!SC.tactical?.[id] };
+  return { init, enter, exit, goTo, level, site, active: () => (data ? data.battle : null), has: (id) => !!SC.tactical?.[id] };
 })();

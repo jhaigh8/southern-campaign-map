@@ -21,7 +21,7 @@ SC.tactical.eutaw = {
   level: 'approximate',
   origin: [-80.2986, 33.4074],
   facing: 88,
-  camera: { at: [-20, -450], zoom: 15.0, pitch: 55, bearing: 70, elev: 30 },
+  camera: { at: [-20, -450], zoom: 15.0, pitch: 55, bearing: 0, elev: 30 },
   sources: 'After Greene\'s and Stewart\'s reports, Williams and Lee, and Dunkerly & Boland, Eutaw Springs (2017). Park landmarks and road © OpenStreetMap contributors. Distances between lines estimated; frontages exaggerated.',
 
   people: {

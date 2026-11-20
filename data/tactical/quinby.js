@@ -6,11 +6,12 @@ window.SC = window.SC || {};
 SC.tactical = SC.tactical || {};
 
 SC.tactical.quinby = {
-  battle: 'quinby', title: 'Quinby Bridge', date: '17 July 1781', level: 'approximate',
+  battle: 'quinby', title: 'Quinby Bridge', date: '17 July 1781', level: 'approximate', site: 'approximate',
   origin: 'quinby', facing: 90,
-  camera: { at: [80, 0], zoom: 15.4, pitch: 52, bearing: 85, elev: 10 },
+  camera: { at: [80, 0], zoom: 15.4, pitch: 52, bearing: 0, elev: 10 },
   sources: "After Lee's Memoirs and Bass (1959, 1961). Site approximate; positions schematic.",
   people: {
+    Greene: { id: 'greene' },
     Sumter: { id: 'sumter' }, Marion: { id: 'marion' }, Lee: { id: 'lee' },
     Coates: { force: 'british', full: 'Lt. Col. John Coates, 19th Foot' },
     Armstrong: { force: 'continental', full: "Capt. James Armstrong, Lee's Legion" },

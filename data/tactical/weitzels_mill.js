@@ -6,11 +6,12 @@ window.SC = window.SC || {};
 SC.tactical = SC.tactical || {};
 
 SC.tactical.weitzels_mill = {
-  battle: 'weitzels_mill', title: "Weitzel's Mill", date: '6 March 1781', level: 'approximate',
+  battle: 'weitzels_mill', title: "Weitzel's Mill", date: '6 March 1781', level: 'approximate', site: 'approximate',
   origin: 'weitzels_mill', facing: 180,
-  camera: { at: [0, 120], zoom: 15.4, pitch: 52, bearing: 180, elev: 230 },
+  camera: { at: [0, 120], zoom: 15.4, pitch: 52, bearing: 0, elev: 230 },
   sources: "After Williams's and Lee's accounts and Buchanan (1997). Site approximate; positions schematic.",
   people: {
+    Greene: { id: 'greene' },
     Williams: { id: 'owilliams' }, Lee: { id: 'lee' }, Washington: { id: 'wwashington' },
     Cornwallis: { id: 'cornwallis' }, Tarleton: { id: 'tarleton' },
     Webster: { force: 'british', full: 'Lt. Col. James Webster' },

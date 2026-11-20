@@ -22,7 +22,7 @@ SC.tactical.camden = {
   level: 'approximate',
   origin: [-80.6124, 34.3645],
   facing: 160.6,
-  camera: { at: [-60, 60], zoom: 14.9, pitch: 55, bearing: 150, elev: 80 },
+  camera: { at: [-60, 60], zoom: 14.9, pitch: 55, bearing: 0, elev: 80 },
   sources: 'After Piecuch (2006), Buchanan (1997), Otho Williams\'s Narrative and the British reports. Road line © OpenStreetMap contributors. Anchored on the Great Wagon Road and the de Kalb site; frontages estimated and exaggerated.',
 
   people: {

@@ -8,7 +8,7 @@ SC.tactical = SC.tactical || {};
 SC.tactical.blackstocks = {
   battle: 'blackstocks', title: "Blackstock's Plantation", date: '20 November 1780', level: 'approximate',
   origin: 'blackstocks', facing: 140,
-  camera: { at: [0, 80], zoom: 15.5, pitch: 52, bearing: 135, elev: 140 },
+  camera: { at: [0, 80], zoom: 15.5, pitch: 52, bearing: 0, elev: 140 },
   sources: "After Tarleton (1787), Bass (1961) and the battlefield site. Site approximate; positions schematic.",
   people: {
     Sumter: { id: 'sumter' }, Tarleton: { id: 'tarleton' },

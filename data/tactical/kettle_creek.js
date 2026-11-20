@@ -8,7 +8,7 @@ SC.tactical = SC.tactical || {};
 SC.tactical.kettle_creek = {
   battle: 'kettle_creek', title: 'Battle of Kettle Creek', date: '14 February 1779', level: 'approximate',
   origin: 'kettle_creek', facing: 310,
-  camera: { at: [0, 120], zoom: 15.3, pitch: 52, bearing: 300, elev: 160 },
+  camera: { at: [0, 120], zoom: 15.3, pitch: 52, bearing: 0, elev: 160 },
   sources: "After Pickens's account and Davis's studies. Site approximate; positions schematic.",
   people: {
     Pickens: { id: 'pickens' }, Clarke: { id: 'clarke' },

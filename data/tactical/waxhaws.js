@@ -8,7 +8,7 @@ SC.tactical = SC.tactical || {};
 SC.tactical.waxhaws = {
   battle: 'waxhaws', title: 'Waxhaws', date: '29 May 1780', level: 'approximate',
   origin: 'waxhaws', facing: 210,
-  camera: { at: [0, 100], zoom: 15.6, pitch: 52, bearing: 205, elev: 180 },
+  camera: { at: [0, 100], zoom: 15.6, pitch: 52, bearing: 0, elev: 180 },
   sources: "After Tarleton (1787), Brownfield's account and Piecuch (2010). Site approximate; positions schematic.",
   people: {
     Tarleton: { id: 'tarleton' },

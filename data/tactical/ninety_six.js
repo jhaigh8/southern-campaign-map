@@ -19,7 +19,7 @@ SC.tactical.ninety_six = {
   level: 'approximate',
   origin: [-82.01833, 34.14612],
   facing: 160,
-  camera: { at: [170, -160], zoom: 15.55, pitch: 52, bearing: 150, elev: 160 },
+  camera: { at: [170, -160], zoom: 15.55, pitch: 52, bearing: 0, elev: 160 },
   sources: "After the NPS (Ninety Six NHS), Greene's reports, Lee's Memoirs and Dunkerly & Williams (2006). Star Fort outline © OpenStreetMap contributors; the other works are drawn schematically.",
 
   people: {

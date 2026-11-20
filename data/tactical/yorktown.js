@@ -22,10 +22,11 @@ SC.tactical.yorktown = {
   level: 'detailed',
   origin: [-76.5061, 37.2294],
   facing: 10,
-  camera: { at: [80, -250], zoom: 14.4, pitch: 50, bearing: 10, elev: 15 },
+  camera: { at: [80, -250], zoom: 14.4, pitch: 50, bearing: 0, elev: 15 },
   sources: "After the NPS (Colonial NHP), Greene, The Guns of Independence (2005), Washington's diary and Cornwallis's report. Earthwork sites © OpenStreetMap contributors; lines between them drawn schematically; troop blocks schematic.",
 
   people: {
+    Dundas: { force: 'british', full: 'Lt. Col. Thomas Dundas, British surrender commissioner' },
     Washington: { id: 'gwashington' },
     Rochambeau: { id: 'rochambeau' },
     Lafayette: { id: 'lafayette' },

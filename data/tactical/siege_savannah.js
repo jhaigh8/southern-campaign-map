@@ -21,7 +21,7 @@ SC.tactical.siege_savannah = {
   level: 'approximate',
   origin: [-81.0996, 32.0755],
   facing: 50,
-  camera: { at: [150, -50], zoom: 15.0, pitch: 52, bearing: 40, elev: 10 },
+  camera: { at: [150, -50], zoom: 15.0, pitch: 52, bearing: 0, elev: 10 },
   sources: "After Lawrence, Storm over Savannah (1951), d'Estaing's and Prevost's reports, and the Spring Hill archaeology. Redoubt site © OpenStreetMap contributors; lines drawn schematically over the modern city.",
 
   people: {

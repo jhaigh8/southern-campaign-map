@@ -8,9 +8,10 @@ SC.tactical = SC.tactical || {};
 SC.tactical.hanging_rock = {
   battle: 'hanging_rock', title: 'Battle of Hanging Rock', date: '6 August 1780', level: 'approximate',
   origin: 'hanging_rock', facing: 120,
-  camera: { at: [0, 100], zoom: 15.3, pitch: 52, bearing: 115, elev: 150 },
+  camera: { at: [0, 100], zoom: 15.3, pitch: 52, bearing: 0, elev: 150 },
   sources: "After Davie's account, Bass (1961) and Buchanan (1997). Site approximate; positions schematic.",
   people: {
+    Bryan: { force: 'loyalist', full: 'Col. Samuel Bryan, North Carolina Loyalists' },
     Sumter: { id: 'sumter' },
     Davie: { force: 'militia', full: 'Maj. William R. Davie, North Carolina mounted troops' },
     'Andrew Jackson': { force: 'militia', full: 'Andrew Jackson, aged 13, a militia messenger' },

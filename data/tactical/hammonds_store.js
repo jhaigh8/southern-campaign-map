@@ -5,11 +5,12 @@ window.SC = window.SC || {};
 SC.tactical = SC.tactical || {};
 
 SC.tactical.hammonds_store = {
-  battle: 'hammonds_store', title: "Hammond's Store", date: '30 December 1780', level: 'approximate',
+  battle: 'hammonds_store', title: "Hammond's Store", date: '30 December 1780', level: 'approximate', site: 'approximate',
   origin: 'hammonds_store', facing: 180,
-  camera: { at: [0, 80], zoom: 15.6, pitch: 52, bearing: 180, elev: 180 },
+  camera: { at: [0, 80], zoom: 15.6, pitch: 52, bearing: 0, elev: 180 },
   sources: "After Morgan's report and Babits (1998). Site approximate; positions schematic.",
   people: {
+    Cornwallis: { id: 'cornwallis' },
     Washington: { id: 'wwashington' }, Morgan: { id: 'morgan' }, Tarleton: { id: 'tarleton' },
     Waters: { force: 'loyalist', full: 'Col. Thomas Waters, Georgia Loyalists' },
   },

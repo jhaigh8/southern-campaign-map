@@ -56,7 +56,7 @@ SC.battles = [
     strength: ['~5,500', '~10,000–13,500'], casualties: ['89 killed, 138 wounded, ~5,000 captured', '76 killed, 189 wounded'], approach: 10, withdrawal: 5,
     summary: "Clinton landed south of the city, crossed the Ashley and dug siege lines across Charleston Neck. Tarleton's victory at Monck's Corner closed the last escape route. Lincoln surrendered the city, the Southern Army and its stores on 12 May. It was the worst American defeat of the war." },
 
-  { id: 'monks_corner', name: "Monck's Corner", kind: 'battle', start: '1780-04-14', end: '1780-04-14', place: 'monks_corner',
+  { id: 'monks_corner', name: "Monck's Corner", kind: 'battle', start: '1780-04-14', end: '1780-04-14', place: 'biggin_bridge',
     location: "Moncks Corner, Berkeley County, S.C.",
     outcome: 'crown', allies: ['huger'], crown: ['tarleton'], others: 'Maj. Patrick Ferguson (British)',
     strength: ['~500', '~600'], casualties: ['~20 killed, ~67 captured', '~3 wounded'], approach: 10, withdrawal: 3,

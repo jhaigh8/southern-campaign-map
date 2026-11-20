@@ -6,9 +6,9 @@ window.SC = window.SC || {};
 SC.tactical = SC.tactical || {};
 
 SC.tactical.brier_creek = {
-  battle: 'brier_creek', title: 'Battle of Brier Creek', date: '3 March 1779', level: 'approximate',
+  battle: 'brier_creek', title: 'Battle of Brier Creek', date: '3 March 1779', level: 'approximate', site: 'approximate',
   origin: 'brier_creek', facing: 270,
-  camera: { at: [0, 150], zoom: 15.0, pitch: 52, bearing: 265, elev: 30 },
+  camera: { at: [0, 150], zoom: 15.0, pitch: 52, bearing: 0, elev: 30 },
   sources: "After Ashe's court of inquiry, Prevost's report and the LAMAR Institute archaeology. Site approximate; positions schematic.",
   people: {
     Ashe: { force: 'militia', full: 'Brig. Gen. John Ashe, North Carolina militia' },

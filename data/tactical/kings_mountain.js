@@ -25,10 +25,11 @@ SC.tactical.kings_mountain = {
   level: 'detailed',
   origin: [-81.381785, 35.141525],
   facing: 324,
-  camera: { at: [0, -20], zoom: 15.2, pitch: 50, bearing: 330, elev: 290 },
+  camera: { at: [0, -20], zoom: 15.2, pitch: 50, bearing: 0, elev: 290 },
   sources: 'After the NPS (Kings Mountain NMP), Draper (1881), Buchanan (1997) and Dunkerly (2007). Park landmarks © OpenStreetMap contributors. The Patriot columns\' exact routes are not recorded; frontages exaggerated.',
 
   people: {
+    Cornwallis: { id: 'cornwallis' },
     Ferguson: { id: 'ferguson' },
     Campbell: { force: 'militia', full: 'Col. William Campbell, Washington County, Virginia' },
     Shelby: { force: 'militia', full: 'Col. Isaac Shelby, Sullivan County, N.C. (now Tennessee)' },

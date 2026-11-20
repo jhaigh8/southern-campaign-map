@@ -19,6 +19,7 @@ SC.tactical.augusta1781 = {
   sources: "After Lee's Memoirs, Pickens's and Brown's reports and Cashin, The King's Ranger (1989). Sites placed approximately; works schematic.",
 
   people: {
+    Greene: { id: 'greene' },
     Pickens: { id: 'pickens' },
     Clarke: { id: 'clarke' },
     Lee: { id: 'lee' },

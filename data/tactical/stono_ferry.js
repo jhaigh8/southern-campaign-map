@@ -6,9 +6,9 @@ window.SC = window.SC || {};
 SC.tactical = SC.tactical || {};
 
 SC.tactical.stono_ferry = {
-  battle: 'stono_ferry', title: 'Battle of Stono Ferry', date: '20 June 1779', level: 'approximate',
+  battle: 'stono_ferry', title: 'Battle of Stono Ferry', date: '20 June 1779', level: 'approximate', site: 'approximate',
   origin: 'stono_ferry', facing: 180,
-  camera: { at: [0, -150], zoom: 15.2, pitch: 52, bearing: 175, elev: 5 },
+  camera: { at: [0, -150], zoom: 15.2, pitch: 52, bearing: 0, elev: 5 },
   sources: "After Lincoln's report, Moultrie's Memoirs and Wilson (2005). Site approximate; positions and works schematic.",
   people: {
     Lincoln: { id: 'lincoln' }, Maitland: { force: 'british', full: 'Lt. Col. John Maitland, 71st Highlanders' },
