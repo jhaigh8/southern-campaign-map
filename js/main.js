@@ -57,6 +57,7 @@
   document.getElementById('close-info').onclick = () => SC.panel.close();
   document.getElementById('future-toggle').addEventListener('change', (e) => { state.showFuture = e.target.checked; SC.emit('state:change'); });
   document.getElementById('landmark-toggle').addEventListener('change', () => SC.emit('state:change'));
+  document.getElementById('visit-toggle').addEventListener('change', (e) => { SC.visit.setOn(e.target.checked); writeHash(); });
   document.getElementById('full-trails').addEventListener('change', (e) => { state.fullTrails = e.target.checked; SC.emit('state:change'); });
 
   // Tilt on/off. Off locks the camera top-down (max pitch 0), so fly-tos stay flat too.
@@ -119,6 +120,7 @@
       if (!document.getElementById('tilt-toggle').checked) p.set('tilt', '0');
       if (state.fullTrails) p.set('trails', 'all');
       if (SC.tactics.active()) p.set('tac', SC.tactics.active());
+      if (SC.visit.isOn()) p.set('visit', '1');
       history.replaceState(null, '', `#${p}`);
     }, 250);
   }
@@ -144,6 +146,8 @@
     SC.move.addLayers(map);
     SC.battles_ui.addLayers(map, state);
     SC.landmarks_ui.addMarkers(map, state);
+    SC.visit.addLayers(map);
+    if (hash.get('visit') === '1') { document.getElementById('visit-toggle').checked = true; SC.visit.setOn(true); }
     SC.cmdPanel.build(state);
     SC.timeline.build(state);
     SC.toasts.init();

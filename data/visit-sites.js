@@ -1,0 +1,143 @@
+// "Visit today": parks, battlefields, historic sites, museums and memorials to visit now.
+// Hand-curated; the roadside-marker layer, park boundaries and the Overmountain trail are generated
+// into data/visit-data.js by tools/build-visit.ps1.
+//
+//   kind    : park | battlefield | historic | museum | grave | trail
+//   battles : battle ids (data/battles.js) the place belongs to; it is listed in those battles' panels
+//   status  : for a battle's own site, how much of the action you can stand on:
+//               on     - preserved ground with interpretation
+//               part   - some of the field is preserved, reconstructed or open
+//               marker - a marker or memorial at or near the site
+//               lost   - built over or under water
+//   url     : official or trail page (opening hours and fees change, so they are not stored here)
+//   src     : 'lt' = position and page from The Liberty Trail (American Battlefield Trust and the SC
+//             Battleground Preservation Trust); others are from OpenStreetMap or the NPS
+window.SC = window.SC || {};
+SC.visitSites = [
+  // ---- The Liberty Trail (South Carolina and North Carolina) ----
+  { id: 'andrew-jackson-state-park', name: "Andrew Jackson State Park", kind: 'park', ll: [-80.80696, 34.84120], url: 'https://thelibertytrail.org/sc/trail-sites/statecounty-parks/andrew-jackson-state-park', src: 'lt' },
+  { id: 'berkeley-county-museum-and-heritage-center', name: "Berkeley County Museum and Heritage Center", kind: 'museum', ll: [-79.97478, 33.19403], battles: ['monks_corner'], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/berkeley-county-museum-and-heritage-center', src: 'lt' },
+  { id: 'biggin-church', name: "Biggin Church ruins", kind: 'historic', ll: [-79.96672, 33.21239], battles: ['monks_corner'], status: 'part', url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/biggin-church', src: 'lt', note: "Church ruins near the site of the 1780 cavalry camp at Biggin Bridge" },
+  { id: 'blackstocks-plantation', name: "Blackstock's Plantation", kind: 'battlefield', ll: [-81.81345, 34.67909], battles: ['blackstocks'], status: 'on', url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/blackstocks-plantation', src: 'lt' },
+  { id: 'boone-hall-plantation-and-gardens', name: "Boone Hall Plantation and Gardens", kind: 'historic', ll: [-79.82267, 32.85438], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/boone-hall-plantation-and-gardens', src: 'lt' },
+  { id: 'breach-inlet-sullivans-island', name: "Breach Inlet at Sullivan's Island", kind: 'battlefield', ll: [-79.85762, 32.76035], url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/breach-inlet-sullivans-island', src: 'lt', note: "Site of the 1776 fight for Sullivan's Island" },
+  { id: 'burchs-mill', name: "Burch's Mill", kind: 'historic', ll: [-79.54513, 34.06028], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/burchs-mill', src: 'lt' },
+  { id: 'camden-battlefield', name: "Camden Battlefield", kind: 'battlefield', ll: [-80.61140, 34.36068], battles: ['camden'], status: 'on', url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/camden-battlefield', src: 'lt', note: "Walking trail and waysides on the preserved battlefield" },
+  { id: 'cedar-springs', name: "Cedar Springs", kind: 'battlefield', ll: [-81.87657, 34.90870], status: 'marker', url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/cedar-springs', src: 'lt', note: "Site of the 1780 action at Cedar Springs (Wofford's Iron Works)" },
+  { id: 'charles-pinckney-national-historic-site', name: "Charles Pinckney National Historic Site", kind: 'historic', ll: [-79.82488, 32.84577], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/charles-pinckney-national-historic-site', src: 'lt' },
+  { id: 'cherokee-county-museum', name: "Cherokee County Museum", kind: 'museum', ll: [-81.64850, 35.06782], battles: ['cowpens'], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/cherokee-county-museum', src: 'lt' },
+  { id: 'colonial-camden', name: "Colonial Camden", kind: 'historic', ll: [-80.60509, 34.23241], battles: ['hobkirk', 'camden'], url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/colonial-camden', src: 'lt', note: "Historic Camden: reconstructed British fortifications and the Kershaw-Cornwallis House" },
+  { id: 'coosawhatchie-tulifinny-hill', name: "Coosawhatchie (Tulifinny Hill)", kind: 'battlefield', ll: [-80.92623, 32.58832], url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/coosawhatchie-tulifinny-hill', src: 'lt' },
+  { id: 'cowpens-national-battlefield', name: "Cowpens National Battlefield", kind: 'park', ll: [-81.81806, 35.13666], battles: ['cowpens'], status: 'on', url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/cowpens-national-battlefield', src: 'lt' },
+  { id: 'drayton-hall', name: "Drayton Hall", kind: 'historic', ll: [-80.07622, 32.87092], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/drayton-hall', src: 'lt' },
+  { id: 'eutaw-springs', name: "Eutaw Springs", kind: 'battlefield', ll: [-80.29925, 33.40772], battles: ['eutaw'], status: 'part', url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/eutaw-springs', src: 'lt', note: "Small park on part of the field; much of the ground is built over or under Lake Marion" },
+  { id: 'fort-dorchester', name: "Fort Dorchester", kind: 'historic', ll: [-80.18094, 32.97663], url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/fort-dorchester', src: 'lt', note: "Tabby fort ruins; a Patriot and later British post" },
+  { id: 'fort-fair-lawn', name: "Fort Fair Lawn", kind: 'historic', ll: [-79.97279, 33.19328], battles: ['monks_corner'], url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/fort-fair-lawn', src: 'lt', note: "Earthworks of a British post near Monck's Corner" },
+  { id: 'fort-johnson', name: "Fort Johnson", kind: 'historic', ll: [-79.93315, 32.73033], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/fort-johnson', src: 'lt' },
+  { id: 'fort-sumter-and-fort-moultrie-national-historical-park', name: "Fort Sumter and Fort Moultrie National Historical Park", kind: 'park', ll: [-79.85762, 32.76035], battles: ['siege_charleston'], status: 'part', url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/fort-sumter-and-fort-moultrie-national-historical-park', src: 'lt', note: "Fort Moultrie (the 1776 palmetto fort's successor) surrendered in May 1780" },
+  { id: 'fort-thicketty', name: "Fort Thicketty", kind: 'historic', ll: [-81.71288, 34.98528], url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/fort-thicketty', src: 'lt', note: "A Loyalist post taken in July 1780" },
+  { id: 'fort-watson', name: "Fort Watson", kind: 'battlefield', ll: [-80.43181, 33.53249], battles: ['fort_watson'], status: 'on', url: 'https://thelibertytrail.org/sc/trail-sites/statecounty-parks/fort-watson', src: 'lt', note: "The Santee Indian Mound, at the end of Fort Watson Road in Santee National Wildlife Refuge" },
+  { id: 'francis-marion-national-forest', name: "Francis Marion National Forest", kind: 'park', ll: [-79.76285, 33.07459], url: 'https://thelibertytrail.org/sc/trail-sites/national-parks/francis-marion-national-forest', src: 'lt' },
+  { id: 'francis-marion-tomb-belle-isle-plantation-cemetery', name: "Francis Marion's tomb (Belle Isle Plantation Cemetery)", kind: 'grave', ll: [-80.08778, 33.43937], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/francis-marion-tomb-belle-isle-plantation-cemetery', src: 'lt' },
+  { id: 'general-moultries-grave', name: "General Moultrie's Grave", kind: 'grave', ll: [-79.85762, 32.76036], battles: ['siege_charleston'], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/general-moultries-grave', src: 'lt' },
+  { id: 'goodale-state-park', name: "Goodale State Park", kind: 'park', ll: [-80.52746, 34.28407], url: 'https://thelibertytrail.org/sc/trail-sites/statecounty-parks/goodale-state-park', src: 'lt' },
+  { id: 'grave-col-james-williams', name: "Grave of Col. James Williams", kind: 'grave', ll: [-81.64847, 35.07339], battles: ['kings_mountain', 'musgrove_mill'], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/grave-col-james-williams', src: 'lt' },
+  { id: 'great-savannah', name: "Great Savannah", kind: 'battlefield', ll: [-80.37426, 33.49021], battles: ['great_savannah'], status: 'marker', url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/great-savannah', src: 'lt' },
+  { id: 'halfway-swamp', name: "Halfway Swamp", kind: 'battlefield', ll: [-80.46888, 33.61530], battles: ['halfway_swamp'], status: 'marker', url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/halfway-swamp', src: 'lt' },
+  { id: 'hampton-plantation-state-historic-site', name: "Hampton Plantation State Historic Site", kind: 'park', ll: [-79.43934, 33.19888], url: 'https://thelibertytrail.org/sc/trail-sites/statecounty-parks/hampton-plantation-state-historic-site', src: 'lt' },
+  { id: 'hanging-rock', name: "Hanging Rock", kind: 'battlefield', ll: [-80.67825, 34.57032], battles: ['hanging_rock'], status: 'on', url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/hanging-rock', src: 'lt' },
+  { id: 'hanover-house', name: "Hanover House", kind: 'historic', ll: [-82.81815, 34.67550], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/hanover-house', src: 'lt' },
+  { id: 'heyward-washington-house', name: "Heyward-Washington House", kind: 'historic', ll: [-79.92930, 32.77528], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/heyward-washington-house', src: 'lt' },
+  { id: 'historic-brattonsville', name: "Historic Brattonsville", kind: 'historic', ll: [-81.17619, 34.86480], battles: ['hucks_defeat'], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/historic-brattonsville', src: 'lt' },
+  { id: 'hobkirk-hill', name: "Hobkirk Hill", kind: 'battlefield', ll: [-80.61334, 34.26221], battles: ['hobkirk'], status: 'lost', url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/hobkirk-hill', src: 'lt', note: "The hill is now a residential part of Camden; markers only" },
+  { id: 'hopewell-plantation-treaty-site', name: "Hopewell Plantation Treaty Site", kind: 'historic', ll: [-82.83693, 34.65424], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/hopewell-plantation-treaty-site', src: 'lt' },
+  { id: 'hopsewee-plantation', name: "Hopsewee Plantation", kind: 'historic', ll: [-79.38409, 33.21149], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/hopsewee-plantation', src: 'lt' },
+  { id: 'hucks-defeat', name: "Huck's Defeat", kind: 'battlefield', ll: [-81.17499, 34.86511], battles: ['hucks_defeat'], status: 'on', url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/hucks-defeat', src: 'lt', note: "At Historic Brattonsville" },
+  { id: 'kershaw-cornwallis-house', name: "Kershaw-Cornwallis House", kind: 'historic', ll: [-80.60509, 34.23241], battles: ['camden', 'hobkirk'], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/kershaw-cornwallis-house', src: 'lt', note: "Reconstructed house used as British headquarters in Camden" },
+  { id: 'kings-mountain-national-military-park', name: "Kings Mountain National Military Park", kind: 'park', ll: [-81.38726, 35.14090], battles: ['kings_mountain'], status: 'on', url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/kings-mountain-national-military-park', src: 'lt' },
+  { id: 'kings-mountain-state-park', name: "Kings Mountain State Park", kind: 'park', ll: [-81.33568, 35.14777], battles: ['kings_mountain'], url: 'https://thelibertytrail.org/sc/trail-sites/statecounty-parks/kings-mountain-state-park', src: 'lt' },
+  { id: 'landsford-canal-state-park', name: "Landsford Canal State Park", kind: 'park', ll: [-80.88272, 34.79100], url: 'https://thelibertytrail.org/sc/trail-sites/statecounty-parks/landsford-canal-state-park', src: 'lt' },
+  { id: 'limestone-springs-memorial', name: "Limestone Springs Memorial", kind: 'historic', ll: [-81.65285, 35.05492], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/limestone-springs-memorial', src: 'lt' },
+  { id: 'lynches-creek-massacre', name: "Lynches Creek Massacre", kind: 'historic', ll: [-79.42027, 33.91349], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/lynches-creek-massacre', src: 'lt' },
+  { id: 'magnolia-plantation-and-gardens', name: "Magnolia Plantation and Gardens", kind: 'historic', ll: [-80.08648, 32.86810], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/magnolia-plantation-and-gardens', src: 'lt' },
+  { id: 'marion-square', name: "Marion Square", kind: 'historic', ll: [-79.93566, 32.78688], battles: ['siege_charleston'], status: 'part', url: 'https://thelibertytrail.org/sc/trail-sites/statecounty-parks/marion-square', src: 'lt', note: "A tabby remnant of the 1780 hornwork survives in the square" },
+  { id: 'memorial-francis-salvador', name: "Memorial of Francis Salvador", kind: 'historic', ll: [-79.94298, 32.78994], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/memorial-francis-salvador', src: 'lt' },
+  { id: 'mepkin', name: "Mepkin", kind: 'historic', ll: [-79.94427, 33.11524], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/mepkin', src: 'lt' },
+  { id: 'middleton-place', name: "Middleton Place", kind: 'historic', ll: [-80.13945, 32.90084], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/middleton-place', src: 'lt' },
+  { id: 'miles-brewton-house', name: "Miles-Brewton House", kind: 'historic', ll: [-79.93246, 32.77238], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/miles-brewton-house', src: 'lt' },
+  { id: 'moncks-corner', name: "Moncks Corner", kind: 'battlefield', ll: [-80.00894, 33.19206], battles: ['monks_corner'], status: 'marker', url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/moncks-corner', src: 'lt' },
+  { id: 'musgrove-mill-state-historic-site', name: "Musgrove Mill State Historic Site", kind: 'park', ll: [-81.85278, 34.59332], battles: ['musgrove_mill'], status: 'on', url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/musgrove-mill-state-historic-site', src: 'lt' },
+  { id: 'ninety-six-national-historic-site', name: "Ninety Six National Historic Site", kind: 'park', ll: [-82.02334, 34.14663], battles: ['ninety_six'], status: 'on', url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/ninety-six-national-historic-site', src: 'lt' },
+  { id: 'old-exchange-and-provost-dungeon', name: "Old Exchange and Provost Dungeon", kind: 'museum', ll: [-79.92686, 32.77686], battles: ['siege_charleston'], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/old-exchange-and-provost-dungeon', src: 'lt' },
+  { id: 'old-santee-canal-park', name: "Old Santee Canal Park", kind: 'historic', ll: [-79.97041, 33.19347], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/old-santee-canal-park', src: 'lt' },
+  { id: 'old-stone-church-0', name: "Old Stone Church", kind: 'historic', ll: [-82.81528, 34.66445], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/old-stone-church-0', src: 'lt' },
+  { id: 'overmountain-victory-national-historic-trail', name: "Overmountain Victory National Historic Trail", kind: 'trail', ll: [-81.37700, 35.14044], battles: ['kings_mountain'], url: 'https://thelibertytrail.org/sc/trail-sites/national-parks/overmountain-victory-national-historic-trail', src: 'lt' },
+  { id: 'ox-swamp', name: "Ox Swamp", kind: 'battlefield', ll: [-80.20982, 33.65305], status: 'marker', url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/ox-swamp', src: 'lt' },
+  { id: 'ports-ferry', name: "Port's Ferry", kind: 'battlefield', ll: [-79.44704, 33.86069], status: 'marker', url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/ports-ferry', src: 'lt' },
+  { id: 'rugeleys-mill', name: "Rugeley's Mill", kind: 'battlefield', ll: [-80.64209, 34.40491], battles: ['camden'], url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/rugeleys-mill', src: 'lt', note: "Gates's army camped here before Camden" },
+  { id: 'santee-state-park', name: "Santee State Park", kind: 'park', ll: [-80.50142, 33.55198], url: 'https://thelibertytrail.org/sc/trail-sites/statecounty-parks/santee-state-park', src: 'lt' },
+  { id: 'siege-charleston', name: "Siege of Charleston", kind: 'battlefield', ll: [-79.93566, 32.78688], battles: ['siege_charleston'], status: 'part', url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/siege-charleston', src: 'lt' },
+  { id: 'snows-island', name: "Snow's Island", kind: 'historic', ll: [-79.33556, 33.86649], url: 'https://thelibertytrail.org/sc/trail-sites/statecounty-parks/snows-island', src: 'lt', note: "Marion's island camp at the Pee Dee and Lynches rivers" },
+  { id: 'south-carolina-historical-society-museum', name: "South Carolina Historical Society Museum", kind: 'museum', ll: [-79.93089, 32.77725], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/south-carolina-historical-society-museum', src: 'lt' },
+  { id: 'stono-ferry', name: "Stono Ferry", kind: 'battlefield', ll: [-80.16182, 32.75628], battles: ['stono_ferry'], status: 'marker', url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/stono-ferry', src: 'lt' },
+  { id: 'tearcoat-swamp', name: "Tearcoat Swamp", kind: 'battlefield', ll: [-80.01841, 33.89072], battles: ['tearcoat'], status: 'marker', url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/tearcoat-swamp', src: 'lt' },
+  { id: 'powder-magazine', name: "The Powder Magazine", kind: 'historic', ll: [-79.93008, 32.77944], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/powder-magazine', src: 'lt' },
+  { id: 'wadboo-bridge', name: "Wadboo Bridge", kind: 'battlefield', ll: [-79.95315, 33.19609], status: 'marker', url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/wadboo-bridge', src: 'lt' },
+  { id: 'walnut-grove-plantation', name: "Walnut Grove Plantation", kind: 'historic', ll: [-81.95861, 34.82645], url: 'https://thelibertytrail.org/sc/trail-sites/historic-sites/walnut-grove-plantation', src: 'lt' },
+  { id: 'waxhaws', name: "Waxhaws", kind: 'battlefield', ll: [-80.62656, 34.74191], battles: ['waxhaws'], status: 'on', url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/waxhaws', src: 'lt', note: "Memorial and mass grave at the site" },
+  { id: 'white-point-garden', name: "White Point Garden", kind: 'park', ll: [-79.93029, 32.76998], url: 'https://thelibertytrail.org/sc/trail-sites/statecounty-parks/white-point-garden', src: 'lt' },
+  { id: 'witherspoons-ferry', name: "Witherspoon's Ferry", kind: 'battlefield', ll: [-79.44844, 33.83835], status: 'marker', url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/witherspoons-ferry', src: 'lt' },
+  { id: 'wyboo-swamp', name: "Wyboo Swamp", kind: 'battlefield', ll: [-80.21030, 33.68593], battles: ['wiboo_lower_bridge'], status: 'marker', url: 'https://thelibertytrail.org/sc/trail-sites/battlefields/wyboo-swamp', src: 'lt' },
+  { id: 'brunswick-town', name: "Brunswick Town", kind: 'park', ll: [-77.94602, 34.04021], url: 'https://thelibertytrail.org/nc/trail-sites/statecounty-parks/brunswick-town', src: 'lt' },
+  { id: 'alamance', name: "Alamance", kind: 'battlefield', ll: [-79.52135, 36.00979], url: 'https://thelibertytrail.org/nc/trail-sites/battlefields/alamance', src: 'lt' },
+  { id: 'burgwin-wright-house', name: "Burgwin-Wright House", kind: 'historic', ll: [-77.94627, 34.23521], url: 'https://thelibertytrail.org/nc/trail-sites/historic-sites/burgwin-wright-house', src: 'lt' },
+  { id: 'chowan-courthouse', name: "Chowan Courthouse", kind: 'historic', ll: [-76.60790, 36.05791], url: 'https://thelibertytrail.org/nc/trail-sites/historic-sites/chowan-courthouse', src: 'lt' },
+  { id: 'cowans-ford', name: "Cowan's Ford", kind: 'battlefield', ll: [-80.94173, 35.42732], battles: ['cowans_ford'], status: 'lost', url: 'https://thelibertytrail.org/nc/trail-sites/battlefields/cowans-ford', src: 'lt', note: "The ford is under Lake Norman; Davidson's death is commemorated nearby" },
+  { id: 'fort-defiance', name: "Fort Defiance", kind: 'historic', ll: [-81.49450, 36.01721], url: 'https://thelibertytrail.org/nc/trail-sites/historic-sites/fort-defiance', src: 'lt' },
+  { id: 'general-lafayette-marker-halifax-north-carolina-nc-9', name: "General Lafayette Marker, Halifax, North Carolina (NC-9)", kind: 'historic', ll: [-77.59346, 36.33080], url: 'https://thelibertytrail.org/nc/trail-sites/historic-sites/general-lafayette-marker-halifax-north-carolina-nc-9', src: 'lt' },
+  { id: 'great-dismal-swamp-nc', name: "Great Dismal Swamp NC", kind: 'park', ll: [-76.35572, 36.50734], url: 'https://thelibertytrail.org/nc/trail-sites/statecounty-parks/great-dismal-swamp-nc', src: 'lt' },
+  { id: 'guilford-courthouse', name: "Guilford Courthouse National Military Park", kind: 'park', ll: [-79.84663, 36.13128], battles: ['guilford'], status: 'on', url: 'https://thelibertytrail.org/nc/trail-sites/battlefields/guilford-courthouse', src: 'lt' },
+  { id: 'historic-bath', name: "Historic Bath", kind: 'park', ll: [-76.81165, 35.47699], url: 'https://thelibertytrail.org/nc/trail-sites/statecounty-parks/historic-bath', src: 'lt' },
+  { id: 'historic-bethabara', name: "Historic Bethabara", kind: 'park', ll: [-80.29618, 36.15468], url: 'https://thelibertytrail.org/nc/trail-sites/statecounty-parks/historic-bethabara', src: 'lt' },
+  { id: 'historic-halifax', name: "Historic Halifax", kind: 'park', ll: [-77.58967, 36.33002], url: 'https://thelibertytrail.org/nc/trail-sites/statecounty-parks/historic-halifax', src: 'lt' },
+  { id: 'house-horseshoe', name: "House in the Horseshoe", kind: 'battlefield', ll: [-79.38339, 35.46663], status: 'on', url: 'https://thelibertytrail.org/nc/trail-sites/battlefields/house-horseshoe', src: 'lt', note: "1781 Loyalist attack on Philip Alston's house" },
+  { id: 'moores-creek-bridge', name: "Moores Creek National Battlefield", kind: 'park', ll: [-78.11031, 34.45821], url: 'https://thelibertytrail.org/nc/trail-sites/battlefields/moores-creek-bridge', src: 'lt', note: "1776 victory over North Carolina Loyalists" },
+  { id: 'pyles-defeat', name: "Pyle's Defeat", kind: 'battlefield', ll: [-79.45033, 36.04992], battles: ['pyles'], status: 'part', url: 'https://thelibertytrail.org/nc/trail-sites/battlefields/pyles-defeat', src: 'lt', note: "A small part of the ground can be walked; the exact site is debated" },
+  { id: 'ramsours-mill', name: "Ramsour's Mill", kind: 'battlefield', ll: [-81.26546, 35.47629], battles: ['ramsours_mill'], status: 'on', url: 'https://thelibertytrail.org/nc/trail-sites/battlefields/ramsours-mill', src: 'lt' },
+  { id: 'tryon-palace', name: "Tryon Palace", kind: 'park', ll: [-77.04304, 35.10483], url: 'https://thelibertytrail.org/nc/trail-sites/statecounty-parks/tryon-palace', src: 'lt' },
+
+  // ---- Visitor centres inside the national parks (OpenStreetMap) ----
+  { id: 'cowp-vc', name: 'Cowpens National Battlefield Visitor Center', kind: 'museum', ll: [-81.81809, 35.13668], battles: ['cowpens'], url: 'https://www.nps.gov/cowp/' },
+  { id: 'kimo-vc', name: 'Kings Mountain National Military Park Visitor Center', kind: 'museum', ll: [-81.37718, 35.14129], battles: ['kings_mountain'], url: 'https://www.nps.gov/kimo/' },
+  { id: 'guco-vc', name: 'Guilford Courthouse National Military Park Visitor Center', kind: 'museum', ll: [-79.84635, 36.13131], battles: ['guilford'], url: 'https://www.nps.gov/guco/' },
+  { id: 'fomo-vc', name: 'Fort Moultrie Visitor Center', kind: 'museum', ll: [-79.85761, 32.76040], battles: ['siege_charleston'], url: 'https://www.nps.gov/fosu/' },
+
+  // ---- Virginia: Yorktown and Green Spring (NPS Colonial National Historical Park; OpenStreetMap) ----
+  { id: 'colo-vc', name: 'Yorktown Battlefield Visitor Center', kind: 'museum', ll: [-76.50244, 37.23080], battles: ['yorktown'], url: 'https://www.nps.gov/york/' },
+  { id: 'colo-yorktown', name: 'Yorktown Battlefield', kind: 'park', ll: [-76.49921, 37.22758], battles: ['yorktown'], status: 'on', url: 'https://www.nps.gov/york/', note: 'Redoubts 9 and 10, the siege lines and the Grand French Battery on the battlefield tour road' },
+  { id: 'colo-surrender', name: 'Surrender Field', kind: 'battlefield', ll: [-76.50539, 37.20943], battles: ['yorktown'], status: 'on', url: 'https://www.nps.gov/york/' },
+  { id: 'colo-moore', name: 'Moore House', kind: 'historic', ll: [-76.48593, 37.22178], battles: ['yorktown'], url: 'https://www.nps.gov/york/', note: 'Where the surrender terms were negotiated' },
+  { id: 'armay', name: 'American Revolution Museum at Yorktown', kind: 'museum', ll: [-76.51830, 37.23875], battles: ['yorktown'], url: 'https://www.historyisfun.org/' },
+  { id: 'green-spring', name: 'Green Spring (Colonial National Historical Park)', kind: 'battlefield', ll: [-76.79960, 37.25813], battles: ['green_spring'], status: 'part', url: 'https://www.nps.gov/colo/', note: 'Site of the Green Spring plantation; the battle was fought on the ground to its south' },
+
+  // ---- Georgia (OpenStreetMap) ----
+  { id: 'savannah-battlefield-park', name: 'Battlefield Memorial Park and Spring Hill Redoubt', kind: 'battlefield', ll: [-81.09954, 32.07561], battles: ['siege_savannah'], status: 'part', note: 'A reconstruction of the Spring Hill redoubt, focus of the 9 October 1779 assault' },
+  { id: 'greene-monument-savannah', name: 'Nathanael Greene Monument (Johnson Square)', kind: 'grave', ll: [-81.09200, 32.08000], note: 'Greene and his son are buried beneath the monument' },
+  { id: 'fort-morris', name: 'Fort Morris State Historic Site', kind: 'park', ll: [-81.28094, 31.76438], battles: ['sunbury'], status: 'on', url: 'https://gastateparks.org/FortMorris' },
+  { id: 'kettle-creek', name: 'Kettle Creek Battlefield', kind: 'battlefield', ll: [-82.88581, 33.69060], battles: ['kettle_creek'], status: 'on', note: 'War Hill, with a monument and walking trail' },
+  { id: 'brier-creek', name: 'Brier Creek battlefield', kind: 'battlefield', ll: [-81.48283, 32.81163], battles: ['brier_creek'], status: 'marker', note: 'Located by archaeology (LAMAR Institute, 2018-20) in a state wildlife area; position approximate' },
+  { id: 'fort-cornwallis', name: "St. Paul's Church (site of Fort Cornwallis)", kind: 'historic', ll: [-81.96050, 33.47450], battles: ['augusta1781'], status: 'part', note: 'A Celtic cross and cannon mark the fort site in the churchyard' },
+  { id: 'augusta-museum', name: 'Augusta Museum of History', kind: 'museum', ll: [-81.96088, 33.47493], battles: ['augusta1781', 'augusta1780'], url: 'https://www.augustamuseum.org/' },
+
+  // ---- South Carolina, beyond the Liberty Trail (OpenStreetMap) ----
+  { id: 'fishdam-monument', name: 'Fish Dam Battleground Monument', kind: 'battlefield', ll: [-81.41805, 34.59483], battles: ['fishdam_ford'], status: 'marker' },
+  { id: 'charleston-museum', name: 'The Charleston Museum', kind: 'museum', ll: [-79.93576, 32.78989], battles: ['siege_charleston'], url: 'https://www.charlestonmuseum.org' },
+  { id: 'cayce-museum', name: 'Cayce Historical Museum', kind: 'museum', ll: [-81.06770, 33.96956], battles: ['fort_granby'], url: 'https://caycesc.gov/museum.php', note: 'A replica of the Cayce house that served as Fort Granby (not on the original site)' },
+  { id: 'camden-archives', name: 'Camden Archives and Museum', kind: 'museum', ll: [-80.60684, 34.25117], battles: ['camden', 'hobkirk'] },
+  { id: 'hammonds-store', name: "Hammond's Store battlefield", kind: 'battlefield', ll: [-81.87000, 34.41800], battles: ['hammonds_store'], status: 'part', note: 'Preserved in 2023 by the SC Battleground Trust near Clinton; the store site itself is lost and this position is approximate. Check access before visiting' },
+  { id: 'morgan-monument', name: 'Daniel Morgan Monument (Morgan Square, Spartanburg)', kind: 'grave', ll: [-81.93300, 34.94900], battles: ['cowpens'] },
+  { id: 'francis-marion-memorial', name: 'Francis Marion Memorial', kind: 'grave', ll: [-79.44800, 33.83800] },
+
+  // ---- Tennessee: the Overmountain muster ----
+  { id: 'sycamore-shoals', name: 'Sycamore Shoals State Historic Area', kind: 'park', ll: [-82.25300, 36.34400], battles: ['kings_mountain'], note: 'Muster ground of the Overmountain men, 25 September 1780; start of the Overmountain Victory NHT' },
+];

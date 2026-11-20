@@ -24,6 +24,19 @@ SC.icons = (() => {
     city: svg('<path d="M3.5 20v-7L8 9.5l4.5 3.5v7Z"/><path d="M12.5 20v-9h5v9M12.5 11l2.5-7 2.5 7"/><path d="M7 20v-3.5h2V20M2.5 20h17.5"/>'),
     // Swallow-tailed colour on a staff
     muster: svg('<path d="M6 21V3"/><path d="M6 4h12l-3 3.5 3 3.5H6"/>'),
+    // "Visit today" kinds
+    // Classical portico
+    museum: svg('<path d="M3 9.5 12 4l9 5.5Z"/><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8"/><path d="M3 20h18"/>'),
+    // Gabled house
+    historic: svg('<path d="M4 20v-9l8-6 8 6v9Z"/><path d="M10 20v-5h4v5"/>'),
+    // Pine and flag: a park
+    park: svg('<path d="M8 21v-4M8 4l-4.5 8h3L4 17h8l-2.5-5h3Z"/><path d="M17 21V6l4 1.5L17 9"/>'),
+    // Obelisk
+    grave: svg('<path d="M10 20 11 6l1-2 1 2 1 14Z"/><path d="M7.5 20h9"/>'),
+    // Footpath
+    trail: svg('<path d="M5 20c2-4 7-3 7-8s5-5 7-8"/><circle cx="5" cy="20" r=".6"/><circle cx="19" cy="4" r=".6"/>'),
+    // Roadside marker on a post
+    marker: svg('<path d="M5 4h14v9H5Z"/><path d="M12 13v8M8 21h8"/>'),
   };
   return { ...I, get: (k, fallback = 'battle') => I[k] || I[fallback] };
 })();

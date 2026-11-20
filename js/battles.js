@@ -102,12 +102,13 @@ SC.battles_ui = (() => {
       </div>
       ${b.others ? `<div class="src">Also present: ${esc(b.others)}</div>` : ''}
       ${b.participants.length ? `<div class="src">Highlighted: each commander's route from ${b.approach} days before to ${b.withdrawal} days after.</div>` : '<div class="src">No tracked commanders took part, so there are no routes to highlight.</div>'}
-      ${SC.tactics.has(b.id) ? `<button class="btn tac-enter" data-act="tactical">${SC.icons.get('battle')}<span>Enter the battlefield<small>Phase-by-phase 3D reconstruction</small><em class="tac-level ${SC.tactical[b.id].level}" title="${esc(SC.tactics.level(b.id)[1])}">${esc(SC.tactics.level(b.id)[0])}</em></span></button>` : ''}
+      ${SC.tactics.has(b.id) ? `<button class="btn tac-enter" data-act="tactical">${SC.icons.get('battle')}<span>Enter the battlefield<small>Phase-by-phase 3D reconstruction</small><em class="tac-level ${SC.tactical[b.id].level}" title="${esc(SC.tactics.level(b.id)[1])}">${esc(SC.tactics.level(b.id)[0])}</em>${SC.tactics.site(b.id)}</span></button>` : ''}
       <div class="info-actions">
         <button class="btn primary" data-act="play">▶ Play this battle</button>
         <button class="btn" data-act="goto">Jump to date</button>
         <button class="btn" data-act="zoom">Zoom to field</button>
       </div>
+      ${SC.visit.battleSection(b)}
       <div class="src">Figures are approximate; sources differ.</div>`,
       () => { state.selectedBattle = null; highlight(null); SC.emit('state:change'); });
     state.selectedBattle = b.id;
@@ -115,6 +116,7 @@ SC.battles_ui = (() => {
     panel.querySelector('[data-act="goto"]').onclick = () => SC.emit('timeline:set', b.startDay);
     panel.querySelector('[data-act="zoom"]').onclick = () => flyTo(b);
     panel.querySelector('[data-act="tactical"]')?.addEventListener('click', () => SC.tactics.enter(b.id));
+    SC.visit.wire(panel, b);
     panel.querySelectorAll('[data-cmd]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); SC.emit('commander:open', a.dataset.cmd); }));
     highlight(b);
     if (fly) flyToRoutes(b);
