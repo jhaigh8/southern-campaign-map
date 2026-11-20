@@ -380,6 +380,7 @@ body.tactical .visit-site .vs-label { display: none !important; }
 .visit-pop .maplibregl-popup-content { background: var(--panel-solid); color: var(--ink); font: 12.5px/1.4 var(--sans); padding: 10px 12px; border-radius: 8px; }
 .visit-pop .vp-kind { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--ink-soft); margin-bottom: 3px; }
 .visit-pop .vp-kind svg { width: 13px; height: 13px; }
+.visit-pop .vp-where { font-size: 11.5px; color: var(--ink-soft); margin-top: 3px; }
 .visit-pop .vp-note { font-size: 11.5px; color: #b45309; margin-top: 3px; }
 .visit-pop .vp-links { display: flex; gap: 12px; margin-top: 6px; }
 .visit-status { display: inline-block; font: 600 10px var(--sans); text-transform: uppercase; letter-spacing: .05em; padding: 1px 7px; border-radius: 999px; color: #fff; background: #3f7d32; font-style: normal; cursor: help; }

@@ -1,7 +1,7 @@
 // Tactical reconstruction: capture of Fort Granby, 15 May 1781. Format: see cowpens.js and yorktown.js.
 //
 // Placement: Fort Granby was James Cayce's fortified house on the Congaree River, in present Cayce, SC,
-// placed approximately (33.95 N, 81.05 W). Positions and works are schematic.
+// placed at the state historical marker for the fort (SCDAH 32-60; data/places.js). Positions and works are schematic.
 //
 // Main sources: Lee's Memoirs; Greene's and Sumter's correspondence.
 window.SC = window.SC || {};
@@ -12,7 +12,7 @@ SC.tactical.fort_granby = {
   title: 'Capture of Fort Granby',
   date: '15 May 1781',
   level: 'approximate', site: 'approximate',
-  origin: [-81.05, 33.95],
+  origin: 'fort_granby',
   facing: 90,
   camera: { at: [-60, 0], zoom: 16.2, pitch: 55, bearing: 0, elev: 50 },
   sources: "After Lee's Memoirs and Greene's and Sumter's correspondence. Site placed approximately; positions schematic.",

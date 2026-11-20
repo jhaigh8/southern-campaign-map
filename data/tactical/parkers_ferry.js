@@ -1,5 +1,5 @@
 // Tactical reconstruction (approximate): Parker's Ferry, 30 August 1781. Format: see cowpens.js.
-// Placement: origin is the battle's map location by the causeway to the Edisto ferry (data/places.js). Marion's
+// Placement: origin is the state historical marker for the battle (SCDAH 15-12; data/places.js), near the causeway to the Edisto ferry. Marion's
 // men lay in the swamp beside the causeway. Positions schematic.
 // Sources: Marion's report to Greene; Bass, Swamp Fox (1959).
 window.SC = window.SC || {};

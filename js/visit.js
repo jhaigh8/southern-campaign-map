@@ -10,7 +10,7 @@ SC.visit = (() => {
     marker: ['Marker or memorial', 'A marker or memorial stands at or near the site; the ground itself is not interpreted.'],
     lost: ['Site lost', 'The ground is built over or under water. Markers or a memorial stand nearby.'],
   };
-  const PROGRAM = { NC: 'North Carolina Highway Historical Marker', GA: 'Georgia historical marker', VA: 'Virginia highway marker' };
+  const PROGRAM = { SC: 'South Carolina historical marker', NC: 'North Carolina Highway Historical Marker', GA: 'Georgia historical marker', VA: 'Virginia highway marker' };
   const MARKER_LAYERS = ['visit-park-fill', 'visit-park-line', 'visit-trail', 'visit-offset', 'visit-markers'];
   let map, on = false;
   const els = {};
@@ -53,8 +53,8 @@ SC.visit = (() => {
     map.on('click', 'visit-markers', (e) => {
       const mk = data().markers[e.features[0].properties.i];
       popup.setLngLat(mk.ll).setHTML(`<div class="vp-kind">${SC.icons.get('marker')} ${esc(PROGRAM[mk.st])} ${esc(mk.no)}</div>
-        <strong>${esc(mk.name)}</strong>${mk.note ? `<div class="vp-note">${esc(mk.note)}</div>` : ''}
-        <div class="vp-links">${mk.url ? `<a href="${esc(mk.url)}" target="_blank" rel="noopener">Marker text</a>` : ''}<a href="${directions(mk.ll)}" target="_blank" rel="noopener">Directions</a></div>`).addTo(map);
+        <strong>${esc(mk.name)}</strong>${mk.where ? `<div class="vp-where">${esc(mk.where)}</div>` : ''}${mk.note ? `<div class="vp-note">${esc(mk.note)}</div>` : ''}
+        <div class="vp-links">${mk.url ? `<a href="${esc(mk.url)}" target="_blank" rel="noopener">${mk.st === 'SC' ? 'Text on the SCDAH map' : 'Marker text'}</a>` : ''}<a href="${directions(mk.ll)}" target="_blank" rel="noopener">Directions</a></div>`).addTo(map);
     });
     map.on('mouseenter', 'visit-markers', () => { map.getCanvas().style.cursor = 'pointer'; });
     map.on('mouseleave', 'visit-markers', () => { map.getCanvas().style.cursor = ''; });
