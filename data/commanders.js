@@ -69,6 +69,8 @@ SC.commanders = [
     bio: 'Held Camden after Cornwallis left. He beat Greene at Hobkirk\'s Hill, then pulled back from the interior and relieved Ninety Six before sailing home in ill health.' },
   { id: 'stewart', name: 'Alexander Stewart', side: 'british', rank: 'Lieutenant Colonel', unit: 'Field army in SC (1781)', force: 'british', portrait: null,
     bio: 'Commanded the British field army at Eutaw Springs on 8 September 1781, the last major battle in the Carolinas.' },
+  { id: 'leslie', name: 'Alexander Leslie', side: 'british', rank: 'Major General', unit: 'British command in the South (Nov 1781–Dec 1782)', force: 'british', portrait: null,
+    bio: 'A Scottish officer who led a division under Cornwallis in 1781, including the right wing at Guilford Courthouse. He took command at Charleston in November 1781, held the city while the Southern Army hemmed it in, sent foraging expeditions up the rivers, and carried out the evacuations of Savannah (July 1782) and Charleston (14 December 1782).' },
   { id: 'arnold', name: 'Benedict Arnold', side: 'british', rank: 'Brigadier General (British)', unit: 'Virginia raiding force', force: 'british', portrait: 'assets/portraits/arnold.jpg',
     bio: 'After his treason, Arnold raided Virginia in January 1781 and burned stores at Richmond. He joined Phillips and handed his force to Cornwallis at Petersburg in May.' },
   { id: 'phillips', name: 'William Phillips', side: 'british', rank: 'Major General', unit: 'Virginia expedition', force: 'british', portrait: 'assets/portraits/phillips.jpg',

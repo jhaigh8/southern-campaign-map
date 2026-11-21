@@ -107,6 +107,13 @@ SC.movements = {
     ['1781-09-08', 'eutaw', 2200, 'd', 'Battle of Eutaw Springs.'],
     ['1781-09-15', 'high_hills', 1600, 'a', 'Returns to the High Hills.'],
     ['1781-10-19', 'high_hills', 1600, 'a'],
+    ['1781-11-18', 'high_hills', 1600, 'd', "Breaks camp and marches for the lowcountry."],
+    ['1781-12-01', 'dorchester_fort', 400, 'd', "With a detachment of horse and foot, drives the British out of Dorchester."],
+    ['1781-12-09', 'round_o', 2000, 'd', "Camps at the Round O, west of Charleston."],
+    ['1782-01-18', [-80.47, 32.80, 'Near Jacksonborough'], 2000, 'a', "Moves closer to protect the state legislature meeting at Jacksonborough."],
+    ['1782-04-05', 'bacons_bridge', 2200, 'a', "Shifts camp to Bacon's Bridge on the Ashley, hemming the British into Charleston."],
+    ['1782-11-15', 'bacons_bridge', 2200, 'a'],
+    ['1782-12-14', 'charleston', 2200, 'd', "Rides into Charleston behind the departing British."],
   ],
 
   morgan: [
@@ -175,6 +182,11 @@ SC.movements = {
     ['1781-09-08', 'eutaw', 400, 'd', "Commands the militia in Greene's front line."],
     ['1781-09-20', [-79.85, 33.35, 'Lower Santee'], 400, 'a', 'Operating along the lower Santee.'],
     ['1781-10-19', [-79.85, 33.35, 'Lower Santee'], 400, 'a'],
+    ['1781-11-17', [-79.85, 33.30, 'Lower Santee'], 400, 'a', "His officers Maham and Shelby take the British hospital at Fair Lawn."],
+    ['1782-01-08', 'jacksonborough', null, 'd', "Takes his seat in the state Senate at Jacksonborough."],
+    ['1782-02-25', 'tidymans', 300, 'd', "Back with his brigade after the rout at Wambaw Bridge; repulsed again at Tidyman's Plantation."],
+    ['1782-08-29', 'wadboo', 200, 'd', "Ambushes Fraser's dragoons in the Avenue of the Cedars at Wadboo: his last fight."],
+    ['1782-12-14', 'wadboo', 200, 'a', "Disbands his brigade once the British have left."],
   ],
 
   sumter: [
@@ -213,6 +225,9 @@ SC.movements = {
     ['1781-06-19', 'ninety_six', 400, 'a'],
     ['1781-09-08', 'eutaw', 300, 'd', 'Commands militia at Eutaw Springs; wounded.'],
     ['1781-09-20', [-80.4, 33.6, 'Santee'], 300, 'a'],
+    ['1781-11-25', 'ninety_six', 300, 'a', "Back in the Ninety Six district, chasing Cunningham's raiders."],
+    ['1782-09-15', 'ninety_six', 400, 'a', "Sets out with Clarke against the Cherokee."],
+    ['1782-10-17', 'long_swamp', 400, 'a', "Cherokee expedition ends at Long Swamp; peace terms follow (dates approximate)."],
   ],
 
   clarke: [
@@ -230,6 +245,8 @@ SC.movements = {
     ['1781-04-16', 'augusta', 400, 'd', 'Lays siege to Augusta.'],
     ['1781-05-22', 'augusta', 400, 'd'],
     ['1781-06-05', 'augusta', 400, 'd', 'Augusta falls.'],
+    ['1782-09-15', 'augusta', 300, 'a', "Joins Pickens's expedition against the Cherokee."],
+    ['1782-10-17', 'long_swamp', 300, 'a'],
   ],
 
   lee: [
@@ -257,6 +274,8 @@ SC.movements = {
     ['1781-08-01', 'high_hills', 280, 'a'],
     ['1781-09-08', 'eutaw', 280, 'd'],
     ['1781-09-30', 'high_hills', 280, 'a'],
+    ['1782-01-13', 'johns_island', 280, 'a', "A planned surprise of the British on Johns Island fails."],
+    ['1782-02-10', null],
   ],
 
   overmountain: [
@@ -356,6 +375,7 @@ SC.movements = {
     ['1780-03-29', 'charleston', null, 'd', 'Serves in the besieged city.'],
     ['1780-05-12', 'charleston', null, 'd', 'Captured with the garrison.'],
     ['1780-05-13', null],
+    ['1782-12-14', 'charleston', null, 'd', "Exchanged earlier in the year, rides into Charleston with Greene: 'the real day of their deliverance'."],
   ],
 
   steuben: [
@@ -381,6 +401,12 @@ SC.movements = {
     ['1781-09-02', 'williamsburg', 800, 'a', 'Rejoins Lafayette; soon after, accidentally shot in the thigh by a sentry.'],
     ['1781-09-28', 'yorktown_allied', 800, 'd'],
     ['1781-10-19', 'yorktown_allied', 800, 'd'],
+    ['1782-01-04', 'round_o', 600, 'a', "Arrives from Virginia with the Pennsylvania line and joins Greene."],
+    ['1782-01-19', 'ebenezer', 500, 'a', "Crosses into Georgia (sources give 12-19 January) to pin the British to Savannah."],
+    ['1782-06-24', 'sharon', 500, 'd', "Beats off a dawn attack on his camp at Sharon Plantation; the Creek leader Emistisiguo is killed."],
+    ['1782-07-12', 'savannah', 500, 'd', "Enters Savannah the day after the British leave."],
+    ['1782-08-20', 'bacons_bridge', 500, 'a', "Rejoins Greene before Charleston."],
+    ['1782-12-14', 'charleston', 800, 'd', "Leads the Continental advance guard into Charleston as the British embark."],
   ],
 
   // ===================== BRITISH =====================
@@ -539,6 +565,11 @@ SC.movements = {
     ['1781-07-20', 'charleston', null, 'a', 'Sails for England in ill health (captured at sea).'],
   ],
 
+  leslie: [
+    ['1781-11-08', 'charleston', 3500, 'd', "Takes command of the British forces in the South at Charleston."],
+    ['1782-07-11', 'charleston', 3500, 'd', "Orders the evacuation of Savannah."],
+    ['1782-12-14', 'charleston', 3500, 'd', "Evacuates Charleston: the last British troops in the Carolinas sail away."],
+  ],
   stewart: [
     ['1781-06-03', 'charleston', 1000, 'd', 'Arrives from Ireland with the 3rd Foot (Buffs).'],
     ['1781-07-20', 'orangeburg', 2000, 'a', 'Takes over the field army.'],
@@ -547,6 +578,7 @@ SC.movements = {
     ['1781-09-08', 'eutaw', 2000, 'd', 'Battle of Eutaw Springs.'],
     ['1781-09-10', 'monks_corner', 1400, 'd', 'Withdraws toward Charleston.'],
     ['1781-10-19', 'monks_corner', 1400, 'a'],
+    ['1781-11-10', 'charleston', 1400, 'a', "Falls back into Charleston; Leslie takes over the command."],
   ],
 
   arnold: [
@@ -596,6 +628,8 @@ SC.movements = {
     ['1781-07-08', 'orangeburg', 550, 'a'],
     ['1781-09-08', 'eutaw', 500, 'd', 'Commands part of the British line at Eutaw Springs.'],
     ['1781-09-10', 'monks_corner', 500, 'a'],
+    ['1781-11-30', 'charleston', 500, 'a', "Withdraws into the Charleston lines."],
+    ['1782-12-14', 'charleston', 500, 'd', "Sails with the evacuation."],
   ],
 
   brown: [
@@ -604,6 +638,8 @@ SC.movements = {
     ['1780-09-18', 'augusta', 500, 'd', 'Relieved by Cruger.'],
     ['1781-05-22', 'augusta', 600, 'd', 'Besieged in Fort Cornwallis.'],
     ['1781-06-05', 'augusta', 600, 'd', 'Surrenders Fort Cornwallis.'],
+    ['1782-01-20', 'savannah', 400, 'a', "Exchanged; commands his King's Rangers at Savannah."],
+    ['1782-07-11', 'savannah', 400, 'd', "Leaves with the evacuation for St. Augustine."],
   ],
 
   // ===================== FRENCH =====================

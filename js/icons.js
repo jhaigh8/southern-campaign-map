@@ -16,6 +16,8 @@ SC.icons = (() => {
     naval: svg('<circle cx="12" cy="4.5" r="1.7"/><path d="M12 6.2V20M8 9h8M5 13.5c0 4 3.5 6.5 7 6.5s7-2.5 7-6.5"/>'),
     // Two forces facing each other across a line
     standoff: svg('<path d="M3 12h6M6.5 9 9.5 12 6.5 15M21 12h-6M17.5 9 14.5 12l3 3"/><path d="M12 5v14" stroke-dasharray="2 2"/>'),
+    // Ship under sail: a British evacuation by sea
+    evacuation: svg('<path d="M3 16.5h18l-2.6 3.5H5.6Z"/><path d="M12 3v13.5"/><path d="M12 4.5 18.5 14H12"/><path d="M12 7 7 14h5"/>'),
     // Canvas tent
     camp: svg('<path d="M3 19.5 12 5l9 14.5"/><path d="M12 19.5V13l-3 6.5M12 5V3"/><path d="M2 19.5h20"/>'),
     // Stockade fort with flag

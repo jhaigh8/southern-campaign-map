@@ -4,7 +4,7 @@ SC.validate = () => {
   const { toDay, distKm, fmtShort } = SC.util;
   const problems = [];
   const ids = new Set(SC.commanders.map((c) => c.id));
-  const START = toDay('1778-12-01'), END = toDay('1781-10-31');
+  const START = toDay('1778-12-01'), END = toDay('1782-12-31');
 
   for (const c of SC.commanders) if (!SC.movements[c.id]) problems.push(`Commander ${c.id} has no movements`);
   for (const [id, wps] of Object.entries(SC.movements)) {
@@ -25,7 +25,7 @@ SC.validate = () => {
   for (const b of SC.battles) {
     for (const id of [...b.allies, ...b.crown]) {
       if (!ids.has(id)) { problems.push(`Battle ${b.id}: unknown commander "${id}"`); continue; }
-      if (b.kind === 'campaign' || b.kind === 'naval') continue;
+      if (b.kind === 'campaign' || b.kind === 'naval' || b.kind === 'evacuation') continue;
       // Each participant should be within ~10 km of the field on at least one day of the action
       let best = Infinity;
       for (let d = b.startDay; d <= b.endDay; d++) {

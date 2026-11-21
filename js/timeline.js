@@ -4,7 +4,7 @@
 SC.timeline = (() => {
   const { toDay, toISO, fmtLong, fmtShort, esc } = SC.util;
   const START = toDay('1778-12-23');
-  const END = toDay('1781-10-19');
+  const END = toDay('1782-12-14');
   const TWEEN_MS = 450;
   let state, playing = false, rafId = null, lastTs = 0, stopAt = null, tween = null;
   const $ = (id) => document.getElementById(id);
@@ -38,7 +38,7 @@ SC.timeline = (() => {
       const b = SC.battles.find((x) => x.id === t.dataset.id);
       pause(); set(b.startDay); SC.battles_ui.select(b.id, true);
     });
-    $('year-labels').innerHTML = [1779, 1780, 1781].map((y) => `<span style="left:${pct(toDay(`${y}-01-01`))}%">${y}</span>`).join('');
+    $('year-labels').innerHTML = [1779, 1780, 1781, 1782].map((y) => `<span style="left:${pct(toDay(`${y}-01-01`))}%">${y}</span>`).join('');
 
     slider.addEventListener('input', () => { pause(); set(+slider.value, { instant: true }); });
     $('prev-day').onclick = () => { pause(); set(state.day - 1); };

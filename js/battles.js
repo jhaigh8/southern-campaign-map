@@ -2,7 +2,7 @@
 SC.battles_ui = (() => {
   const { toDay, esc, fmtRange } = SC.util;
   const OUTCOME = { allied: ['american', 'American / Allied victory'], crown: ['british', 'British / Loyalist victory'], draw: ['draw', 'Indecisive'] };
-  const outcomeLabel = (b) => (b.kind === 'standoff' ? 'No fighting' : OUTCOME[b.outcome][1]);
+  const outcomeLabel = (b) => (b.kind === 'standoff' ? 'No fighting' : b.kind === 'evacuation' ? 'British evacuation' : OUTCOME[b.outcome][1]);
   let map, state;
   const markers = {};
   let dashStep = 0, animHandle = null;
