@@ -367,22 +367,46 @@ body.tactical .cmd-marker, body.tactical .battle-marker, body.tactical .lm-marke
 /* ---------- Visit today ---------- */
 .visit-site { display: flex; align-items: center; gap: 4px; cursor: pointer; --vs: #3f7d32; }
 .visit-site.kind-museum { --vs: #7a4a9a; } .visit-site.kind-historic { --vs: #8a5a2b; }
-.visit-site.kind-grave { --vs: #555; } .visit-site.kind-trail { --vs: #b8741f; } .visit-site.kind-battlefield { --vs: #a3352b; }
+.visit-site.kind-grave { --vs: #555; } .visit-site.kind-trail { --vs: #b8741f; } .visit-site.kind-battlefield { --vs: #4f6f2a; }
+/* The map's own battle icons stay on top of the Visit pins; popups above both */
+.maplibregl-marker.visit-site { z-index: 1; }
+.maplibregl-marker.battle-marker { z-index: 3; }
+.maplibregl-marker.battle-marker:hover { z-index: 6; }
+.maplibregl-popup { z-index: 8; }
 .visit-site .vs-icon {
   width: 22px; height: 22px; border-radius: 5px; display: grid; place-items: center;
   background: #fbf6e9; border: 1.5px solid var(--vs); color: var(--vs); box-shadow: 0 1px 4px rgba(0,0,0,.5);
 }
 .visit-site.st-marker .vs-icon, .visit-site.st-lost .vs-icon { border-style: dashed; }
 .visit-site .vs-icon svg { width: 15px; height: 15px; }
-.visit-site .vs-label { display: none; font: 600 11px var(--sans); color: #fff; text-shadow: 0 1px 2px #000, 0 0 4px #000; white-space: nowrap; }
+.visit-site .vs-label { display: none; font: 600 11px/1.2 var(--sans); color: #fff; text-shadow: 0 1px 2px #000, 0 0 4px #000; white-space: nowrap; }
+.visit-site .vs-label small { display: block; font: 600 9.5px var(--sans); text-transform: uppercase; letter-spacing: .05em; color: #f1dfae; }
+.visit-site:hover { z-index: 5; }
 #map.visit-labels .visit-site .vs-label, .visit-site:hover .vs-label { display: block; }
 body.tactical .visit-site .vs-label { display: none !important; }
 .visit-pop .maplibregl-popup-content { background: var(--panel-solid); color: var(--ink); font: 12.5px/1.4 var(--sans); padding: 10px 12px; border-radius: 8px; }
 .visit-pop .vp-kind { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--ink-soft); margin-bottom: 3px; }
 .visit-pop .vp-kind svg { width: 13px; height: 13px; }
 .visit-pop .vp-where { font-size: 11.5px; color: var(--ink-soft); margin-top: 3px; }
-.visit-pop .vp-note { font-size: 11.5px; color: #b45309; margin-top: 3px; }
+.visit-pop .vp-note { font-size: 11px; color: var(--ink-soft); margin-top: 3px; font-style: italic; }
+.visit-pop .vp-text { margin-top: 7px; padding-top: 6px; border-top: 1px solid var(--line); font: 12.5px/1.45 var(--serif); }
+.visit-pop .vp-text p { margin: 0 0 6px; }
+.visit-pop .vp-text.full { max-height: 48vh; overflow-y: auto; padding-right: 4px; }
+.visit-pop .vp-more { border: 0; background: none; padding: 0; color: var(--accent); font: 600 12px var(--sans); cursor: pointer; }
+.visit-pop .vp-more:hover { text-decoration: underline; }
+.visit-pop .vp-credit { font-size: 10.5px; color: var(--ink-soft); margin-top: 4px; }
 .visit-pop .vp-links { display: flex; gap: 12px; margin-top: 6px; }
+.visit-pop a { color: var(--accent); font-weight: 600; }
+.visit-pop .vp-also { margin-top: 7px; padding-top: 6px; border-top: 1px solid var(--line); font-size: 11.5px; max-height: 96px; overflow-y: auto; }
+.visit-pop .vp-also span { display: block; color: var(--ink-soft); margin-bottom: 2px; }
+.visit-pop .vp-also button { display: block; border: 0; background: none; padding: 1px 0; color: var(--accent); font: 600 11.5px var(--sans); cursor: pointer; text-align: left; }
+.visit-pop .vp-also button:hover { text-decoration: underline; }
+.visit-pop a:focus-visible, .visit-pop button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.visit-pop .maplibregl-popup-close-button { color: var(--ink-soft); font-size: 18px; padding: 0 6px; }
+.visit-pop.maplibregl-popup-anchor-bottom .maplibregl-popup-tip, .visit-pop.maplibregl-popup-anchor-bottom-left .maplibregl-popup-tip, .visit-pop.maplibregl-popup-anchor-bottom-right .maplibregl-popup-tip { border-top-color: var(--panel-solid); }
+.visit-pop.maplibregl-popup-anchor-top .maplibregl-popup-tip, .visit-pop.maplibregl-popup-anchor-top-left .maplibregl-popup-tip, .visit-pop.maplibregl-popup-anchor-top-right .maplibregl-popup-tip { border-bottom-color: var(--panel-solid); }
+.visit-pop.maplibregl-popup-anchor-left .maplibregl-popup-tip { border-right-color: var(--panel-solid); }
+.visit-pop.maplibregl-popup-anchor-right .maplibregl-popup-tip { border-left-color: var(--panel-solid); }
 .visit-status { display: inline-block; font: 600 10px var(--sans); text-transform: uppercase; letter-spacing: .05em; padding: 1px 7px; border-radius: 999px; color: #fff; background: #3f7d32; font-style: normal; cursor: help; }
 .visit-status.part { background: #6f8f2f; } .visit-status.marker { background: #8a6d2a; } .visit-status.lost { background: #6b6259; }
 .visit-sec { margin: 14px 0 6px; border-top: 1px solid color-mix(in srgb, var(--ink) 15%, transparent); padding-top: 10px; }
@@ -393,3 +417,6 @@ body.tactical .visit-site .vs-label { display: none !important; }
 .visit-sec li a svg { width: 14px; height: 14px; flex: none; }
 .visit-sec li small { display: block; color: var(--ink-soft); margin-left: 19px; }
 .visit-sec li .visit-status { margin-left: 4px; }
+.visit-sec h5 { margin: 10px 0 5px; font: 600 11px var(--sans); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); }
+.visit-sec .visit-type { margin-left: 4px; font: 600 10px var(--sans); text-transform: uppercase; letter-spacing: .05em; color: var(--ink-soft); font-style: normal; }
+.visit-sec ul.visit-mk li a { font-weight: 500; }
