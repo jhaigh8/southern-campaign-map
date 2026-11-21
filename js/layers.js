@@ -1,6 +1,7 @@
-// Base map styles and layer switching. Every tile source here is free and needs no API key.
+// Base map styles and layer switching. Every tile source here is free, needs no API key and may be used
+// openly: the base maps are the USGS National Map (US government work, public domain).
 SC.layers = (() => {
-  const ESRI = 'https://server.arcgisonline.com/ArcGIS/rest/services';
+  const USGS = 'https://basemap.nationalmap.gov/arcgis/rest/services';
   const TERRAIN = { source: 'dem', exaggeration: 1.6 };
   const isFile = location.protocol === 'file:';
   // One shared "toning" for every period map, so scans from different engravers read as one atlas
@@ -10,16 +11,21 @@ SC.layers = (() => {
 
   function style() {
     const sources = {
-      satellite: { type: 'raster', tileSize: 256, maxzoom: 19,
-        tiles: [`${ESRI}/World_Imagery/MapServer/tile/{z}/{y}/{x}`],
-        attribution: 'Imagery © Esri, Maxar, Earthstar Geographics' },
+      satellite: { type: 'raster', tileSize: 256, maxzoom: 17,
+        tiles: [`${USGS}/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}`],
+        attribution: 'Imagery: USDA NAIP / USGS The National Map' },
+      // NASA Blue Marble (public domain) under the USGS imagery: covers open water and the zoomed-out
+      // views, where the USGS mosaic has gaps
+      'satellite-lo': { type: 'raster', tileSize: 256, maxzoom: 8,
+        tiles: ['https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/BlueMarble_ShadedRelief_Bathymetry/default/GoogleMapsCompatible_Level8/{z}/{y}/{x}.jpeg'],
+        attribution: 'Blue Marble: NASA Earth Observatory' },
       relief: { type: 'raster', tileSize: 256, maxzoom: 13,
-        tiles: [`${ESRI}/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}`],
-        attribution: 'Relief © Esri' },
-      // Carto now requires an API key, so the modern layer uses Esri's keyless street map
-      modern: { type: 'raster', tileSize: 256, maxzoom: 19,
-        tiles: [`${ESRI}/World_Street_Map/MapServer/tile/{z}/{y}/{x}`],
-        attribution: 'Map © Esri, HERE, Garmin, © OpenStreetMap contributors' },
+        tiles: [`${USGS}/USGSShadedReliefOnly/MapServer/tile/{z}/{y}/{x}`],
+        attribution: 'Relief: USGS 3D Elevation Program' },
+      // USGS topographic map: roads, boundaries, place names and rivers, public domain
+      modern: { type: 'raster', tileSize: 256, maxzoom: 16,
+        tiles: [`${USGS}/USGSTopo/MapServer/tile/{z}/{y}/{x}`],
+        attribution: 'Map: USGS The National Map' },
       dem: { type: 'raster-dem', tileSize: 256, maxzoom: 14, encoding: 'terrarium',
         tiles: ['https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'],
         attribution: 'Elevation: Mapzen Terrain Tiles (AWS Open Data)' },
@@ -28,7 +34,8 @@ SC.layers = (() => {
     };
     const layers = [
       { id: 'bg', type: 'background', paint: { 'background-color': '#e9dcc0' } },
-      { id: 'satellite', type: 'raster', source: 'satellite' },
+      { id: 'satellite-lo', type: 'raster', source: 'satellite-lo' },
+      { id: 'satellite', type: 'raster', source: 'satellite', minzoom: 8.5 },
       { id: 'relief', type: 'raster', source: 'relief', layout: { visibility: 'none' },
         paint: { 'raster-saturation': -0.6, 'raster-hue-rotate': 25, 'raster-contrast': -0.1, 'raster-brightness-min': 0.25, 'raster-opacity': 0.8 } },
       { id: 'modern', type: 'raster', source: 'modern', layout: { visibility: 'none' } },
@@ -60,6 +67,7 @@ SC.layers = (() => {
   function setBase(name) {
     current = name;
     setVis('satellite', name === 'satellite');
+    setVis('satellite-lo', name === 'satellite');
     setVis('relief', name === 'period');
     setVis('modern', name === 'modern');
     setVis('hillshade', name !== 'modern');

@@ -1,6 +1,6 @@
 # The Southern Campaign: an interactive 3D atlas
 
-Step day by day through the Southern Campaign of the American Revolution, from the capture of Savannah (Dec 1778) to the surrender at Yorktown (Oct 1781), and watch commanders and their armies move across a 3D map.
+Step day by day through the Southern Campaign of the American Revolution, from the capture of Savannah (Dec 1778) through the surrender at Yorktown (Oct 1781) to the British evacuation of Charleston (Dec 1782), and watch commanders and their armies move across a 3D map.
 
 ## Running it
 
@@ -107,7 +107,7 @@ tools/va-markers.json   the hand-picked Virginia markers with their inscriptions
 
 Strengths and casualties are approximate, and sources disagree.
 
-**Map data:** Esri World Imagery, World Shaded Relief and World Street Map; Mapzen/AWS Terrain Tiles; © OpenStreetMap contributors. **Rendering:** MapLibre GL JS 5.6. **Portraits:** see `assets/portraits/CREDITS.md`.
+**Map data:** USGS The National Map (USDA NAIP imagery, 3DEP shaded relief, US Topo) and NASA Blue Marble (zoomed-out imagery), all public domain; Mapzen/AWS Terrain Tiles; © OpenStreetMap contributors (site positions). **Rendering:** MapLibre GL JS 5.6. **Portraits:** see `assets/portraits/CREDITS.md`.
 
 **Visit today:** The Liberty Trail (American Battlefield Trust and the South Carolina Battleground Preservation Trust) for South and North Carolina site positions and pages; National Park Service unit boundaries (Land Resources Division) and the Overmountain Victory NHT historic route; South Carolina Department of Archives and History (its public marker map, Revolution-era markers); NC Department of Natural and Cultural Resources, Highway Historical Marker Program (American Revolution layer); Georgia Historical Society marker list (public ArcGIS layer); Virginia Department of Historic Resources highway markers (151 picked by reading all 2,711 inscriptions; see `tools/va-markers.json`); © OpenStreetMap contributors for the other sites. Marker inscriptions are shown with credit to each program.
 
