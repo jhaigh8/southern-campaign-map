@@ -14,7 +14,7 @@ SC.battles = [
     strength: ['~850', '~3,100'], casualties: ['~83 killed, 453 captured', '7 killed, 19 wounded'], approach: 7, withdrawal: 2,
     summary: "Campbell's force from New York landed at Girardeau's Plantation. Guided by an enslaved man named Quamino Dolly along a hidden path through the swamp, they turned Howe's flank. The American defense collapsed and Savannah fell in an afternoon, opening the British Southern strategy." },
 
-  { id: 'sunbury', name: 'Capture of Fort Morris (Sunbury)', kind: 'siege', start: '1779-01-09', end: '1779-01-10', place: 'sunbury',
+  { id: 'sunbury', name: 'Capture of Fort Morris (Sunbury)', kind: 'siege', start: '1779-01-06', end: '1779-01-09', place: 'sunbury',
     location: "Fort Morris State Historic Site, near Midway, Liberty County, Georgia",
     outcome: 'crown', allies: [], crown: ['prevost'], others: 'Maj. Joseph Lane (American garrison)',
     strength: ['~200', '~2,000'], casualties: ['~4 killed, ~7 wounded, ~200 captured', '~1 killed, ~3 wounded'], approach: 3, withdrawal: 7,
@@ -23,19 +23,19 @@ SC.battles = [
   { id: 'port_royal', name: 'Port Royal Island (Beaufort)', kind: 'battle', start: '1779-02-03', end: '1779-02-03', place: 'port_royal_island',
     location: "Gray's Hill, Port Royal Island, near Beaufort, Beaufort County, S.C.",
     outcome: 'allied', allies: ['moultrie'], crown: [], others: 'Maj. Gardiner (British; first name given variously)',
-    strength: ['~300', '~200'], casualties: ['8 killed, 22 wounded', '~40–50 killed and wounded, a few captured (sources differ)'], approach: 0, withdrawal: 0,
+    strength: ['~200–300 (sources differ)', '~200–320 (sources differ)'], casualties: ['8 killed, 22 wounded', '~40–50 killed and wounded, a few captured (sources differ)'], approach: 0, withdrawal: 0,
     summary: "A British landing party tried to seize Port Royal Island. Moultrie met it with Charleston militia and two field guns. After a long exchange, with both sides short of ammunition, the British fell back to their ships. It was one of the few Patriot successes of early 1779." },
 
   { id: 'kettle_creek', name: 'Kettle Creek', kind: 'battle', start: '1779-02-14', end: '1779-02-14', place: 'kettle_creek',
     location: "Near Washington, Wilkes County, Georgia",
-    outcome: 'allied', allies: ['pickens', 'clarke'], crown: [], others: 'Col. John Dooly (American); Col. James Boyd (Loyalist, killed)',
-    strength: ['~340', '~600–800'], casualties: ['9 killed, 23 wounded', '~70 killed, ~75 captured'], approach: 4, withdrawal: 6,
+    outcome: 'allied', allies: ['pickens', 'clarke'], crown: [], others: 'Col. John Dooly (American); Col. John Boyd (Loyalist, killed; some accounts call him James)',
+    strength: ['~340–420', '~600–800'], casualties: ['9 killed, 23 wounded (some counts ~21 in all)', '~40–70 killed, ~75 wounded or captured (sources differ)'], approach: 4, withdrawal: 6,
     summary: "Pickens caught Boyd's Loyalists, who were marching to join Campbell, while they butchered cattle on Kettle Creek. Boyd was mortally wounded. The victory discouraged backcountry Loyalists and helped push Campbell out of Augusta." },
 
   { id: 'brier_creek', name: 'Brier Creek', kind: 'battle', start: '1779-03-03', end: '1779-03-03', place: 'brier_creek',
     location: "Brier Creek near Sylvania, Screven County, Georgia",
     outcome: 'crown', allies: [], crown: [], others: 'Gen. John Ashe (American); Lt. Col. Mark Prevost (British)',
-    strength: ['~1,500', '~900'], casualties: ['~150 killed or drowned, 227 captured', '5 killed, 11 wounded'], approach: 0, withdrawal: 0,
+    strength: ['~1,100–1,500 (sources differ)', '~900'], casualties: ['~150 killed or drowned, 227 captured', '5 killed, 11 wounded'], approach: 0, withdrawal: 0,
     summary: "Mark Prevost made a wide flank march and fell on Ashe's North Carolina militia from the rear. The Americans were trapped against the swamps of Brier Creek and the Savannah River and many drowned trying to escape. The defeat secured Georgia for the Crown." },
 
   { id: 'stono_ferry', name: 'Stono Ferry', kind: 'battle', start: '1779-06-20', end: '1779-06-20', place: 'stono_ferry',
@@ -54,12 +54,12 @@ SC.battles = [
     location: "Charleston, S.C.",
     outcome: 'crown', allies: ['lincoln', 'moultrie'], crown: ['clinton', 'cornwallis', 'tarleton'], others: '',
     strength: ['~5,500', '~10,000–13,500'], casualties: ['89 killed, 138 wounded, ~5,000 captured', '76 killed, 189 wounded'], approach: 10, withdrawal: 5,
-    summary: "Clinton landed south of the city, crossed the Ashley and dug siege lines across Charleston Neck. Tarleton's victory at Monck's Corner closed the last escape route. Lincoln surrendered the city, the Southern Army and its stores on 12 May. It was the worst American defeat of the war." },
+    summary: "Clinton's army landed on Simmons Island on 11 February, worked its way up the coast, crossed the Ashley and dug siege lines across Charleston Neck. Tarleton's victory at Monck's Corner closed the last escape route. Lincoln surrendered the city, the Southern Army and its stores on 12 May. It was the worst American defeat of the war." },
 
   { id: 'monks_corner', name: "Monck's Corner", kind: 'battle', start: '1780-04-14', end: '1780-04-14', place: 'biggin_bridge',
     location: "Moncks Corner, Berkeley County, S.C.",
-    outcome: 'crown', allies: ['huger'], crown: ['tarleton'], others: 'Maj. Patrick Ferguson (British)',
-    strength: ['~500', '~600'], casualties: ['~20 killed, ~67 captured', '~3 wounded'], approach: 10, withdrawal: 3,
+    outcome: 'crown', allies: ['huger'], crown: ['tarleton'], others: 'Lt. Col. William Washington (American cavalry, escaped); Maj. Patrick Ferguson and Lt. Col. James Webster (British)',
+    strength: ['~500', "~600 attacking (~1,400 with Webster's infantry in reserve)"], casualties: ['~20 killed, ~67 captured', '~3 wounded'], approach: 10, withdrawal: 3,
     summary: "In a night attack Tarleton surprised Huger's cavalry guarding Charleston's line of communication up the Cooper River. He captured some 400 horses and completed the encirclement of the city." },
 
   { id: 'lenuds_ferry', name: "Lenud's Ferry", kind: 'battle', start: '1780-05-06', end: '1780-05-06', place: 'lenuds_ferry',
@@ -74,16 +74,22 @@ SC.battles = [
     strength: ['~420', '~270'], casualties: ['113 killed, 150 wounded, 53 captured', '5 killed, 12 wounded'], approach: 3, withdrawal: 4,
     summary: "Tarleton rode about 105 miles in 54 hours to catch Buford's retreating Virginians. Many Americans were cut down after trying to surrender. \"Tarleton's Quarter\" became a rallying cry for backcountry Patriots." },
 
+  { id: 'alexanders_old_field', name: "Alexander's Old Field", kind: 'battle', start: '1780-06-06', end: '1780-06-06', place: 'alexanders_old_field',
+    location: "Beckhamville, about 3 miles north of Great Falls, Chester County, S.C. (state marker at S.C. 97 and S.C. 99)",
+    outcome: 'allied', allies: [], crown: [], others: 'Capt. John McClure and the Gaston brothers (Patriot militia); Col. Henry Houseman (Loyalist)',
+    strength: ['~32', '~200'], casualties: ['2 wounded (some accounts say a few killed)', 'unknown; a few killed'], approach: 0, withdrawal: 0,
+    summary: "A week after the Waxhaws, Loyalists gathered at Alexander's Old Field to swear allegiance to the King. Captain John McClure and about 32 neighbours, among them old Judge John Gaston and his sons, charged the assembly and scattered it. It is counted the first Patriot victory in South Carolina after the fall of Charleston." },
+
   { id: 'ramsours_mill', name: "Ramsour's Mill", kind: 'battle', start: '1780-06-20', end: '1780-06-20', place: 'ramsours_mill',
     location: "Lincolnton, Lincoln County, N.C.",
     outcome: 'allied', allies: [], crown: [], others: 'Col. Francis Locke (Patriot militia); Col. John Moore (Loyalist militia)',
-    strength: ['~400', '~1,300'], casualties: ['~70 killed and wounded', '~70 killed, ~100 wounded'], approach: 0, withdrawal: 0,
+    strength: ['~400', '~1,300'], casualties: ['~70 killed, ~100 wounded', '~70 killed, ~100 wounded'], approach: 0, withdrawal: 0,
     summary: "A fight between neighbours: Patriot militia attacked a gathering of Loyalists. Few on either side wore uniforms, and men marked themselves with paper or sprigs of green. The Loyalist rising in western North Carolina collapsed." },
 
   { id: 'hucks_defeat', name: "Huck's Defeat", kind: 'battle', start: '1780-07-12', end: '1780-07-12', place: 'hucks_defeat',
     location: "Williamson's Plantation (Historic Brattonsville), York County, S.C.",
     outcome: 'allied', allies: [], crown: [], others: 'Col. William Bratton & Capt. John McClure (Patriot); Capt. Christian Huck (British Legion, killed)',
-    strength: ['~250', '~115'], casualties: ['1 killed', '~35 killed, ~30 wounded'], approach: 0, withdrawal: 0,
+    strength: ['~140–250 (sources differ)', '~115'], casualties: ['1 killed', '~35 killed, ~30 wounded'], approach: 0, withdrawal: 0,
     summary: "Backcountry militia surprised Huck's detachment at dawn at Williamson's Plantation. It was the first Patriot victory after the fall of Charleston and drew volunteers to Sumter." },
 
   { id: 'rocky_mount', name: 'Rocky Mount', kind: 'battle', start: '1780-07-30', end: '1780-07-30', place: 'rocky_mount',
@@ -94,9 +100,9 @@ SC.battles = [
 
   { id: 'hanging_rock', name: 'Hanging Rock', kind: 'battle', start: '1780-08-06', end: '1780-08-06', place: 'hanging_rock',
     location: "Near Heath Springs, Lancaster County, S.C.",
-    outcome: 'draw', allies: ['sumter'], crown: [], others: 'Maj. John Carden (Loyalist); 13-year-old Andrew Jackson present',
+    outcome: 'allied', allies: ['sumter'], crown: [], others: 'Maj. John Carden (Loyalist); 13-year-old Andrew Jackson present',
     strength: ['~800', '~1,400'], casualties: ['12 killed, 41 wounded', '~200 killed and wounded'], approach: 5, withdrawal: 5,
-    summary: "Sumter's militia routed part of the Loyalist camp. Discipline then broke down as his men plundered the British stores and rum, and Sumter had to withdraw before the victory was complete." },
+    summary: "Sumter's militia routed part of the Loyalist camp. Discipline then broke down as his men plundered the British stores and rum, and Sumter had to withdraw before the victory was complete. It is still counted an American victory: the Loyalist camp was broken and its losses were four times Sumter's." },
 
   { id: 'lynches_standoff', name: 'Standoff at Little Lynches Creek', kind: 'standoff', start: '1780-08-11', end: '1780-08-12', place: 'lynches_creek',
     location: "Little Lynches Creek, Kershaw County, S.C. (about 15 miles northeast of Camden)",
@@ -167,13 +173,19 @@ SC.battles = [
   { id: 'blackstocks', name: "Blackstock's Plantation", kind: 'battle', start: '1780-11-20', end: '1780-11-20', place: 'blackstocks',
     location: "Tyger River near Cross Keys, Union County, S.C.",
     outcome: 'allied', allies: ['sumter'], crown: ['tarleton'], others: '',
-    strength: ['~1,000', '~270'], casualties: ['3 killed, 4 wounded (incl. Sumter)', '~50 killed (disputed)'], approach: 8, withdrawal: 5,
+    strength: ['~1,000', '~270'], casualties: ['3 killed, 4 wounded (incl. Sumter)', "~50 (Tarleton's report) to ~190 (American claims) killed and wounded"], approach: 8, withdrawal: 5,
     summary: "Tarleton outran his own infantry and attacked Sumter's strong position with only part of his force. He was repulsed. Sumter was badly wounded in the shoulder." },
+
+  { id: 'rugeleys_mill', name: "Rugeley's Mill", kind: 'battle', start: '1780-12-04', end: '1780-12-04', place: [-80.6424, 34.4053],
+    location: "Clermont, Henry Rugeley's plantation, about 13 miles north of Camden, Kershaw County, S.C.",
+    outcome: 'allied', allies: [], crown: [], others: 'Lt. Col. William Washington (American cavalry); Col. Henry Rugeley (Loyalist)',
+    strength: ['~80 cavalry', '~114'], casualties: ['none', '114 captured'], approach: 0, withdrawal: 0,
+    summary: "Rugeley's Loyalists held a fortified log barn that Washington's dragoons could not take without artillery. Washington had a pine log shaped and blackened to look like a cannon, set it on wheels in full view and called on the garrison to surrender before he opened fire. Rugeley gave up without a shot: 114 men, their muskets and wagons. The barn was burned." },
 
   { id: 'halfway_swamp', name: 'Halfway Swamp', kind: 'battle', start: '1780-12-12', end: '1780-12-13', place: 'halfway_swamp',
     location: "Halfway Swamp, near Rimini, Clarendon County, S.C. (approximate; by tradition)",
     outcome: 'draw', allies: ['marion'], crown: [], others: 'Maj. Robert McLeroth (64th Foot)',
-    strength: ['~700', '~200 regulars'], casualties: ['a few wounded (sources differ)', '~6 killed'], approach: 6, withdrawal: 5,
+    strength: ['~700', '~400 (the 64th Foot and ~200 recruits)'], casualties: ['a few wounded (sources differ)', '~6 killed'], approach: 6, withdrawal: 5,
     summary: "Marion caught McLeroth's column of new recruits marching to join Cornwallis and blocked its road. McLeroth proposed settling it with a duel of twenty picked men a side, then slipped away in the night while Marion waited. Marion broke off after learning there was smallpox at nearby Singleton's Mill, and the British reached Winnsboro." },
 
   { id: 'hammonds_store', name: "Hammond's Store", kind: 'battle', start: '1780-12-30', end: '1780-12-30', place: 'hammonds_store',
@@ -197,7 +209,7 @@ SC.battles = [
   { id: 'cowans_ford', name: "Cowan's Ford", kind: 'battle', start: '1781-02-01', end: '1781-02-01', place: 'cowans_ford',
     location: "Catawba River near Huntersville, N.C. (now under Lake Norman)",
     outcome: 'crown', allies: [], crown: ['cornwallis'], others: 'Gen. William Lee Davidson (American, killed)',
-    strength: ['~300', '~2,500'], casualties: ['~4 killed incl. Davidson', '~4 killed, 36 wounded'], approach: 7, withdrawal: 3,
+    strength: ['~300 at the ford (of ~800 guarding the crossings)', '~2,500'], casualties: ['~4 killed incl. Davidson', '~4 killed, 36 wounded'], approach: 7, withdrawal: 3,
     summary: "Cornwallis forced a crossing of the swollen Catawba before dawn, wading chest-deep under militia fire. Davidson was killed and the militia scattered, opening the road east after Greene." },
 
   { id: 'race_to_dan', name: 'Race to the Dan', kind: 'campaign', start: '1781-02-10', end: '1781-02-14', place: 'irwins_ferry',
@@ -209,7 +221,7 @@ SC.battles = [
   { id: 'pyles', name: "Pyle's Defeat", kind: 'battle', start: '1781-02-25', end: '1781-02-25', place: 'pyles',
     location: "Near Burlington, Alamance County, N.C.",
     outcome: 'allied', allies: ['lee', 'pickens'], crown: [], others: 'Col. John Pyle (Loyalist, wounded)',
-    strength: ['~600', '~400'], casualties: ['1 horse killed', '~90 killed, many wounded'], approach: 7, withdrawal: 7,
+    strength: ['~600', '~400'], casualties: ['1 horse killed', '~90–250 killed (sources differ), many wounded'], approach: 7, withdrawal: 7,
     summary: "Pyle's Loyalists mistook Lee's green-jacketed Legion for Tarleton's men. When the error came out, the Legion cut them down. The slaughter frightened North Carolina Loyalists away from Cornwallis." },
 
   { id: 'weitzels_mill', name: "Weitzel's Mill", kind: 'battle', start: '1781-03-06', end: '1781-03-06', place: 'weitzels_mill',
@@ -229,6 +241,12 @@ SC.battles = [
     outcome: 'crown', allies: ['greene', 'lee', 'wwashington', 'owilliams', 'huger'], crown: ['cornwallis', 'tarleton'], others: '',
     strength: ['~4,400', '~1,900'], casualties: ['79 killed, 185 wounded (plus ~1,000 militia missing)', '93 killed, 413 wounded, 26 missing'], approach: 10, withdrawal: 5,
     summary: "Greene copied Morgan's layered defence on a larger scale with three lines. Cornwallis broke through only after firing grapeshot into the melee, hitting his own Guards. He held the field but lost a quarter of his army. \"Another such victory would ruin the British Army,\" said Charles James Fox in Parliament." },
+
+  { id: 'beatties_mill', name: "Beattie's Mill", kind: 'battle', start: '1781-03-21', end: '1781-03-21', place: 'beatties_mill',
+    location: "Little River, west of Due West, Abbeville County, S.C. (approximate)",
+    outcome: 'allied', allies: [], crown: [], others: 'Col. Elijah Clarke and Lt. Col. James McCall (Patriot); Maj. James Dunlap (Loyalist, captured)',
+    strength: ['~180', '~90'], casualties: ['none reported', '34 killed and wounded, 42 captured'], approach: 0, withdrawal: 0,
+    summary: "Clarke's Georgians and McCall's South Carolinians caught Major James Dunlap's Loyalist dragoons foraging at Beattie's Mill. A party seized the bridge behind them, and after several hours Dunlap surrendered. He was murdered as a prisoner a few days later; Pickens denounced the killing to the British commander at Ninety Six and offered a reward for the killers." },
 
   { id: 'fort_watson', name: 'Siege of Fort Watson', kind: 'siege', start: '1781-04-15', end: '1781-04-23', place: 'fort_watson',
     location: "Scott's Lake near Summerton, Clarendon County, S.C. (Santee National Wildlife Refuge)",
@@ -275,7 +293,7 @@ SC.battles = [
   { id: 'ninety_six', name: 'Siege of Ninety-Six', kind: 'siege', radiusKm: 40, start: '1781-05-22', end: '1781-06-19', place: 'ninety_six',
     location: "Ninety Six, Greenwood County, S.C.",
     outcome: 'crown', allies: ['greene', 'lee', 'wwashington', 'owilliams'], crown: ['cruger', 'rawdon'], others: 'Col. Thaddeus Kosciuszko (engineer)',
-    strength: ['~1,000', '~550'], casualties: ['~57 killed, ~70 wounded', '~27 killed, ~58 wounded'], approach: 7, withdrawal: 6,
+    strength: ['~1,000–1,500 (with militia)', '~550'], casualties: ['~57 killed, ~70 wounded', '~27 killed, ~58 wounded'], approach: 7, withdrawal: 6,
     summary: "Kosciuszko dug approach trenches toward the earthen Star Fort, but the Loyalist garrison held out for 28 days. When Rawdon's relief column drew near, Greene's assault of 18 June failed and he lifted the siege. The British abandoned Ninety Six weeks later anyway." },
 
   { id: 'charlottesville', name: 'Charlottesville Raid', kind: 'raid', start: '1781-06-04', end: '1781-06-04', place: 'charlottesville',
@@ -287,7 +305,7 @@ SC.battles = [
   { id: 'green_spring', name: 'Green Spring', kind: 'battle', start: '1781-07-06', end: '1781-07-06', place: 'green_spring',
     location: "Near Jamestown, James City County, Va.",
     outcome: 'crown', allies: ['lafayette', 'wayne'], crown: ['cornwallis', 'tarleton'], others: '',
-    strength: ['~900 engaged', '~5,000'], casualties: ['28 killed, 99 wounded, 12 missing', '~75 killed and wounded'], approach: 10, withdrawal: 7,
+    strength: ['~900 engaged', '~5,000 engaged of ~7,000'], casualties: ['28 killed, 99 wounded, 12 missing', '~75 killed and wounded'], approach: 10, withdrawal: 7,
     summary: "Cornwallis made it look as if only his rear guard remained on the north bank of the James. Wayne attacked and found the whole British army. He saved his men by charging straight at the enemy before falling back." },
 
   { id: 'quinby', name: 'Quinby Bridge', kind: 'battle', start: '1781-07-17', end: '1781-07-17', place: 'quinby',
@@ -299,7 +317,7 @@ SC.battles = [
   { id: 'parkers_ferry', name: "Parker's Ferry", kind: 'battle', start: '1781-08-30', end: '1781-08-30', place: 'parkers_ferry',
     location: "Edisto River near Jacksonboro, Colleton County, S.C.",
     outcome: 'allied', allies: ['marion'], crown: [], others: 'Maj. Thomas Fraser (Loyalist)',
-    strength: ['~400', '~500'], casualties: ['~5 killed', '~125 killed and wounded'], approach: 10, withdrawal: 9,
+    strength: ['~400', '~500'], casualties: ['~5 killed', '~125–200 killed and wounded (sources differ)'], approach: 10, withdrawal: 9,
     summary: "Marion's men lay hidden along a causeway through the swamp. Fraser's Loyalist cavalry charged down it repeatedly into point-blank fire." },
 
   { id: 'capes', name: 'Battle of the Capes', kind: 'naval', start: '1781-09-05', end: '1781-09-05', place: [-75.65, 36.85],
@@ -311,7 +329,7 @@ SC.battles = [
   { id: 'eutaw', name: 'Eutaw Springs', kind: 'battle', start: '1781-09-08', end: '1781-09-08', place: 'eutaw',
     location: "Near Eutawville, Orangeburg County, S.C.",
     outcome: 'draw', allies: ['greene', 'marion', 'pickens', 'lee', 'wwashington', 'owilliams'], crown: ['stewart', 'cruger'], others: '',
-    strength: ['~2,200', '~2,000'], casualties: ['138 killed, 375 wounded, 41 missing', '85 killed, 351 wounded, 257 missing'], approach: 17, withdrawal: 3,
+    strength: ['~2,200', '~2,000'], casualties: ['138 killed, 375 wounded, 41 missing', "85 killed, 351 wounded, 257 missing (Stewart's return; Americans counted up to ~500 prisoners)"], approach: 17, withdrawal: 3,
     summary: "Greene's attack drove the British back through their own camp. His hungry troops then stopped to plunder the tents and rum, and a counterattack from a fortified brick house restored the line. Stewart held the field but withdrew toward Charleston. It was the last major battle in the Carolinas." },
 
   { id: 'the_hook', name: 'The Hook (Gloucester)', kind: 'battle', start: '1781-10-03', end: '1781-10-03', place: [-76.5028, 37.2761],
@@ -323,6 +341,6 @@ SC.battles = [
   { id: 'yorktown', name: 'Siege of Yorktown', kind: 'siege', radiusKm: 60, start: '1781-09-28', end: '1781-10-19', place: 'yorktown',
     location: "Yorktown, York County, Va.",
     outcome: 'allied', allies: ['gwashington', 'rochambeau', 'lafayette', 'lincoln', 'degrasse', 'wayne', 'steuben'], crown: ['cornwallis', 'tarleton'], others: 'Alexander Hamilton; Henry Knox (artillery)',
-    strength: ['~8,800 American, ~7,800 French', '~9,000 incl. seamen'], casualties: ['~88 killed, ~301 wounded', '~156 killed, ~326 wounded, ~7,000 captured'], approach: 40, withdrawal: 0,
+    strength: ['~8,800 Continentals, ~3,000 Virginia militia, ~7,800 French', '~9,000 incl. seamen'], casualties: ['~88 killed, ~301 wounded', '~156 killed, ~326 wounded, ~7,000 captured'], approach: 40, withdrawal: 0,
     summary: "The allied armies marched 450 miles from New York while de Grasse sealed the Chesapeake. Cornwallis was trapped. Allied guns opened on 9 October, Redoubts 9 and 10 fell to bayonet assaults on the night of 14 October, and a breakout across the York failed in a storm. On 19 October the British marched out to surrender. The war's last great campaign was over." },
 ];

@@ -1,13 +1,15 @@
 // Tactical reconstruction (approximate): Parker's Ferry, 30 August 1781. Format: see cowpens.js.
-// Placement: origin is the state historical marker for the battle (SCDAH 15-12; data/places.js), near the causeway to the Edisto ferry. Marion's
-// men lay in the swamp beside the causeway. Positions schematic.
+// Placement: the state marker (SCDAH 15-12, on S.C. 64) says the ambush was "along this road about 1 mile from the ferry".
+// Parker's Ferry Road still runs ~7 km NE from the marker to Parkers Ferry Landing on the Edisto (OpenStreetMap; USGS
+// hydrography), so origin is on that road about 1.2 miles short of the landing (data/places.js). The British came down the
+// road from the ferry side, from the north-east. Marion's men lay in the woods beside the causeway. Positions schematic.
 // Sources: Marion's report to Greene; Bass, Swamp Fox (1959).
 window.SC = window.SC || {};
 SC.tactical = SC.tactical || {};
 
 SC.tactical.parkers_ferry = {
   battle: 'parkers_ferry', title: "Parker's Ferry", date: '30 August 1781', level: 'approximate', site: 'approximate',
-  origin: 'parkers_ferry', facing: 90,
+  origin: 'parkers_ferry', facing: 40,
   camera: { at: [0, 0], zoom: 15.5, pitch: 52, bearing: 0, elev: 5 },
   sources: "After Marion's report and Bass, Swamp Fox (1959). Site approximate; positions schematic.",
   people: {
@@ -31,7 +33,7 @@ SC.tactical.parkers_ferry = {
       at: { fra: [0, 0, 'broken'], mar: [60, 0, 'firing'], lure: [0, -300, 'moving'] },
       arrows: [{ side: 'crown', path: [[0, 600], [0, -100]] }] },
     { time: '18:00', title: 'Out of powder', conf: 'documented',
-      text: "When the British infantry and guns come up, Marion's men are nearly out of ammunition and withdraw. The British lost about 100 killed and wounded, most of them dragoons shot from the saddle; Marion lost very few. Days later, his men joined Greene at Eutaw Springs.",
+      text: "When the British infantry and guns come up, Marion's men are nearly out of ammunition and withdraw. The British lost well over 100 killed and wounded (estimates run from about 125 to 200), most of them dragoons shot from the saddle; Marion lost very few. Days later, his men joined Greene at Eutaw Springs.",
       at: { mar: [300, 0, 'moving'], inf: [0, 300, 'firing'], fra: [0, 500, 'routed'] } },
   ],
 };

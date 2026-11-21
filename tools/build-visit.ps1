@@ -100,7 +100,7 @@ $scSeen = @{}   # a marker appears once in each of the map's category layers
 # text of every untagged marker that mentions the Revolution): churches burned by the British, British
 # posts and headquarters, Jacksonborough, Pickens's home and grave, and similar
 $scExtra = '07-17', '08-09', '08-21', '08-59', '10-07', '10-119', '11-10', '13-01', '15-01', '18-02', '18-05',
-  '20-07', '22-18', '27-18', '28-04', '38-08', '39-03', '39-04', '40-185', '40-29', '45-09'
+  '20-07', '22-18', '27-18', '28-04', '38-08', '39-03', '39-04', '40-185', '40-29', '45-09', '12-06', '28-23'
 foreach ($pm in $kml.GetElementsByTagName('Placemark')) {
   $d = @{}; foreach ($x in $pm.GetElementsByTagName('Data')) { $d[$x.GetAttribute('name')] = $x.InnerText.Trim() }
   if ("$($d['Time Period'])" -notmatch 'American Revolution' -and "$($d['Keywords'])" -notmatch 'American Revolution' -and $scExtra -notcontains $pm.name.Trim()) { continue }

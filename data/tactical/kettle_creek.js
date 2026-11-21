@@ -13,7 +13,7 @@ SC.tactical.kettle_creek = {
   people: {
     Pickens: { id: 'pickens' }, Clarke: { id: 'clarke' },
     Dooly: { force: 'militia', full: 'Col. John Dooly, Georgia militia' },
-    Boyd: { force: 'loyalist', full: 'Col. James Boyd, Loyalist militia (mortally wounded)' },
+    Boyd: { force: 'loyalist', full: 'Col. John Boyd, Loyalist militia (mortally wounded; some accounts call him James)' },
   },
   units: {
     pick: { name: "Pickens's South Carolina militia", short: 'Pickens', side: 'allied', force: 'militia', men: 200, type: 'skirmish', w: 120, d: 16 },

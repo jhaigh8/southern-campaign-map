@@ -8,6 +8,8 @@
 //     the hill from the south-east, so Greene's line faced ~160 degrees. American right = west of the road.
 //   - The whole field is built over; positions follow the accounts' descriptions only, hence "approximate".
 //   - The order of Rawdon's regiments is reconstructed from differing accounts.
+//   - Greene's line, left to right: 2nd Maryland, 1st Maryland, Hawes's 2nd Virginia, Campbell's 1st Virginia
+//     (American Battlefield Trust). Campbell's regiment on the far right gave way first, exposing Hawes.
 //
 // Main sources: Greene's and Rawdon's reports; Otho Williams; John Buchanan, The Road to Charleston (2019);
 // the Gunby court of inquiry (1781).
@@ -68,7 +70,7 @@ SC.tactical.hobkirk = {
     { time: '10:00', title: 'Rawdon sallies from Camden', conf: 'documented',
       text: "Greene is camped on Hobkirk's Hill, waiting for help to besiege Camden. Warned by a deserter that Greene's artillery has been sent away, Rawdon arms every man he can, about 900, and marches out. Rather than come straight up the road, he swings east along the edge of the swamp to strike from an unexpected side. Many of Greene's men are cooking or washing clothes.",
       at: {
-        md2: [-240, -60, 'formed', 0, 80, 40], md1: [-90, -60, 'formed', 0, 80, 40], va1: [130, -60, 'formed', 0, 80, 40], va2: [280, -60, 'formed', 0, 80, 40],
+        md2: [-240, -60, 'formed', 0, 80, 40], md1: [-90, -60, 'formed', 0, 80, 40], va2: [130, -60, 'formed', 0, 80, 40], va1: [280, -60, 'formed', 0, 80, 40],
         guns: [15, -200], wash: [60, -280], ncm: [-60, -320], kirk: [-40, 360],
         nyv: [-560, 820, 'moving', 120], f63: [-620, 740, 'moving', 120], kar: [-680, 660, 'moving', 120], voi: [-740, 580, 'moving', 120], drag: [-800, 500, 'moving', 120],
       },
@@ -78,7 +80,7 @@ SC.tactical.hobkirk = {
       text: "Kirkwood's Delawares and the pickets meet the British in the woods at the foot of the hill and fight a stubborn delaying action, buying Greene time. Greene forms on the crest: Huger's Virginians on the right of the road, Williams's Marylanders on the left, with three 6-pounders, which had just come back, in the centre.",
       at: {
         kirk: [-60, 320, 'firing'],
-        md2: [-240, 0], md1: [-90, 0], guns: [15, 15], va1: [130, 0], va2: [280, 0],
+        md2: [-240, 0], md1: [-90, 0], guns: [15, 15], va2: [130, 0], va1: [280, 0],
         nyv: [-130, 420, 'moving', 20], f63: [-20, 440, 'moving', 20], kar: [90, 460, 'moving', 20], voi: [-40, 560, 'moving'], drag: [80, 600],
       },
       arrows: [{ side: 'crown', path: [[-600, 720], [-300, 560], [-120, 460]] }] },
@@ -87,16 +89,16 @@ SC.tactical.hobkirk = {
       text: "Seeing how narrow Rawdon's front is, Greene orders a double envelopment: the regiments on the wings swing round both British flanks while the centre charges with the bayonet and the guns fire canister. Washington's cavalry rides wide round the British right to fall on the rear. Rawdon answers by bringing up the Volunteers of Ireland to lengthen his line.",
       at: {
         kirk: [-200, 160], guns: [15, 15, 'firing'],
-        md2: [-330, 140, 'moving', 35], md1: [-90, 110, 'moving'], va1: [120, 120, 'moving'], va2: [330, 160, 'moving', -35],
+        md2: [-330, 140, 'moving', 35], md1: [-90, 110, 'moving'], va2: [120, 120, 'moving'], va1: [330, 160, 'moving', -35],
         nyv: [-130, 300, 'firing'], f63: [-20, 300, 'firing'], kar: [90, 300, 'firing'], voi: [-250, 320, 'moving'],
         wash: [-520, -40, 'moving'],
       },
       arrows: [{ side: 'allied', path: [[60, -280], [-500, -100], [-720, 300]] }, { side: 'allied', path: [[-240, 10], [-330, 120]] }, { side: 'allied', path: [[280, 10], [330, 140]] }] },
 
     { time: '11:00', title: 'The 1st Maryland falters', conf: 'documented',
-      text: "In the centre, Captain Beatty is killed and his company of the 1st Maryland wavers. Gunby orders the regiment to fall back and re-form, but the move turns into a retreat. Ford of the 2nd Maryland is mortally wounded and his men give way; the Virginians on the right, suddenly alone, are ordered back. The British take the crest. Gunby's order was argued over for years afterward.",
+      text: "In the centre, Captain Beatty is killed and his company of the 1st Maryland wavers. Gunby orders the regiment to fall back and re-form, but the move turns into a retreat. Ford of the 2nd Maryland is mortally wounded and his men give way; on the right, Campbell's 1st Virginia meets stiff resistance and falls back, leaving Hawes's 2nd Virginia under fire from the flank, and the Virginians are ordered back. The British take the crest. Gunby's order was argued over for years afterward.",
       at: {
-        md1: [-60, -180, 'routed'], md2: [-280, -120, 'broken'], va1: [140, -130, 'broken'], va2: [320, -60, 'moving'],
+        md1: [-60, -180, 'routed'], md2: [-280, -120, 'broken'], va2: [140, -130, 'broken'], va1: [320, -60, 'moving'],
         nyv: [-150, 60, 'moving'], f63: [-30, 70, 'moving'], kar: [90, 60, 'moving'], voi: [-280, 140, 'firing'],
       },
       arrows: [{ side: 'crown', path: [[-20, 290], [-20, 80]] }] },
@@ -105,7 +107,7 @@ SC.tactical.hobkirk = {
       text: "Washington's dragoons, having ridden into Rawdon's rear, have rounded up some 200 prisoners, many of them surgeons and stragglers. Hearing the retreat, he comes back in time to save Greene's guns, which Greene himself helps drag away. Greene retreats about two miles; Rawdon, too weak to pursue, returns to Camden.",
       at: {
         wash: [10, -150, 'moving'], guns: [20, -380, 'moving'],
-        md1: [-40, -700, 'moving'], md2: [-200, -720, 'moving'], va1: [120, -720, 'moving'], va2: [280, -700, 'moving'], ncm: [-40, -900, 'moving'], kirk: [-100, -800, 'moving'],
+        md1: [-40, -700, 'moving'], md2: [-200, -720, 'moving'], va2: [120, -720, 'moving'], va1: [280, -700, 'moving'], ncm: [-40, -900, 'moving'], kirk: [-100, -800, 'moving'],
         nyv: [-140, 0], f63: [-20, 10], kar: [100, 0], voi: [-260, 40], drag: [40, -40, 'moving'],
       },
       arrows: [{ side: 'allied', path: [[-560, 0], [-300, -120], [0, -150]] }, { side: 'allied', path: [[20, -60], [20, -360]] }] },
