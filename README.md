@@ -2,6 +2,8 @@
 
 Step day by day through the Southern Campaign of the American Revolution, from the capture of Savannah (Dec 1778) through the surrender at Yorktown (Oct 1781) to the British evacuation of Charleston (Dec 1782), and watch commanders and their armies move across a 3D map.
 
+**View it online:** https://jhaigh8.github.io/southern-campaign-map/
+
 ## Running it
 
 Double-click **`Start Map.bat`**. It starts a small local web server (no Python or Node needed) and opens `http://localhost:8000`. If port 8000 is busy it uses the next free port. Keep the window open while you use the map.
@@ -112,6 +114,9 @@ Strengths and casualties are approximate, and sources disagree.
 **Visit today:** The Liberty Trail (American Battlefield Trust and the South Carolina Battleground Preservation Trust) for South and North Carolina site positions and pages; National Park Service unit boundaries (Land Resources Division) and the Overmountain Victory NHT historic route; South Carolina Department of Archives and History (its public marker map, Revolution-era markers); NC Department of Natural and Cultural Resources, Highway Historical Marker Program (American Revolution layer); Georgia Historical Society marker list (public ArcGIS layer); Virginia Department of Historic Resources highway markers (151 picked by reading all 2,711 inscriptions; see `tools/va-markers.json`); © OpenStreetMap contributors for the other sites. Marker inscriptions are shown with credit to each program.
 
 **Battle locations** were checked against the National Register / park positions on Wikipedia, The Liberty Trail and OpenStreetMap (park boundaries, monuments, trails, rivers) in November 2026.
+
+### Credits and rights
+This is a non-commercial personal project. Base maps, period map scans and almost all portraits are public domain (credits above and in `assets/portraits/CREDITS.md`; the Overmountain Men photograph is used under its Wikimedia Commons licence). Historical marker inscriptions are quoted from, and credited to, the South Carolina Department of Archives and History, the North Carolina Department of Natural and Cultural Resources, the Georgia Historical Society and the Virginia Department of Historic Resources; site positions and pages for Liberty Trail sites come from The Liberty Trail (American Battlefield Trust and the SC Battleground Preservation Trust). If you hold rights to any of this material and would like it removed or credited differently, please open an issue.
 
 ### Adding a battlefield reconstruction
 Copy `data/tactical/cowpens.js` and add a `<script>` tag for it in `index.html`:
