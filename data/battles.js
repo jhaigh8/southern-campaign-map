@@ -111,7 +111,7 @@ SC.battles = [
     summary: "The two armies ran into each other on a night march and fought at dawn. Gates had placed raw Virginia and North Carolina militia opposite Cornwallis's best regulars, and they broke without firing. De Kalb's Marylanders and Delawares fought on until surrounded. Gates fled 60 miles to Charlotte on a fast horse. It was one of the worst defeats ever suffered by an American army." },
 
   { id: 'fishing_creek', name: 'Fishing Creek', kind: 'battle', start: '1780-08-18', end: '1780-08-18', place: 'fishing_creek',
-    location: "Catawba River near Fort Lawn, Chester County, S.C.",
+    location: "Near the Catawba River, about 2 miles north of Great Falls, Chester County, S.C.",
     outcome: 'crown', allies: ['sumter'], crown: ['tarleton'], others: '',
     strength: ['~800', '~160'], casualties: ['~150 killed, ~300 captured', '16 killed and wounded'], approach: 2, withdrawal: 6,
     summary: "Two days after Camden, Tarleton caught Sumter's men resting with their arms stacked. Sumter escaped half-dressed and bareback." },
@@ -122,14 +122,14 @@ SC.battles = [
     strength: ['~200', '~500'], casualties: ['4 killed, 12 wounded', '63 killed, 90 wounded, 70 captured'], approach: 1, withdrawal: 12,
     summary: "The Patriots threw up a breastwork and lured the Loyalists into attacking it, then shattered them. Learning of Camden, they escaped with their prisoners over the mountains." },
 
-  { id: 'great_savannah', name: 'Great Savannah', kind: 'battle', start: '1780-08-20', end: '1780-08-20', place: 'nelsons_ferry',
-    location: "Near Nelson's Ferry on the Santee (now Lake Marion), Clarendon County, S.C.",
+  { id: 'great_savannah', name: 'Great Savannah', kind: 'battle', start: '1780-08-20', end: '1780-08-20', place: 'great_savannah',
+    location: "Great Savannah, by Nelson's Ferry on the Santee (now Lake Marion), Clarendon County, S.C.",
     outcome: 'allied', allies: ['marion'], crown: [], others: '',
     strength: ['~50', '~40 guards'], casualties: ['1 wounded', '~22 captured'], approach: 3, withdrawal: 7,
     summary: "Marion struck a British escort at Nelson's Ferry and freed about 150 Maryland Continentals captured at Camden. It was his first notable action as a partisan leader." },
 
   { id: 'blue_savannah', name: 'Blue Savannah', kind: 'battle', start: '1780-09-04', end: '1780-09-04', place: 'blue_savannah',
-    location: "Britton's Neck area near Gresham, Marion County, S.C. (approximate)",
+    location: "Blue Savannah, near the Little Pee Dee SE of Marion, Marion County, S.C. (approximate: about 3 miles north of the state marker on U.S. 501, as its text describes)",
     outcome: 'allied', allies: ['marion'], crown: [], others: 'Maj. Micajah Ganey and Capt. Jesse Barfield (Loyalist)',
     strength: ['~50–60', '~250'], casualties: ['4 wounded', '~30–50 killed or wounded'], approach: 6, withdrawal: 4,
     summary: "Marion first scattered Ganey's advance guard in a dawn charge. Facing Barfield's larger main body, he then feigned a retreat and drew it into an ambush at a Carolina bay called Blue Savannah, where the Loyalists broke and fled. The win brought about sixty new volunteers to Marion." },
@@ -153,7 +153,7 @@ SC.battles = [
     summary: "Frontier riflemen surrounded the wooded ridge and fought their way up from all sides. Ferguson was shot from his horse. Every man in his force was killed or captured. Cornwallis abandoned his first invasion of North Carolina, and Jefferson later called the battle \"the turn of the tide of success\"." },
 
   { id: 'tearcoat', name: 'Tearcoat Swamp', kind: 'battle', start: '1780-10-25', end: '1780-10-25', place: 'tearcoat',
-    location: "Tearcoat Swamp near Manning, Clarendon County, S.C.",
+    location: "Tearcoat Swamp (Tearcoat Branch of the Black River), south of Turbeville, Clarendon County, S.C. (approximate)",
     outcome: 'allied', allies: ['marion'], crown: [], others: 'Col. Samuel Tynes (Loyalist)',
     strength: ['~150', '~200'], casualties: ['none', '~6 killed, 14 wounded, 23 captured'], approach: 7, withdrawal: 10,
     summary: "Marion's midnight attack scattered a Loyalist militia muster and captured the muskets and supplies meant to arm it." },
@@ -171,7 +171,7 @@ SC.battles = [
     summary: "Tarleton outran his own infantry and attacked Sumter's strong position with only part of his force. He was repulsed. Sumter was badly wounded in the shoulder." },
 
   { id: 'halfway_swamp', name: 'Halfway Swamp', kind: 'battle', start: '1780-12-12', end: '1780-12-13', place: 'halfway_swamp',
-    location: "Near Rimini, Clarendon County, S.C.",
+    location: "Halfway Swamp, near Rimini, Clarendon County, S.C. (approximate; by tradition)",
     outcome: 'draw', allies: ['marion'], crown: [], others: 'Maj. Robert McLeroth (64th Foot)',
     strength: ['~700', '~200 regulars'], casualties: ['a few wounded (sources differ)', '~6 killed'], approach: 6, withdrawal: 5,
     summary: "Marion caught McLeroth's column of new recruits marching to join Cornwallis and blocked its road. McLeroth proposed settling it with a duel of twenty picked men a side, then slipped away in the night while Marion waited. Marion broke off after learning there was smallpox at nearby Singleton's Mill, and the British reached Winnsboro." },
@@ -218,8 +218,8 @@ SC.battles = [
     strength: ['~700', '~1,200'], casualties: ['~20–50 killed and wounded (sources differ)', '~21–30 killed and wounded'], approach: 5, withdrawal: 5,
     summary: "Cornwallis tried to catch Otho Williams's light corps, which was screening Greene, at the ford over Reedy Fork. Webster forced the crossing under rifle fire and the Americans fell back in good order. Nine days later the two armies met at Guilford Courthouse." },
 
-  { id: 'wiboo_lower_bridge', name: 'Wiboo Swamp & Lower Bridge', kind: 'battle', start: '1781-03-06', end: '1781-03-13', place: [-79.85, 33.65],
-    location: "Wyboo Swamp near Manning to the Lower Bridge on the Black River near Kingstree, Clarendon & Williamsburg counties, S.C.",
+  { id: 'wiboo_lower_bridge', name: 'Wiboo Swamp & Lower Bridge', kind: 'battle', start: '1781-03-06', end: '1781-03-13', place: 'lower_bridge',
+    location: "Wyboo Swamp (the causeway is now under Lake Marion) to the Lower Bridge on the Black River near Kingstree, Clarendon & Williamsburg counties, S.C.",
     outcome: 'allied', allies: ['marion'], crown: [], others: 'Lt. Col. John Watson (British)',
     strength: ['~300–400', '~500'], casualties: ['light (sources differ)', 'light to moderate (sources differ)'], approach: 6, withdrawal: 15,
     summary: "Watson marched a column up the Santee to destroy Marion's brigade. Marion fought him at Wiboo Swamp and then held the Lower Bridge over the Black River, where his riflemen picked off anyone trying to cross. Watson gave up and fell back to Georgetown. Meanwhile a second column under Doyle found and burned Snow's Island." },
@@ -236,7 +236,7 @@ SC.battles = [
     strength: ['~380', '~120'], casualties: ['2 killed, 6 wounded', '~114 captured'], approach: 7, withdrawal: 7,
     summary: "The fort stood on an old Indian mound and had no artillery to fear. Hezekiah Maham designed a log tower that rose above its walls, and riflemen firing down from it forced the garrison to surrender." },
 
-  { id: 'blandford', name: 'Blandford (Petersburg)', kind: 'battle', start: '1781-04-25', end: '1781-04-25', place: 'petersburg',
+  { id: 'blandford', name: 'Blandford (Petersburg)', kind: 'battle', start: '1781-04-25', end: '1781-04-25', place: [-77.3885, 37.2262],
     location: "Blandford, east side of Petersburg, Va.",
     outcome: 'crown', allies: ['steuben'], crown: ['phillips', 'arnold'], others: 'Brig. Gen. Peter Muhlenberg (American)',
     strength: ['~1,000 militia', '~2,500'], casualties: ['~60–150 (sources differ)', '~20–60 (sources differ)'], approach: 3, withdrawal: 6,
@@ -314,7 +314,7 @@ SC.battles = [
     strength: ['~2,200', '~2,000'], casualties: ['138 killed, 375 wounded, 41 missing', '85 killed, 351 wounded, 257 missing'], approach: 17, withdrawal: 3,
     summary: "Greene's attack drove the British back through their own camp. His hungry troops then stopped to plunder the tents and rum, and a counterattack from a fortified brick house restored the line. Stewart held the field but withdrew toward Charleston. It was the last major battle in the Carolinas." },
 
-  { id: 'the_hook', name: 'The Hook (Gloucester)', kind: 'battle', start: '1781-10-03', end: '1781-10-03', place: [-76.52, 37.29],
+  { id: 'the_hook', name: 'The Hook (Gloucester)', kind: 'battle', start: '1781-10-03', end: '1781-10-03', place: [-76.5028, 37.2761],
     location: "About 3 miles north of Gloucester Point, Gloucester County, Va.",
     outcome: 'allied', allies: [], crown: ['tarleton'], others: "Duc de Lauzun (French legion); Brig. Gen. George Weedon and Lt. Col. John Mercer (Virginia militia)",
     strength: ['~600 cavalry & infantry engaged', '~400'], casualties: ['3 French killed, 16 wounded, plus a few militia', '~12–50 killed, wounded and captured (sources differ)'], approach: 4, withdrawal: 16,
