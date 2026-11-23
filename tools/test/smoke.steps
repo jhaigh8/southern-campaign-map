@@ -1,0 +1,3 @@
+-|0|(()=>{let out='';const w=console.warn,i=console.info;console.warn=(m)=>out=m;console.info=(m)=>out=m;SC.validate();console.warn=w;console.info=i;return location.href+' | '+out+' | errs '+JSON.stringify(window.__errs||[])+' | battles '+SC.battles.length+' | markers '+SC.visitData.markers.length})()
+period|12|(SC.layers.setBase('period'), SC.map.jumpTo({center:[-80.6,33.6],zoom:7.5,pitch:30,bearing:0}),'ok')
+-|0|JSON.stringify([...document.querySelectorAll('img')].filter(i=>i.src.includes('portraits')).map(i=>i.complete&&i.naturalWidth>0).reduce((a,x)=>(a[x]=(a[x]||0)+1,a),{}))
